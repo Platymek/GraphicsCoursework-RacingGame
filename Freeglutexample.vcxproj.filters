@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\example.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\ImageLoading.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="shaders\Shader.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\OBB.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Sprite.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Animation.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\Graphics.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="engine\ImageLoading.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="shaders\Shader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\OBB.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Sprite.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Animation.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\Graphics.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{9604e9f0-a9c7-48ca-bc3a-ca96f1aabe51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{fc837774-d0bb-4f04-9bf7-d9b28cb5f32c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\glslfiles">
+      <UniqueIdentifier>{b7ce5ed7-2e98-4a7a-934a-80e4387d3098}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="glslfiles\basicTexture.vert">
+      <Filter>Source\glslfiles</Filter>
+    </None>
+    <None Include="glslfiles\basicTexture.frag">
+      <Filter>Source\glslfiles</Filter>
+    </None>
+  </ItemGroup>
+</Project>
