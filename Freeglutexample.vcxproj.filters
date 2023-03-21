@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\example.cpp">
+    <ClCompile Include="game\example.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="engine\ImageLoading.cpp">
@@ -20,6 +20,10 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="engine\Graphics.cpp" />
+    <ClCompile Include="engine\Actor.cpp" />
+    <ClCompile Include="game\car.cpp" />
+    <ClCompile Include="engine\Scene.cpp" />
+    <ClCompile Include="engine\Engine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\ImageLoading.h">
@@ -38,6 +42,10 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="engine\Graphics.h" />
+    <ClInclude Include="engine\Actor.h" />
+    <ClInclude Include="game\car.h" />
+    <ClInclude Include="engine\Scene.h" />
+    <ClInclude Include="engine\Engine.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

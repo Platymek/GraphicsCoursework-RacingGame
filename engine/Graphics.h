@@ -17,6 +17,7 @@ class Graphics
 {
 public:
 
+	Graphics();
 	Graphics(int screenWidth, int screenHeight);
 
 	void Init();

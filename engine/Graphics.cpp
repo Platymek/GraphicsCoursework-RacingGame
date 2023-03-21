@@ -58,6 +58,10 @@ float Graphics::DrawRequest::getTime()
 	return time;
 }
 
+Graphics::Graphics()
+{
+}
+
 Graphics::Graphics(int screenWidth, int screenHeight)
 {
 	this->screenWidth = screenWidth;

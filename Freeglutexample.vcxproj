@@ -19,18 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\Engine.h" />
+    <ClInclude Include="game\car.h" />
+    <ClInclude Include="engine\Actor.h" />
     <ClInclude Include="engine\ImageLoading.h" />
     <ClInclude Include="engine\OBB.h" />
     <ClInclude Include="engine\Graphics.h" />
+    <ClInclude Include="engine\Scene.h" />
     <ClInclude Include="shaders\Shader.h" />
     <ClInclude Include="engine\Sprite.h" />
     <ClInclude Include="engine\Animation.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\Engine.cpp" />
+    <ClCompile Include="game\car.cpp" />
+    <ClCompile Include="engine\Actor.cpp" />
     <ClCompile Include="engine\Graphics.cpp" />
-    <ClCompile Include="src\example.cpp" />
+    <ClCompile Include="game\example.cpp" />
     <ClCompile Include="engine\ImageLoading.cpp" />
     <ClCompile Include="engine\OBB.cpp" />
+    <ClCompile Include="engine\Scene.cpp" />
     <ClCompile Include="shaders\Shader.cpp" />
     <ClCompile Include="engine\Sprite.cpp" />
     <ClCompile Include="engine\Animation.cpp" />
