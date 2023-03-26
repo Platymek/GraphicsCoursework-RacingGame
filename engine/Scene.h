@@ -1,8 +1,12 @@
 #pragma once
 
 #include "Actor.h"
-#include "Graphics.h"
+class Actor;
+
 #include "Engine.h"
+class Engine;
+
+#include "Graphics.h"
 
 #include "..\glm\glm.hpp"
 using namespace glm;
@@ -20,12 +24,12 @@ public:
 	virtual void Draw(Graphics& graphics);
 
 	void AddActor(Actor& actor);
-	vector<Actor&>& GetActors();
+	vector<Actor>& GetActors();
 
 
 private:
 
-	vector<Actor&> actors;
+	vector<Actor> actors;
 
 	vec2 cameraPosition, cameraScale, cameraOrigin;
 	float cameraRotation;

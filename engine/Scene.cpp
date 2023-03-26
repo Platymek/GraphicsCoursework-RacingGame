@@ -15,8 +15,8 @@ void Scene::Process(Engine& engine, float delta)
 void Scene::Draw(Graphics& graphics)
 {
 	for (Actor a : actors) graphics.DrawAnimation(a.GetAnimationName(),
-		a.GetPosition().x, a.GetPosition().y, a.GetAt(), a.GetLayer(), a.GetRotation(),
-		a.GetScale().x, a.GetScale().y);
+		a.GetPosition().x, a.GetPosition().y, a.GetAt(), a.GetLayer(), a.GetRotation());
+		//a.GetScale().x, a.GetScale().y);
 }
 
 void Scene::AddActor(Actor& actor)
@@ -24,7 +24,7 @@ void Scene::AddActor(Actor& actor)
 	actors.push_back(actor);
 }
 
-vector<Actor&>& Scene::GetActors()
+vector<Actor>& Scene::GetActors()
 {
 	return actors;
 }

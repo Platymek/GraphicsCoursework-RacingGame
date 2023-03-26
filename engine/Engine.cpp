@@ -1,23 +1,34 @@
 #include "Engine.h"
+#include <iostream>
 
-Engine::Engine(Graphics& graphics, Scene& scene)
+using namespace std;
+
+Engine::Engine()
 {
-	this->graphics = graphics;
-	this->currentScene = scene;
+	this->graphics = nullptr;
+	this->currentScene = nullptr;
 }
 
-void Engine::Process()
+void Engine::Init(Graphics& graphics, Scene& scene)
 {
-	currentScene.Process(*this, 0.016f);
-	currentScene.Draw(graphics);
+	this->graphics = &graphics;
+	this->currentScene = &scene;
+}
+
+void Engine::Process(mat4& projectionMatrix)
+{
+	currentScene->Process(*this, 0.016f);
+	currentScene->Draw(*graphics);
+
+	graphics->Process(projectionMatrix);
 }
 
 void Engine::SetScene(Scene& scene)
 {
-	currentScene = scene;
+	currentScene = &scene;
 }
 
-Graphics& Engine::GetGraphics()
+Graphics* Engine::GetGraphics()
 {
 	return graphics;
 }

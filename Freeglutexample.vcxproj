@@ -29,6 +29,7 @@
     <ClInclude Include="shaders\Shader.h" />
     <ClInclude Include="engine\Sprite.h" />
     <ClInclude Include="engine\Animation.h" />
+    <ClInclude Include="game\TestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\Engine.cpp" />
@@ -42,6 +43,7 @@
     <ClCompile Include="shaders\Shader.cpp" />
     <ClCompile Include="engine\Sprite.cpp" />
     <ClCompile Include="engine\Animation.cpp" />
+    <ClCompile Include="game\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glslfiles\basicTexture.frag" />

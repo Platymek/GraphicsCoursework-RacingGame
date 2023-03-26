@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Scene.h"
+class Scene;
+
 #include "Graphics.h"
 
 #include "..\glm\glm.hpp"
@@ -16,7 +18,7 @@ public:
 	Actor();
 	Actor(string name, vec2 position, float rotation = 0, int layer = 0);
 	
-	virtual void Process(Scene& scene, float delta);
+	virtual void Process(Scene scene, float delta);
 
 	vec2 GetPosition(), GetScale(), GetOrigin();
 	float GetRotation(), GetAt();

@@ -2,7 +2,14 @@
 
 #include "../engine/Actor.h"
 
-class car : Actor
+class Car : public Actor
 {
+public:
+
+	Car(vec2 position, float rotation);
+
+
+private:
+
 
 };

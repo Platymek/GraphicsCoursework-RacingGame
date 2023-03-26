@@ -15,6 +15,9 @@ using namespace std;
 
 #include "..\engine\Graphics.h"
 #include "..\engine\Animation.h"
+#include "..\engine\Engine.h"
+#include "..\engine\Scene.h"
+#include "TestScene.h"
 
 #include <iostream>
 using namespace std;
@@ -29,8 +32,9 @@ bool Right = false;
 bool Up = false;
 bool Down = false;
 
+TestScene scene;
 Graphics graphics(640, 360);
-Animation a;
+Engine engine;
 
 //OPENGL FUNCTION PROTOTYPES
 void display(); //used as callback in glut for display.
@@ -61,10 +65,11 @@ void init()
 
 	t = 0;
 
-	a.Init("./textures/test/move", 6, 0.6f);
-
 	graphics.Init();
-	graphics.AddAnimation("test/move", "./textures/test/move", 6, 0.6f);
+
+	graphics.AddAnimation("Car/move", "./textures/Car/move", 6, 0.6f);
+
+	engine.Init(graphics, scene);
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -78,12 +83,14 @@ void display()
 
 	t += 0.016f;
 
-	a.Render(ProjectionMatrix, glm::translate(glm::mat4(1.0), glm::vec3(32, 32, 0.0)), t);
+	//graphics.DrawAnimation("Car/move", 48, 48, t, 0, t, 4, 4);
+	//graphics.DrawAnimation("Car/move", 64, 64, t, 0, t + 1, 4, 4);
+	//graphics.DrawAnimation("Car/move", 48, 64, t, 0, t + 1, 4, 4);
 
-	graphics.DrawAnimation("test/move", 48, 48, t, 0, t, 4, 4);
-	graphics.DrawAnimation("test/move", 64, 64, t, 0, t + 1, 4, 4);
-	graphics.DrawAnimation("test/move", 48, 64, t, 0, t + 1, 4, 4);
-	graphics.Process(ProjectionMatrix);
+	//engine.GetGraphics()->DrawAnimation("Car/move", 64, 64, t, 0, t + 1, 4, 4);
+	//engine.GetGraphics()->Process(ProjectionMatrix);
+
+	engine.Process(ProjectionMatrix);
 
 	glDisable(GL_BLEND);
 

@@ -5,7 +5,8 @@ Actor::Actor()
 	t = at = 0;
 	SetState("idle");
 
-	origin = scale = vec2(1, 1);
+	origin = vec2(0, 0);
+	scale = vec2(1, 1);
 }
 
 Actor::Actor(string name, vec2 position, float rotation, int layer)
@@ -16,7 +17,7 @@ Actor::Actor(string name, vec2 position, float rotation, int layer)
 	this->layer = layer;
 }
 
-void Actor::Process(Scene& scene, float delta)
+void Actor::Process(Scene scene, float delta)
 {
 	t += delta;
 	at += delta * animationSpeed;

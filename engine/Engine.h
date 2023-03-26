@@ -2,6 +2,7 @@
 
 #include "Graphics.h";
 #include "Scene.h";
+class Scene;
 
 #include <vector>
 using namespace std;
@@ -10,15 +11,17 @@ class Engine
 {
 public:
 
-	Engine(Graphics& graphics, Scene& scene);
+	Engine();
 
-	void Process();
+	void Init(Graphics& graphics, Scene& scene);
+	void Process(mat4& projectionMatrix);
 	
 	void SetScene(Scene& scene);
-	Graphics& GetGraphics();
+	Graphics* GetGraphics();
+
 
 private:
 
-	Graphics graphics;
-	Scene currentScene;
+	Graphics* graphics;
+	Scene* currentScene;
 };

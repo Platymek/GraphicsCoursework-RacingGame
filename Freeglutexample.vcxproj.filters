@@ -24,6 +24,7 @@
     <ClCompile Include="game\car.cpp" />
     <ClCompile Include="engine\Scene.cpp" />
     <ClCompile Include="engine\Engine.cpp" />
+    <ClCompile Include="game\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\ImageLoading.h">
@@ -46,6 +47,7 @@
     <ClInclude Include="game\car.h" />
     <ClInclude Include="engine\Scene.h" />
     <ClInclude Include="engine\Engine.h" />
+    <ClInclude Include="game\TestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
