@@ -21,10 +21,11 @@
     </ClCompile>
     <ClCompile Include="engine\Graphics.cpp" />
     <ClCompile Include="engine\Actor.cpp" />
-    <ClCompile Include="game\car.cpp" />
+    <ClCompile Include="game\Car.cpp" />
     <ClCompile Include="engine\Scene.cpp" />
     <ClCompile Include="engine\Engine.cpp" />
     <ClCompile Include="game\TestScene.cpp" />
+    <ClCompile Include="game\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\ImageLoading.h">
@@ -44,10 +45,11 @@
     </ClInclude>
     <ClInclude Include="engine\Graphics.h" />
     <ClInclude Include="engine\Actor.h" />
-    <ClInclude Include="game\car.h" />
+    <ClInclude Include="game\Car.h" />
     <ClInclude Include="engine\Scene.h" />
     <ClInclude Include="engine\Engine.h" />
     <ClInclude Include="game\TestScene.h" />
+    <ClInclude Include="game\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

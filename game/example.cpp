@@ -17,7 +17,9 @@ using namespace std;
 #include "..\engine\Animation.h"
 #include "..\engine\Engine.h"
 #include "..\engine\Scene.h"
+
 #include "TestScene.h"
+#include "Car.h"
 
 #include <iostream>
 using namespace std;
@@ -32,7 +34,8 @@ bool Right = false;
 bool Up = false;
 bool Down = false;
 
-TestScene scene;
+Car car(vec2(128, 128), 0);
+Scene scene;
 Graphics graphics(640, 360);
 Engine engine;
 
@@ -66,8 +69,10 @@ void init()
 	t = 0;
 
 	graphics.Init();
-
 	graphics.AddAnimation("Car/move", "./textures/Car/move", 6, 0.6f);
+
+	scene.Init();
+	scene.AddActor(car);
 
 	engine.Init(graphics, scene);
 
@@ -81,7 +86,7 @@ void display()
 
 	glEnable(GL_BLEND);
 
-	t += 0.016f;
+	t += 0.0069;
 
 	//graphics.DrawAnimation("Car/move", 48, 48, t, 0, t, 4, 4);
 	//graphics.DrawAnimation("Car/move", 64, 64, t, 0, t + 1, 4, 4);

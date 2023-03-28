@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include <iostream>
 
 Scene::Scene()
 {
@@ -7,24 +8,30 @@ Scene::Scene()
 	cameraRotation = 0;
 }
 
+void Scene::Init()
+{
+	vector<Actor*> actors();
+}
+
 void Scene::Process(Engine& engine, float delta)
 {
-	for (Actor a : actors) a.Process(*this, delta);
+	for (Actor* a : actors) a->Process(*this, delta);
 }
 
 void Scene::Draw(Graphics& graphics)
 {
-	for (Actor a : actors) graphics.DrawAnimation(a.GetAnimationName(),
-		a.GetPosition().x, a.GetPosition().y, a.GetAt(), a.GetLayer(), a.GetRotation());
+	for (Actor* a : actors) graphics.DrawAnimation(a->GetAnimationName(),
+		a->GetPosition().x, a->GetPosition().y, a->GetAt(), a->GetLayer(), a->GetRotation());
 		//a.GetScale().x, a.GetScale().y);
 }
 
 void Scene::AddActor(Actor& actor)
 {
-	actors.push_back(actor);
+	actors.push_back(&actor);
+	cout << actors.back() << endl;
 }
 
-vector<Actor>& Scene::GetActors()
+vector<Actor*>& Scene::GetActors()
 {
 	return actors;
 }

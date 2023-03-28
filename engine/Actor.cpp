@@ -1,4 +1,5 @@
 #include "Actor.h"
+#include <iostream>
 
 Actor::Actor()
 {
@@ -21,6 +22,8 @@ void Actor::Process(Scene scene, float delta)
 {
 	t += delta;
 	at += delta * animationSpeed;
+
+	cout << "hello" << endl;
 }
 
 vec2 Actor::GetPosition()
@@ -89,7 +92,9 @@ void Actor::SetAnimation(string currentAnimationName, string nextAnimationName)
 
 void Actor::SetAnimation(string animationName)
 {
-	this->currentAnimationName = animationName;
+	cout << name + "/" + animationName << endl;
+
+	this->currentAnimationName = name + "/" + animationName;
 
 	useNextAnimation = false;
 }
