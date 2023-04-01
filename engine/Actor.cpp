@@ -18,12 +18,10 @@ Actor::Actor(string name, vec2 position, float rotation, int layer)
 	this->layer = layer;
 }
 
-void Actor::Process(Scene scene, float delta)
+void Actor::Process(Scene scene, Input input, float delta)
 {
 	t += delta;
 	at += delta * animationSpeed;
-
-	cout << "hello" << endl;
 }
 
 vec2 Actor::GetPosition()

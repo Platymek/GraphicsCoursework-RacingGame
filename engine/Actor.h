@@ -1,9 +1,9 @@
 #pragma once
 
+#include "Graphics.h"
+#include "Input.h"
 #include "Scene.h"
 class Scene;
-
-#include "Graphics.h"
 
 #include "..\glm\glm.hpp"
 using namespace glm;
@@ -18,7 +18,7 @@ public:
 	Actor();
 	Actor(string name, vec2 position, float rotation = 0, int layer = 0);
 	
-	virtual void Process(Scene scene, float delta);
+	virtual void Process(Scene scene, Input input, float delta);
 
 	vec2 GetPosition(), GetScale(), GetOrigin();
 	float GetRotation(), GetAt();

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\Engine.h" />
+    <ClInclude Include="engine\Input.h" />
     <ClInclude Include="game\Car.h" />
     <ClInclude Include="engine\Actor.h" />
     <ClInclude Include="engine\ImageLoading.h" />
@@ -34,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine\Engine.cpp" />
+    <ClCompile Include="engine\Input.cpp" />
     <ClCompile Include="game\Car.cpp" />
     <ClCompile Include="engine\Actor.cpp" />
     <ClCompile Include="engine\Graphics.cpp" />

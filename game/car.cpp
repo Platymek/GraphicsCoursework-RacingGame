@@ -22,27 +22,18 @@ Car::Car(vec2 position, float rotation) : Actor("Car", position, rotation, 2)
 	steerSpeed = 1;
 	SetSteerSpeedMultiplier();
 
-	speed = 64;
+	speed = 0;
 }
 
 vec2 Car::getVelocity()
 {
-	vec2 v(speed * sin(rotation), speed * cos(rotation));
+	vec2 v(speed * -sin(rotation), speed * cos(rotation));
 	return v;
 }
 
-void Car::Process(Scene scene, float delta)
+void Car::Process(Scene scene, Input input, float delta)
 {
-	Actor::Process(scene, delta);
-
-	Accelerate(delta);
-	SteerRight(delta);
-
-	//if (GetT() < 5) Accelerate(delta);
-	//else if (GetT() < 10) Reverse(delta);
-	//else Deccelerate(delta);
-
-	cout << speed << endl;
+	Actor::Process(scene, input, delta);
 
 	position += getVelocity() * delta;
 }

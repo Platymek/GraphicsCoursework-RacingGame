@@ -26,6 +26,7 @@
     <ClCompile Include="engine\Engine.cpp" />
     <ClCompile Include="game\TestScene.cpp" />
     <ClCompile Include="game\Player.cpp" />
+    <ClCompile Include="engine\Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\ImageLoading.h">
@@ -50,6 +51,7 @@
     <ClInclude Include="engine\Engine.h" />
     <ClInclude Include="game\TestScene.h" />
     <ClInclude Include="game\Player.h" />
+    <ClInclude Include="engine\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

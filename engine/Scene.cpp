@@ -15,7 +15,7 @@ void Scene::Init()
 
 void Scene::Process(Engine& engine, float delta)
 {
-	for (Actor* a : actors) a->Process(*this, delta);
+	for (Actor* a : actors) a->Process(*this, *engine.GetInput(), delta);
 }
 
 void Scene::Draw(Graphics& graphics)

@@ -17,9 +17,10 @@ using namespace std;
 #include "..\engine\Animation.h"
 #include "..\engine\Engine.h"
 #include "..\engine\Scene.h"
+#include "..\engine\Input.h"
 
 #include "TestScene.h"
-#include "Car.h"
+#include "Player.h"
 
 #include <iostream>
 using namespace std;
@@ -34,10 +35,12 @@ bool Right = false;
 bool Up = false;
 bool Down = false;
 
-Car car(vec2(128, 128), 0);
+Player player(1, vec2(128, 128), 0);
 Scene scene;
 Graphics graphics(640, 360);
 Engine engine;
+
+Input input;
 
 //OPENGL FUNCTION PROTOTYPES
 void display(); //used as callback in glut for display.
@@ -72,9 +75,16 @@ void init()
 	graphics.AddAnimation("Car/move", "./textures/Car/move", 6, 0.6f);
 
 	scene.Init();
-	scene.AddActor(car);
+	scene.AddActor(player);
 
-	engine.Init(graphics, scene);
+	cout << GLUT_KEY_UP << endl;
+
+	input.AddKey("up1", GLUT_KEY_UP);
+	input.AddKey("left1", GLUT_KEY_LEFT);
+	input.AddKey("down1", GLUT_KEY_DOWN);
+	input.AddKey("right1", GLUT_KEY_RIGHT);
+
+	engine.Init(graphics, scene, input);
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -88,12 +98,7 @@ void display()
 
 	t += 0.0069;
 
-	//graphics.DrawAnimation("Car/move", 48, 48, t, 0, t, 4, 4);
-	//graphics.DrawAnimation("Car/move", 64, 64, t, 0, t + 1, 4, 4);
-	//graphics.DrawAnimation("Car/move", 48, 64, t, 0, t + 1, 4, 4);
-
-	//engine.GetGraphics()->DrawAnimation("Car/move", 64, 64, t, 0, t + 1, 4, 4);
-	//engine.GetGraphics()->Process(ProjectionMatrix);
+	input.Process();
 
 	engine.Process(ProjectionMatrix);
 
@@ -105,6 +110,26 @@ void display()
 void idle()
 {
 	glutPostRedisplay();
+}
+
+void inputCharacter(unsigned char key, int x, int y)
+{
+	input.ProcessKeyDown(key);
+}
+
+void inputCharacterUp(unsigned char key, int x, int y)
+{
+	input.ProcessKeyUp(key);
+}
+
+void inputSpecial(int key, int x, int y)
+{
+	input.ProcessKeyDown(key);
+}
+
+void inputSpecialUp(int key, int x, int y)
+{
+	input.ProcessKeyUp(key);
 }
 
 /**************** END OPENGL FUNCTIONS *************************/
@@ -142,6 +167,12 @@ int main(int argc, char **argv)
 	glutDisplayFunc(display);
 
 	glutIdleFunc(idle);
+
+	glutKeyboardFunc(inputCharacter);
+	glutKeyboardUpFunc(inputCharacterUp);
+
+	glutSpecialFunc(inputSpecial);
+	glutSpecialUpFunc(inputSpecialUp);
 
 	//starts the main loop. Program loops and calls callback functions as appropriate.
 	glutMainLoop();

@@ -9,10 +9,11 @@ Engine::Engine()
 	this->currentScene = nullptr;
 }
 
-void Engine::Init(Graphics& graphics, Scene& scene)
+void Engine::Init(Graphics& graphics, Scene& scene, Input& input)
 {
 	this->graphics = &graphics;
 	this->currentScene = &scene;
+	this->input = &input;
 }
 
 void Engine::Process(mat4& projectionMatrix)
@@ -21,6 +22,7 @@ void Engine::Process(mat4& projectionMatrix)
 	currentScene->Draw(*graphics);
 
 	graphics->Process(projectionMatrix);
+	input->Process();
 }
 
 void Engine::SetScene(Scene& scene)
@@ -31,4 +33,9 @@ void Engine::SetScene(Scene& scene)
 Graphics* Engine::GetGraphics()
 {
 	return graphics;
+}
+
+Input* Engine::GetInput()
+{
+	return input;
 }
