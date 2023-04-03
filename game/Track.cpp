@@ -35,6 +35,8 @@ Track::Track()
 
 	connected = false;
 	drawMiddleLine = false;
+
+	drawLeftLine = drawRightLine = true;
 }
 
 void Track::Draw(Graphics& graphics)
@@ -48,6 +50,14 @@ void Track::Draw(Graphics& graphics)
 		for (int i = 1; i < coordinates.size(); i++)
 			graphics.DrawLine(coordinates[i - 1], coordinates[i]);
 	}
+
+	if (drawLeftLine)
+	{
+		graphics.DrawLine(leftBounds[0], leftBounds[leftBounds.size() - 1]);
+
+		for (int i = 1; i < leftBounds.size(); i++)
+			graphics.DrawLine(leftBounds[i - 1], leftBounds[i]);
+	}
 }
 
 void Track::Init(vector<Road> roads)
@@ -55,9 +65,12 @@ void Track::Init(vector<Road> roads)
 	Scene::Init();
 
 	for (Road r : roads) AddRoad(r);
+	Connect();
+
+	for (vec2 v : leftBounds) cout << v.x << ", " << v.y << endl;
 }
 
-void Track::AddRoad(Road road)
+void Track::AddRoad(Road road, bool processFirst)
 {
 	coordinates.push_back(vec2(road.x, road.y));
 	widths.push_back(road.width);
@@ -67,19 +80,42 @@ void Track::AddRoad(Road road)
 	leftBounds.push_back(vec2());
 	rightBounds.push_back(vec2());
 
-	//if (coordinates.size() > 2)
-	//{
-	//	int lastIndex = coordinates.size() - 1;
-	//	vec2 previousCoordinates = coordinates[lastIndex - 2];
-	//
-	//	float angle = atan(road.x - previousCoordinates.x,
-	//					road.y - previousCoordinates.y);
-	//
-	//	angles[lastIndex - 1] = angle;
-	//
-	//	float leftAngle = 
-	//	leftBounds[lastIndex - 1] = vec2();
-	//}
+	if (coordinates.size() > 2)
+	{
+		// process next road //
+		int lastIndex = coordinates.size() - 1;
+		vec2 previousCoordinates = coordinates[lastIndex - 2];
+	
+		float angle = atan(road.x - previousCoordinates.x,
+						road.y - previousCoordinates.y);
+	
+		angles[lastIndex - 1] = angle;
+	
+		float leftAngle = angle - (pi<float>() / 2);
+		leftBounds[lastIndex - 1] = coordinates[lastIndex - 1] 
+			+ vec2(road.width * sin(leftAngle), road.width * cos(leftAngle));
+
+		//cout <<  << endl;
+
+		if (processFirst)
+		{
+			// process first road //
+			angles[0] = atan(coordinates[1].x - coordinates[lastIndex].x,
+							coordinates[1].y - coordinates[lastIndex].y);
+
+			float firstLeftAngle = angles[0] - (pi<float>() / 2);
+			leftBounds[0] = coordinates[0]
+				+ vec2(widths[0] * sin(firstLeftAngle), widths[0] * cos(firstLeftAngle));
+
+			// process second road //
+			angles[lastIndex] = atan(coordinates[lastIndex - 1].x - coordinates[0].x,
+				coordinates[lastIndex - 1].y - coordinates[0].y);
+			
+			float lastLeftAngle = angles[lastIndex] + (pi<float>() / 2);
+			leftBounds[lastIndex] = coordinates[lastIndex]
+				+ vec2(widths[lastIndex] * sin(lastLeftAngle), widths[lastIndex] * cos(lastLeftAngle));
+		}
+	}
 }
 
 void Track::Connect()

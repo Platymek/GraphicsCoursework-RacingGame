@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../engine/Scene.h"
+#include <iostream>
 
 class Track : public Scene
 {
@@ -18,7 +19,7 @@ public:
 	void Draw(Graphics& graphics) override;
 
 	void Init(vector<Road> roads);
-	void AddRoad(Road road);
+	void AddRoad(Road road, bool processFirst = true);
 	void Connect();
 
 	void SetDrawMiddleLine(bool drawMiddleLine);
@@ -26,7 +27,7 @@ public:
 
 private:
 
-	bool connected, drawMiddleLine;
+	bool connected, drawMiddleLine, drawLeftLine, drawRightLine;
 
 	vector<vec2> coordinates;
 	vector<int> widths;
