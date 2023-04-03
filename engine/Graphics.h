@@ -26,6 +26,8 @@ public:
 	void DrawAnimation(string animationName, int x, int y, float time = 0, int layer = 0, float rotation = 0,
 					float xScale = 1, float yScale = 1, float xOrigin = 0, float yOrigin = 0);
 
+	void DrawLine(vec2 p1, vec2 p2);
+
 	struct DrawRequest;
 
 
@@ -36,6 +38,9 @@ private:
 
 	/// <summary>5 layers</summary>
 	forward_list<DrawRequest> drawRequests[5];
+
+	vector<vec2> line1s;
+	vector<vec2> line2s;
 };
 
 struct Graphics::DrawRequest

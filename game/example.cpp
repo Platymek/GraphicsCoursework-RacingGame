@@ -19,7 +19,7 @@ using namespace std;
 #include "..\engine\Scene.h"
 #include "..\engine\Input.h"
 
-#include "TestScene.h"
+#include "Track.h"
 #include "Player.h"
 
 #include <iostream>
@@ -36,7 +36,7 @@ bool Up = false;
 bool Down = false;
 
 Player player(2, vec2(128, 128), 0);
-Scene scene;
+Track scene;
 Graphics graphics(640, 360);
 Engine engine;
 
@@ -74,10 +74,17 @@ void init()
 	graphics.Init();
 	graphics.AddAnimation("Car/move", "./textures/Car/move", 6, 0.6f);
 
-	scene.Init();
+	scene.Init(vector<Track::Road> 
+	{
+		Track::Road(0,	16,	16, 0),
+		Track::Road(64, 16,	16, 0),
+		Track::Road(64, 64, 16, 0),
+		Track::Road(16,	64, 16, 0),
+	});
+
 	scene.AddActor(player);
 
-	cout << GLUT_KEY_UP << endl;
+	std::cout << GLUT_KEY_UP << endl;
 
 	input.AddKey("up1",		GLUT_KEY_UP,	true);
 	input.AddKey("left1",	GLUT_KEY_LEFT,	true);
@@ -156,14 +163,14 @@ int main(int argc, char **argv)
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
-		cout << " GLEW ERROR" << endl;
+		std::cout << " GLEW ERROR" << endl;
 	}
 
 	//Check the OpenGL version being used
 	int OpenGLVersion[2];
 	glGetIntegerv(GL_MAJOR_VERSION, &OpenGLVersion[0]);
 	glGetIntegerv(GL_MINOR_VERSION, &OpenGLVersion[1]);
-	cout << OpenGLVersion[0] << " " << OpenGLVersion[1] << endl;
+	std::cout << OpenGLVersion[0] << " " << OpenGLVersion[1] << endl;
 
 	//initialise the objects for rendering
 	init();

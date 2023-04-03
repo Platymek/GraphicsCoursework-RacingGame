@@ -85,6 +85,17 @@ void Graphics::Process(mat4& projectionMatrix)
 	
 		layer.clear();
 	}
+
+	glBegin(GL_LINES);
+	for (int i = 0; i < line1s.size(); i++)
+	{
+		glVertex2f(line1s[i].x, line1s[i].y);
+		glVertex2f(line2s[i].x, line2s[i].x);
+	}
+	glEnd();
+
+	line1s.clear();
+	line2s.clear();
 }
 
 void Graphics::AddAnimation(string animationName, const char* folderName, const int numberOfFrames, const float period)
@@ -109,6 +120,12 @@ void Graphics::DrawAnimation(string animationName, int x, int y, float time, int
 	dr.AddTransformation(DrawRequest::Transformation::yScale, yScale);
 
 	drawRequests[layer].push_front(dr);
+}
+
+void Graphics::DrawLine(vec2 v1, vec2 v2)
+{
+	line1s.push_back(v1);
+	line2s.push_back(v2);
 }
 
 
