@@ -15,7 +15,7 @@ public:
 	Engine();
 
 	void Init(Graphics& graphics, Scene& scene, Input& input);
-	void Process(mat4& projectionMatrix);
+	void Process();
 	
 	void SetScene(Scene& scene);
 	Graphics* GetGraphics();

@@ -76,11 +76,13 @@ void init()
 
 	scene.Init(vector<Track::Road> 
 	{
-		Track::Road(0,	16,	16, 0),
-		Track::Road(64, 16,	16, 0),
-		Track::Road(64, 64, 16, 0),
-		Track::Road(16,	64, 16, 0),
+		Track::Road(128, 128, 32, 0),
+		Track::Road(128, 512, 32, 0),
+		Track::Road(512, 512, 32, 0),
+		Track::Road(512, 128, 32, 0),
 	});
+
+	scene.SetDrawMiddleLine(true);
 
 	scene.AddActor(player);
 
@@ -112,7 +114,7 @@ void display()
 
 	input.Process();
 
-	engine.Process(ProjectionMatrix);
+	engine.Process();
 
 	glDisable(GL_BLEND);
 

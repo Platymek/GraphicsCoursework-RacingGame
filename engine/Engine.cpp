@@ -16,12 +16,12 @@ void Engine::Init(Graphics& graphics, Scene& scene, Input& input)
 	this->input = &input;
 }
 
-void Engine::Process(mat4& projectionMatrix)
+void Engine::Process()
 {
 	currentScene->Process(*this, 0.016f);
 	currentScene->Draw(*graphics);
 
-	graphics->Process(projectionMatrix);
+	graphics->Process();
 	input->Process();
 }
 

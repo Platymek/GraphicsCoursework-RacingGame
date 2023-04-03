@@ -60,12 +60,16 @@ float Graphics::DrawRequest::getTime()
 
 Graphics::Graphics()
 {
+	this->screenWidth = 0;
+	this->screenHeight = 0;
 }
 
 Graphics::Graphics(int screenWidth, int screenHeight)
 {
 	this->screenWidth = screenWidth;
 	this->screenHeight = screenHeight;
+
+	projectionMatrix = glm::ortho(0.0, (double)screenWidth, 0.0, (double)screenHeight);
 }
 
 void Graphics::Init()
@@ -73,7 +77,7 @@ void Graphics::Init()
 
 }
 
-void Graphics::Process(mat4& projectionMatrix)
+void Graphics::Process()
 {
 	for (forward_list<DrawRequest>& layer : drawRequests)
 	{
@@ -89,8 +93,8 @@ void Graphics::Process(mat4& projectionMatrix)
 	glBegin(GL_LINES);
 	for (int i = 0; i < line1s.size(); i++)
 	{
-		glVertex2f(line1s[i].x, line1s[i].y);
-		glVertex2f(line2s[i].x, line2s[i].x);
+		glVertex2f(line1s[i].x / screenWidth - 1, line1s[i].y / screenHeight - 1);
+		glVertex2f(line2s[i].x / screenWidth - 1, line2s[i].y / screenHeight - 1);
 	}
 	glEnd();
 
@@ -98,7 +102,8 @@ void Graphics::Process(mat4& projectionMatrix)
 	line2s.clear();
 }
 
-void Graphics::AddAnimation(string animationName, const char* folderName, const int numberOfFrames, const float period)
+void Graphics::AddAnimation(string animationName, const char* folderName, const int numberOfFrames, 
+							const float period)
 {
 	Animation a;
 	a.Init(folderName, numberOfFrames, period);

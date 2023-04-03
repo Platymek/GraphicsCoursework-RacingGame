@@ -41,12 +41,13 @@ void Track::Draw(Graphics& graphics)
 {
 	Scene::Draw(graphics);
 
-	//for (vec2 c : coordinates)
-	//{
-	//	
-	//}
+	if (drawMiddleLine)
+	{
+		graphics.DrawLine(coordinates[0], coordinates[coordinates.size() - 1]);
 
-	graphics.DrawLine(vec2(0, 0), vec2(.5, .5));
+		for (int i = 1; i < coordinates.size(); i++)
+			graphics.DrawLine(coordinates[i - 1], coordinates[i]);
+	}
 }
 
 void Track::Init(vector<Road> roads)
