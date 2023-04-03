@@ -14,14 +14,10 @@ public:
 
 	void Process();
 
-	void ProcessKeyDown(int key);
-	void ProcessKeyDown(unsigned char key);
+	void ProcessKeyDown(int key, bool special);
+	void ProcessKeyUp(int key, bool special);
 
-	void ProcessKeyUp(int key);
-	void ProcessKeyUp(unsigned char key);
-
-	void AddKey(string name, int key);
-	void AddKey(string name, unsigned char key);
+	void AddKey(string name, int key, bool special);
 
 	bool IsKeyPressed(string name);
 	bool IsKeyDown(string name);

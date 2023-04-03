@@ -18,39 +18,27 @@ void Input::Process()
 	released.clear();
 }
 
-void Input::ProcessKeyDown(int key)
+void Input::ProcessKeyDown(int key, bool special)
 {
-	if (!down.count(key)) pressed.insert(key);
+	int k = key + (special ? 0 : 256);
+
+	if (!down.count(k)) pressed.insert(k);
 	
-	down.insert(key);
+	down.insert(k);
+}
+void Input::ProcessKeyUp(int key, bool special)
+{
+	int k = key + (special ? 0 : 256);
+
+	down.erase(k);
+	released.insert(k);
 }
 
-void Input::ProcessKeyDown(unsigned char key)
+void Input::AddKey(string name, int key, bool special)
 {
-	ProcessKeyDown((int)key + 256);
-}
-
-void Input::ProcessKeyUp(int key)
-{
-	down.erase(key);
-	released.insert(key);
-}
-
-void Input::ProcessKeyUp(unsigned char key)
-{
-	ProcessKeyUp((int)key + 256);
-}
-
-void Input::AddKey(string name, int key)
-{
-	keys.insert({ name, key });
+	keys.insert({ name, key + (special ? 0 : 256)});
 
 	cout << name << ", " << keys[name] << endl;
-}
-
-void Input::AddKey(string name, unsigned char key)
-{
-	AddKey(name, (int)key + 256);
 }
 
 bool Input::IsKeyPressed(string name)

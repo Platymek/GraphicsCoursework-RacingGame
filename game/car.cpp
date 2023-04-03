@@ -13,7 +13,7 @@ Car::Car(vec2 position, float rotation) : Actor("Car", position, rotation, 2)
 	decceleration = 8;
 	SetDeccelerationMultiplier();
 
-	maxSpeed = 32;
+	maxSpeed = 64;
 	SetMaxSpeedMutliplier();
 
 	minSpeed = -32;

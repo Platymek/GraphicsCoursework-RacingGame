@@ -35,7 +35,7 @@ bool Right = false;
 bool Up = false;
 bool Down = false;
 
-Player player(1, vec2(128, 128), 0);
+Player player(2, vec2(128, 128), 0);
 Scene scene;
 Graphics graphics(640, 360);
 Engine engine;
@@ -79,10 +79,15 @@ void init()
 
 	cout << GLUT_KEY_UP << endl;
 
-	input.AddKey("up1", GLUT_KEY_UP);
-	input.AddKey("left1", GLUT_KEY_LEFT);
-	input.AddKey("down1", GLUT_KEY_DOWN);
-	input.AddKey("right1", GLUT_KEY_RIGHT);
+	input.AddKey("up1",		GLUT_KEY_UP,	true);
+	input.AddKey("left1",	GLUT_KEY_LEFT,	true);
+	input.AddKey("down1",	GLUT_KEY_DOWN,	true);
+	input.AddKey("right1",	GLUT_KEY_RIGHT, true);
+
+	input.AddKey("up2",		'w', false);
+	input.AddKey("left2",   'a', false);
+	input.AddKey("down2",	's', false);
+	input.AddKey("right2",	'd', false);
 
 	engine.Init(graphics, scene, input);
 
@@ -114,22 +119,22 @@ void idle()
 
 void inputCharacter(unsigned char key, int x, int y)
 {
-	input.ProcessKeyDown(key);
+	input.ProcessKeyDown(key, false);
 }
 
 void inputCharacterUp(unsigned char key, int x, int y)
 {
-	input.ProcessKeyUp(key);
+	input.ProcessKeyUp(key, false);
 }
 
 void inputSpecial(int key, int x, int y)
 {
-	input.ProcessKeyDown(key);
+	input.ProcessKeyDown(key, true);
 }
 
 void inputSpecialUp(int key, int x, int y)
 {
-	input.ProcessKeyUp(key);
+	input.ProcessKeyUp(key, true);
 }
 
 /**************** END OPENGL FUNCTIONS *************************/
