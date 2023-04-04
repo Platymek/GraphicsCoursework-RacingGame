@@ -4,7 +4,11 @@
 #include <set>
 #include <string>
 
+#include "..\glm\glm.hpp"
+#include "..\glm\gtc\matrix_transform.hpp"
+
 using namespace std;
+using namespace glm;
 
 class Input
 {
@@ -14,6 +18,7 @@ public:
 
 	void Process();
 
+	// keys //
 	void ProcessKeyDown(int key, bool special);
 	void ProcessKeyUp(int key, bool special);
 
@@ -22,6 +27,15 @@ public:
 	bool IsKeyPressed(string name);
 	bool IsKeyDown(string name);
 	bool IsKeyReleased(string name);
+
+	// mouse //
+	void ProcessMouseDown(int x, int y);
+	void ProcessMouseUp();
+
+	bool IsMousePressed();
+	bool IsMouseDown();
+	bool IsMouseReleased();
+	vec2 GetMousePosition();
 
 
 private:
@@ -34,4 +48,9 @@ private:
 	set<int> pressed;
 	set<int> down;
 	set<int> released;
+
+	bool mousePressed;
+	bool mouseDown;
+	bool mouseReleased;
+	vec2 mousePosition;
 };

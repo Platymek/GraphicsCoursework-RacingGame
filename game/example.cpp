@@ -80,6 +80,8 @@ void init()
 		Track::Road(128, 512, 32, 0),
 		Track::Road(512, 512, 32, 0),
 		Track::Road(512, 128, 32, 0),
+		Track::Road(320, 64, 32, 0),
+		Track::Road(192, 64, 32, 0),
 	});
 
 	scene.SetDrawMiddleLine(true);
@@ -114,6 +116,8 @@ void display()
 
 	input.Process();
 
+	if (input.IsMouseDown()) cout << input.GetMousePosition().x << ", " << input.GetMousePosition().y << endl;
+
 	engine.Process();
 
 	glDisable(GL_BLEND);
@@ -144,6 +148,22 @@ void inputSpecial(int key, int x, int y)
 void inputSpecialUp(int key, int x, int y)
 {
 	input.ProcessKeyUp(key, true);
+}
+
+void mouse(int button, int state, int x, int y)
+{
+	switch (button) 
+	{
+	case GLUT_LEFT_BUTTON:
+
+		if (state == GLUT_DOWN)
+
+			input.ProcessMouseDown(x, y);
+		else
+			input.ProcessMouseUp();
+
+		break;
+	}
 }
 
 /**************** END OPENGL FUNCTIONS *************************/
@@ -187,6 +207,8 @@ int main(int argc, char **argv)
 
 	glutSpecialFunc(inputSpecial);
 	glutSpecialUpFunc(inputSpecialUp);
+
+	glutMouseFunc(mouse);
 
 	//starts the main loop. Program loops and calls callback functions as appropriate.
 	glutMainLoop();

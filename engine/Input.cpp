@@ -16,6 +16,7 @@ void Input::Process()
 {
 	pressed.clear();
 	released.clear();
+	mouseReleased = false;
 }
 
 void Input::ProcessKeyDown(int key, bool special)
@@ -57,4 +58,38 @@ bool Input::IsKeyReleased(string name)
 {
 	int key = keys[name];
 	return released.count(key);
+}
+
+void Input::ProcessMouseDown(int x, int y)
+{
+	mousePressed = mouseDown;
+	mouseDown = true;
+
+	mousePosition = vec2(x, y);
+}
+
+void Input::ProcessMouseUp()
+{
+	mouseDown = false;
+	mouseReleased = true;
+}
+
+bool Input::IsMousePressed()
+{
+	return mousePressed;
+}
+
+bool Input::IsMouseDown()
+{
+	return mouseDown;
+}
+
+bool Input::IsMouseReleased()
+{
+	return mouseReleased;
+}
+
+vec2 Input::GetMousePosition()
+{
+	return mousePosition;
 }

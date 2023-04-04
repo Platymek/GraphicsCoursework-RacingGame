@@ -53,10 +53,18 @@ void Track::Draw(Graphics& graphics)
 
 	if (drawLeftLine)
 	{
-		graphics.DrawLine(leftBounds[0], leftBounds[leftBounds.size() - 1]);
+		graphics.DrawLine(leftBounds[leftBounds.size() - 1], leftBounds[0]);
 
 		for (int i = 1; i < leftBounds.size(); i++)
 			graphics.DrawLine(leftBounds[i - 1], leftBounds[i]);
+	}
+
+	if (drawRightLine)
+	{
+		graphics.DrawLine(rightBounds[rightBounds.size() - 1], rightBounds[0]);
+
+		for (int i = 1; i < rightBounds.size(); i++)
+			graphics.DrawLine(rightBounds[i - 1], rightBounds[i]);
 	}
 }
 
@@ -92,10 +100,12 @@ void Track::AddRoad(Road road, bool processFirst)
 		angles[lastIndex - 1] = angle;
 	
 		float leftAngle = angle - (pi<float>() / 2);
-		leftBounds[lastIndex - 1] = coordinates[lastIndex - 1] 
-			+ vec2(road.width * sin(leftAngle), road.width * cos(leftAngle));
 
-		//cout <<  << endl;
+		leftBounds[lastIndex - 1] = coordinates[lastIndex - 1]
+			+ vec2(widths[lastIndex - 1] * sin(leftAngle), widths[lastIndex - 1] * cos(leftAngle));
+
+		rightBounds[lastIndex - 1] = coordinates[lastIndex - 1]
+			- vec2(widths[lastIndex - 1] * sin(leftAngle), widths[lastIndex - 1] * cos(leftAngle));
 
 		if (processFirst)
 		{
@@ -104,16 +114,24 @@ void Track::AddRoad(Road road, bool processFirst)
 							coordinates[1].y - coordinates[lastIndex].y);
 
 			float firstLeftAngle = angles[0] - (pi<float>() / 2);
+
 			leftBounds[0] = coordinates[0]
 				+ vec2(widths[0] * sin(firstLeftAngle), widths[0] * cos(firstLeftAngle));
 
+			rightBounds[0] = coordinates[0]
+				- vec2(widths[0] * sin(firstLeftAngle), widths[0] * cos(firstLeftAngle));
+
 			// process second road //
-			angles[lastIndex] = atan(coordinates[lastIndex - 1].x - coordinates[0].x,
-				coordinates[lastIndex - 1].y - coordinates[0].y);
+			angles[lastIndex] = atan(coordinates[0].x - coordinates[lastIndex - 1].x,
+									coordinates[0].y - coordinates[lastIndex - 1].y);
 			
-			float lastLeftAngle = angles[lastIndex] + (pi<float>() / 2);
+			float lastLeftAngle = angles[lastIndex] - (pi<float>() / 2);
+
 			leftBounds[lastIndex] = coordinates[lastIndex]
 				+ vec2(widths[lastIndex] * sin(lastLeftAngle), widths[lastIndex] * cos(lastLeftAngle));
+
+			rightBounds[lastIndex] = coordinates[lastIndex]
+				- vec2(widths[lastIndex] * sin(lastLeftAngle), widths[lastIndex] * cos(lastLeftAngle));
 		}
 	}
 }
