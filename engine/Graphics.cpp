@@ -129,8 +129,21 @@ void Graphics::DrawAnimation(string animationName, int x, int y, float time, int
 
 void Graphics::DrawLine(vec2 v1, vec2 v2)
 {
-	line1s.push_back(v1);
-	line2s.push_back(v2);
+	vec2 v1n = (v1 - vec2(1)) * vec2(2);
+	vec2 v2n = (v2 - vec2(1)) * vec2(2);
+
+	line1s.push_back(v1n);
+	line2s.push_back(v2n);
+}
+
+int Graphics::GetScreenWidth()
+{
+	return screenWidth;
+}
+
+int Graphics::GetScreenHeight()
+{
+	return screenHeight;
 }
 
 

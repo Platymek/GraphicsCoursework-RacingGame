@@ -16,10 +16,13 @@ public:
 
 	Track();
 
+	void Process(Engine& engine, float delta) override;
 	void Draw(Graphics& graphics) override;
 
+	void Init() override;
 	void Init(vector<Road> roads);
 	void AddRoad(Road road, bool processFirst = true);
+	void RemoveRoad();
 	void Connect();
 
 	void SetDrawMiddleLine(bool drawMiddleLine);
@@ -27,7 +30,7 @@ public:
 
 private:
 
-	bool connected, drawMiddleLine, drawLeftLine, drawRightLine;
+	bool connected, drawMiddleLine, drawLeftLine, drawRightLine, editting;
 
 	vector<vec2> coordinates;
 	vector<int> widths;

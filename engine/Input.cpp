@@ -10,13 +10,21 @@ Input::Input()
 	set<int> pressed = set<int>();
 	set<int> down = set<int>();
 	set<int> released = set<int>();
+
+	mouseRightPressed = mouseRightDown = mouseRightReleased 
+		= mouseLeftPressed = mouseLeftDown = mouseLeftReleased = false;
 }
 
 void Input::Process()
 {
 	pressed.clear();
 	released.clear();
-	mouseReleased = false;
+
+	mouseRightPressed = false;
+	mouseRightReleased = false;
+
+	mouseLeftPressed = false;
+	mouseRightReleased = false;
 }
 
 void Input::ProcessKeyDown(int key, bool special)
@@ -60,33 +68,64 @@ bool Input::IsKeyReleased(string name)
 	return released.count(key);
 }
 
-void Input::ProcessMouseDown(int x, int y)
+void Input::ProcessMouseRightDown()
 {
-	mousePressed = mouseDown;
-	mouseDown = true;
-
-	mousePosition = vec2(x, y);
+	if (!mouseRightDown) mouseRightPressed = true;
+	mouseRightDown = true;
 }
 
-void Input::ProcessMouseUp()
+void Input::ProcessMouseRightUp()
 {
-	mouseDown = false;
-	mouseReleased = true;
+	mouseRightDown = false;
+	mouseRightReleased = true;
 }
 
-bool Input::IsMousePressed()
+bool Input::IsMouseRightPressed()
 {
-	return mousePressed;
+	return mouseRightPressed;
 }
 
-bool Input::IsMouseDown()
+bool Input::IsMouseRightDown()
 {
-	return mouseDown;
+	return mouseRightDown;
 }
 
-bool Input::IsMouseReleased()
+bool Input::IsMouseRightReleased()
 {
-	return mouseReleased;
+	return mouseRightReleased;
+}
+
+void Input::ProcessMouseLeftDown()
+{
+	if (!mouseLeftDown) mouseLeftPressed = true;
+	mouseLeftDown = true;
+}
+
+void Input::ProcessMouseLeftUp()
+{
+	mouseLeftDown = false;
+	mouseLeftReleased = true;
+}
+
+bool Input::IsMouseLeftPressed()
+{
+	return mouseLeftPressed;
+}
+
+bool Input::IsMouseLeftDown()
+{
+	return mouseLeftDown;
+}
+
+bool Input::IsMouseLeftReleased()
+{
+	return mouseLeftReleased;
+}
+
+void Input::SetMousePosition(int x, int y)
+{
+	mousePosition.x = x;
+	mousePosition.y = y;
 }
 
 vec2 Input::GetMousePosition()

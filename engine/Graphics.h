@@ -28,6 +28,9 @@ public:
 
 	void DrawLine(vec2 p1, vec2 p2);
 
+	int GetScreenWidth();
+	int GetScreenHeight();
+
 	struct DrawRequest;
 
 

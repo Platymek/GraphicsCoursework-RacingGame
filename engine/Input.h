@@ -29,12 +29,21 @@ public:
 	bool IsKeyReleased(string name);
 
 	// mouse //
-	void ProcessMouseDown(int x, int y);
-	void ProcessMouseUp();
+	void ProcessMouseRightDown();
+	void ProcessMouseRightUp();
 
-	bool IsMousePressed();
-	bool IsMouseDown();
-	bool IsMouseReleased();
+	bool IsMouseRightPressed();
+	bool IsMouseRightDown();
+	bool IsMouseRightReleased();
+
+	void ProcessMouseLeftDown();
+	void ProcessMouseLeftUp();
+
+	bool IsMouseLeftPressed();
+	bool IsMouseLeftDown();
+	bool IsMouseLeftReleased();
+
+	void SetMousePosition(int x, int y);
 	vec2 GetMousePosition();
 
 
@@ -49,8 +58,13 @@ private:
 	set<int> down;
 	set<int> released;
 
-	bool mousePressed;
-	bool mouseDown;
-	bool mouseReleased;
+	bool mouseRightPressed;
+	bool mouseRightDown;
+	bool mouseRightReleased;
+
+	bool mouseLeftPressed;
+	bool mouseLeftDown;
+	bool mouseLeftReleased;
+
 	vec2 mousePosition;
 };

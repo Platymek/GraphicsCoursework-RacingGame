@@ -74,21 +74,11 @@ void init()
 	graphics.Init();
 	graphics.AddAnimation("Car/move", "./textures/Car/move", 6, 0.6f);
 
-	scene.Init(vector<Track::Road> 
-	{
-		Track::Road(128, 128, 32, 0),
-		Track::Road(128, 512, 32, 0),
-		Track::Road(512, 512, 32, 0),
-		Track::Road(512, 128, 32, 0),
-		Track::Road(320, 64, 32, 0),
-		Track::Road(192, 64, 32, 0),
-	});
+	scene.Init();
 
 	scene.SetDrawMiddleLine(true);
 
 	scene.AddActor(player);
-
-	std::cout << GLUT_KEY_UP << endl;
 
 	input.AddKey("up1",		GLUT_KEY_UP,	true);
 	input.AddKey("left1",	GLUT_KEY_LEFT,	true);
@@ -114,9 +104,7 @@ void display()
 
 	t += 0.0069;
 
-	input.Process();
-
-	if (input.IsMouseDown()) cout << input.GetMousePosition().x << ", " << input.GetMousePosition().y << endl;
+	//if (input.IsMouseDown()) cout << input.GetMousePosition().x << ", " << input.GetMousePosition().y << endl;
 
 	engine.Process();
 
@@ -158,12 +146,27 @@ void mouse(int button, int state, int x, int y)
 
 		if (state == GLUT_DOWN)
 
-			input.ProcessMouseDown(x, y);
+			input.ProcessMouseLeftDown();
 		else
-			input.ProcessMouseUp();
+			input.ProcessMouseLeftUp();
+
+		break;
+
+	case GLUT_RIGHT_BUTTON:
+
+		if (state == GLUT_DOWN)
+
+			input.ProcessMouseRightDown();
+		else
+			input.ProcessMouseRightUp();
 
 		break;
 	}
+}
+
+void passiveMouse(int x, int y)
+{
+	input.SetMousePosition(x, y);
 }
 
 /**************** END OPENGL FUNCTIONS *************************/
@@ -209,6 +212,9 @@ int main(int argc, char **argv)
 	glutSpecialUpFunc(inputSpecialUp);
 
 	glutMouseFunc(mouse);
+
+	glutMotionFunc(passiveMouse);
+	glutPassiveMotionFunc(passiveMouse);
 
 	//starts the main loop. Program loops and calls callback functions as appropriate.
 	glutMainLoop();
