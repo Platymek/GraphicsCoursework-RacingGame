@@ -6,7 +6,7 @@ class Player : public Car
 {
 public:
 
-	Player(int playerNumber, vec2 position, float rotation);
+	Player(int playerNumber);
 	void Process(Scene scene, Input input, float delta) override;
 
 

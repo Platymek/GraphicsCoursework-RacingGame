@@ -31,7 +31,6 @@
     <ClInclude Include="shaders\Shader.h" />
     <ClInclude Include="engine\Sprite.h" />
     <ClInclude Include="engine\Animation.h" />
-    <ClInclude Include="game\TestScene.h" />
     <ClInclude Include="game\Track.h" />
   </ItemGroup>
   <ItemGroup>
@@ -48,7 +47,6 @@
     <ClCompile Include="shaders\Shader.cpp" />
     <ClCompile Include="engine\Sprite.cpp" />
     <ClCompile Include="engine\Animation.cpp" />
-    <ClCompile Include="game\TestScene.cpp" />
     <ClCompile Include="game\Track.cpp" />
   </ItemGroup>
   <ItemGroup>

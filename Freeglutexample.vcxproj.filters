@@ -24,7 +24,6 @@
     <ClCompile Include="game\Car.cpp" />
     <ClCompile Include="engine\Scene.cpp" />
     <ClCompile Include="engine\Engine.cpp" />
-    <ClCompile Include="game\TestScene.cpp" />
     <ClCompile Include="game\Player.cpp" />
     <ClCompile Include="engine\Input.cpp" />
     <ClCompile Include="game\Track.cpp" />
@@ -50,7 +49,6 @@
     <ClInclude Include="game\Car.h" />
     <ClInclude Include="engine\Scene.h" />
     <ClInclude Include="engine\Engine.h" />
-    <ClInclude Include="game\TestScene.h" />
     <ClInclude Include="game\Player.h" />
     <ClInclude Include="engine\Input.h" />
     <ClInclude Include="game\Track.h" />

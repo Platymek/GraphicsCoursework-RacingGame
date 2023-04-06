@@ -9,6 +9,13 @@ public:
 
 	struct Road;
 
+	enum class StateType
+	{
+		Edit,
+		Play,
+		End
+	};
+
 	enum class RoadType
 	{
 		Normal
@@ -26,6 +33,7 @@ public:
 	void Connect();
 
 	void SetDrawMiddleLine(bool drawMiddleLine);
+	void SetState(StateType state);
 
 
 private:
@@ -39,6 +47,8 @@ private:
 	vector<float> angles;
 	vector<vec2> leftBounds;
 	vector<vec2> rightBounds;
+
+	StateType state;
 };
 
 struct Track::Road

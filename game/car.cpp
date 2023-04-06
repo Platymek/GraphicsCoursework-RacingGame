@@ -1,6 +1,6 @@
 #include "car.h"
 
-Car::Car(vec2 position, float rotation) : Actor("Car", position, rotation, 2)
+Car::Car() : Actor("Car", vec2(0,0), 0)
 {
 	SetAnimation("move");
 
@@ -29,6 +29,12 @@ vec2 Car::getVelocity()
 {
 	vec2 v(speed * -sin(rotation), speed * cos(rotation));
 	return v;
+}
+
+void Car::Init(vec2 position, float rotation)
+{
+	this->position = position;
+	this->rotation = rotation;
 }
 
 void Car::Process(Scene scene, Input input, float delta)

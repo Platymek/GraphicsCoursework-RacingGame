@@ -7,8 +7,9 @@ class Car : public Actor
 {
 public:
 
-	Car(vec2 position, float rotation);
+	Car();
 
+	void Init(vec2 position, float rotation);
 	void Process(Scene scene, Input input, float delta) override;
 
 	void ToggleProgressFlag(int flag);

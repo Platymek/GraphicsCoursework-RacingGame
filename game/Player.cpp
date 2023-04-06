@@ -1,7 +1,6 @@
 #include "Player.h"
 
-Player::Player(int playerNumber, vec2 position, float rotation)
-	: Car(position, rotation)
+Player::Player(int playerNumber) : Car()
 {
 	this->playerNumber = playerNumber;
 
@@ -14,8 +13,7 @@ Player::Player(int playerNumber, vec2 position, float rotation)
 
 void Player::Process(Scene scene, Input input, float delta)
 {
-	Actor::Process(scene, input, delta);
-
+	Car::Process(scene, input, delta);
 
 	// process steering //
 	int turn  = input.IsKeyDown(keyNames["right"]) - input.IsKeyDown(keyNames["left"]);
@@ -27,7 +25,6 @@ void Player::Process(Scene scene, Input input, float delta)
 	else if (turn == -1) 
 
 		SteerRight(delta);
-
 
 	// process acceleration //
 	int drive = input.IsKeyDown(keyNames["up"]) - input.IsKeyDown(keyNames["down"]);
@@ -41,7 +38,4 @@ void Player::Process(Scene scene, Input input, float delta)
 		Reverse(delta);
 	else 
 		Deccelerate(delta);
-
-
-	position += getVelocity() * delta;
 }

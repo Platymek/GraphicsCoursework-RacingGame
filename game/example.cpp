@@ -27,7 +27,7 @@ using namespace std;
 
 glm::mat4 ViewMatrix;  // matrix for the modelling and viewing
 glm::mat4 ProjectionMatrix; // matrix for the orthographic projection
-int screenWidth = 640, screenHeight = 360;
+int screenWidth = 960, screenHeight = 540;
 
 //booleans to handle when the arrow keys are pressed or released.
 bool Left = false;
@@ -35,9 +35,8 @@ bool Right = false;
 bool Up = false;
 bool Down = false;
 
-Player player(2, vec2(128, 128), 0);
 Track scene;
-Graphics graphics(640, 360);
+Graphics graphics(screenWidth, screenHeight);
 Engine engine;
 
 Input input;
@@ -60,7 +59,7 @@ void reshape(int width, int height)		// Resize the OpenGL window
 	// set Viewport dimensions
 	glViewport(0, 0, width, height);
 
-	ProjectionMatrix = glm::ortho(0.0, 640.0, 0.0, 360.0);
+	ProjectionMatrix = glm::ortho(0.0, 1.0 * screenWidth, 0.0, 1.0 * screenHeight);
 }
 
 void init()
@@ -75,20 +74,22 @@ void init()
 	graphics.AddAnimation("Car/move", "./textures/Car/move", 6, 0.6f);
 
 	scene.Init();
-
 	scene.SetDrawMiddleLine(true);
 
-	scene.AddActor(player);
+	//p1.Init(vec2(32,32), 0);
+	//scene.AddActor(p1);
 
-	input.AddKey("up1",		GLUT_KEY_UP,	true);
-	input.AddKey("left1",	GLUT_KEY_LEFT,	true);
-	input.AddKey("down1",	GLUT_KEY_DOWN,	true);
-	input.AddKey("right1",	GLUT_KEY_RIGHT, true);
+	input.AddKey("up2",		GLUT_KEY_UP,	true);
+	input.AddKey("left2",	GLUT_KEY_LEFT,	true);
+	input.AddKey("down2",	GLUT_KEY_DOWN,	true);
+	input.AddKey("right2",	GLUT_KEY_RIGHT, true);
 
-	input.AddKey("up2",		'w', false);
-	input.AddKey("left2",   'a', false);
-	input.AddKey("down2",	's', false);
-	input.AddKey("right2",	'd', false);
+	input.AddKey("up1",		'w', false);
+	input.AddKey("left1",   'a', false);
+	input.AddKey("down1",	's', false);
+	input.AddKey("right1",	'd', false);
+
+	input.AddKey("start", 13, false);
 
 	engine.Init(graphics, scene, input);
 

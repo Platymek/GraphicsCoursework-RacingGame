@@ -1,4 +1,8 @@
 #include "Track.h"
+#include "Player.h"
+
+Player p1(1);
+Player p2(2);
 
 Track::Road::Road()
 {
@@ -22,7 +26,7 @@ Track::Road::Road(int x, int y, int width, RoadType type)
 	this->type = type;
 }
 
-Track::Track()
+Track::Track() : Scene()
 {
 	coordinates = vector<vec2>();
 	widths = vector<int>();
@@ -38,15 +42,21 @@ Track::Track()
 
 	drawLeftLine = drawRightLine = false;
 
-	editting = true;
+	SetState(StateType::Edit);
 }
 
 void Track::Process(Engine& engine, float delta)
 {
-	if (editting)
+	switch (state)
 	{
-		if (engine.GetInput()->IsMouseRightPressed() && coordinates.size() > 0) 
-			
+	case StateType::Edit:
+
+		if (engine.GetInput()->IsKeyReleased("start") && coordinates.size() > 3)
+
+			SetState(StateType::Play);
+
+		else if (engine.GetInput()->IsMouseRightPressed() && coordinates.size() > 0)
+
 			RemoveRoad();
 		else
 		{
@@ -75,13 +85,17 @@ void Track::Process(Engine& engine, float delta)
 
 				if (engine.GetInput()->IsMouseLeftDown())
 				{
-					Road r = Road(mousex, mousey, 16, 0);
+					Road r = Road(mousex, mousey, 48, 0);
 					AddRoad(r);
 				}
 			}
 		}
+		break;
+
+	case StateType::Play:
+		Scene::Process(engine, delta);
+		break;
 	}
-	else Scene::Process(engine, delta);
 }
 
 void Track::Draw(Graphics& graphics)
@@ -215,4 +229,31 @@ void Track::Connect()
 void Track::SetDrawMiddleLine(bool drawMiddleLine)
 {
 	this->drawMiddleLine = drawMiddleLine;
+}
+
+void Track::SetState(StateType state)
+{
+	this->state = state;
+
+	switch (state)
+	{
+	case StateType::Play:
+
+		float startingAngle = atan(coordinates[1].x - coordinates[0].x, coordinates[1].y - coordinates[0].y);
+
+		float startingLeftAngle = startingAngle - (pi<float>() / 2);
+		int thirdWidth = widths[0] / 3;
+
+		vec2 c1 = coordinates[0];
+		c1 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+		p1.Init(c1, startingAngle);
+
+		vec2 c2 = coordinates[0];
+		c2 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+		p2.Init(c2, startingAngle);
+
+		AddActor(p1);
+		AddActor(p2);
+		break;
+	}
 }

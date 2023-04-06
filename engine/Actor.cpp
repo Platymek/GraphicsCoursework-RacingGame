@@ -8,6 +8,7 @@ Actor::Actor()
 
 	origin = vec2(0, 0);
 	scale = vec2(1, 1);
+	currentAnimationName = "";
 }
 
 Actor::Actor(string name, vec2 position, float rotation, int layer)
@@ -90,9 +91,9 @@ void Actor::SetAnimation(string currentAnimationName, string nextAnimationName)
 
 void Actor::SetAnimation(string animationName)
 {
-	cout << name + "/" + animationName << endl;
-
-	this->currentAnimationName = name + "/" + animationName;
+	string a = string(name);
+	a += "/" + animationName;
+	this->currentAnimationName = a;
 
 	useNextAnimation = false;
 }
