@@ -6,21 +6,20 @@
 #include "..\glm\glm.hpp"
 #include "..\glm\gtc\matrix_transform.hpp"
 
-// Polygon objects
-const int NUMVERTS = 4;
-
 class OBB
 {
 public:
-	OBB();			//constructor
 
-	glm::vec4 vert[NUMVERTS];			
-	glm::vec4 vertOriginal[NUMVERTS];
+	OBB(int width = 0, int height = 0);
 
-	//member functions
-	void transformPoints(glm::mat4 matrix);
-	bool SAT2D(OBB& p2);
-	bool SATtest(float proj[4], float len);
+	void Transform(glm::mat4 matrix);
+	bool IsColliding(OBB& p2);
+	bool Test(float proj[4], float len);
+
+private:
+
+	glm::vec4 vertices[4];
+	glm::vec4 originalVertices[4];
 };
 
 #endif
