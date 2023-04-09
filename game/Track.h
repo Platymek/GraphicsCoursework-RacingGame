@@ -28,7 +28,7 @@ public:
 
 	void Init() override;
 	void Init(vector<Road> roads);
-	void AddRoad(Road road, bool processFirst = true);
+	void AddRoad(Road road, bool connect);
 	void RemoveRoad();
 	void Connect();
 

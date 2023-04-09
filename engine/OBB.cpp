@@ -8,26 +8,28 @@
 using namespace std;
 
 
-OBB::OBB(int width, int height)
+OBB::OBB(float width, float height, float angle)
 {
-	float halfWidth = (1.0 * width) / 2;
-	float halfHeight = (1.0 * height) / 2;
+	float halfWidth = width / 2;
+	float halfHeight = height / 2;
+	glm::mat4 angleMatrix = glm::rotate(glm::mat4(1.0), angle, glm::vec3(0.0, 0.0, 1.0));
 
-	originalVertices[0] = vertices[0] = glm::vec4(-halfWidth, -halfHeight, 0.0, 1.0);
-	originalVertices[1] = vertices[1] = glm::vec4(halfWidth, -halfHeight, 0.0, 1.0);
-	originalVertices[2] = vertices[2] = glm::vec4(halfWidth, halfHeight, 0.0, 1.0);
-	originalVertices[3] = vertices[3] = glm::vec4(-halfWidth, halfHeight, 0.0, 1.0);
+	originalVertices[0] = vertices[0] = glm::vec4(-halfWidth, -halfHeight, 0.0, 1.0) * angleMatrix;
+	originalVertices[1] = vertices[1] = glm::vec4(halfWidth, -halfHeight, 0.0, 1.0) * angleMatrix;
+	originalVertices[2] = vertices[2] = glm::vec4(halfWidth, halfHeight, 0.0, 1.0) * angleMatrix;
+	originalVertices[3] = vertices[3] = glm::vec4(-halfWidth, halfHeight, 0.0, 1.0) * angleMatrix;
 }
+
+//void OBB::Draw(Graphics& graphics)
+//{
+//	graphics.DrawLine(vertices[]);
+//}
 
 //This function is assuming a matrix in column major order to transform the points.
 //The transform points function is multiplying the original vertex positions by the matrix
 void OBB::Transform(glm::mat4 matrix)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		vertices[i] = matrix * originalVertices[i];
-		vertices[i] = matrix * originalVertices[i];
-	}
+	for (int i = 0; i < 4; i++) vertices[i] = matrix * originalVertices[i];
 }
 
 bool OBB::IsColliding(OBB& p2)

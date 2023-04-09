@@ -5,13 +5,15 @@
 
 #include "..\glm\glm.hpp"
 #include "..\glm\gtc\matrix_transform.hpp"
+#include "Graphics.h"
 
 class OBB
 {
 public:
 
-	OBB(int width = 0, int height = 0);
+	OBB(float width, float height, float angle = 0);
 
+	//void Draw(Graphics& graphics);
 	void Transform(glm::mat4 matrix);
 	bool IsColliding(OBB& p2);
 	bool Test(float proj[4], float len);
