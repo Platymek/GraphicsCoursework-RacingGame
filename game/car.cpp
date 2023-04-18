@@ -1,6 +1,6 @@
 #include "car.h"
 
-Car::Car() : Actor("Car", vec2(0,0), 0)
+Car::Car() : Actor("Car", vec2(0,0), 0, 0, 20, 24)
 {
 	SetAnimation("move");
 
@@ -23,6 +23,8 @@ Car::Car() : Actor("Car", vec2(0,0), 0)
 	SetSteerSpeedMultiplier();
 
 	speed = 0;
+
+	SetAnimationSpeed(0);
 }
 
 vec2 Car::getVelocity()
@@ -40,6 +42,12 @@ void Car::Init(vec2 position, float rotation)
 void Car::Process(Scene scene, Input input, float delta)
 {
 	Actor::Process(scene, input, delta);
+
+	if (speed > 0)
+
+		SetAnimationSpeed(currentMaxSpeed / speed);
+	else
+		SetAnimationSpeed(0);
 
 	position += getVelocity() * delta;
 }

@@ -18,6 +18,7 @@ using namespace std;
 #include "..\engine\Engine.h"
 #include "..\engine\Scene.h"
 #include "..\engine\Input.h"
+#include "..\engine\OBB.h"
 
 #include "Track.h"
 #include "Player.h"
@@ -38,6 +39,7 @@ bool Down = false;
 Track scene;
 Graphics graphics(screenWidth, screenHeight);
 Engine engine;
+OBB obb = OBB(64, 64);
 
 Input input;
 
@@ -71,13 +73,12 @@ void init()
 	t = 0;
 
 	graphics.Init();
-	graphics.AddAnimation("Car/move", "./textures/Car/move", 6, 0.6f);
+	graphics.AddAnimation("Car/idle", "./textures/Car/idle", 1, 1);
+	graphics.AddAnimation("Car/move", "./textures/Car/move", 2, 0.2f);
+	graphics.AddAnimation("Car/boost", "./textures/Car/boost", 2, 0.2f);
 
 	scene.Init();
 	scene.SetDrawMiddleLine(true);
-
-	//p1.Init(vec2(32,32), 0);
-	//scene.AddActor(p1);
 
 	input.AddKey("up2",		GLUT_KEY_UP,	true);
 	input.AddKey("left2",	GLUT_KEY_LEFT,	true);
@@ -108,6 +109,11 @@ void display()
 	//if (input.IsMouseDown()) cout << input.GetMousePosition().x << ", " << input.GetMousePosition().y << endl;
 
 	engine.Process();
+
+	mat4 m = translate(mat4(1.0), vec3(16, 16, 0));
+	obb.Transform(m);
+
+	obb.Draw(graphics);
 
 	glDisable(GL_BLEND);
 
