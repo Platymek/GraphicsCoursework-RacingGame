@@ -1,5 +1,8 @@
 #include "car.h"
 
+float CARTAU = pi<float>() * 2;
+float HALFPI = pi<float>() / 2;
+
 Car::Car() : Actor("Car", vec2(0,0), 0, 0, 20, 24)
 {
 	SetAnimation("move");
@@ -52,6 +55,20 @@ void Car::Process(Scene scene, Input input, float delta)
 	position += getVelocity() * delta;
 }
 
+void Car::ProcessCollision(Actor& source)
+{
+	float angle = atan(position.x - source.GetPosition().x, source.GetPosition().y - position.y) 
+				- GetRotation();
+
+	while (angle >  pi<float>()) angle -= CARTAU;
+	while (angle < -pi<float>()) angle += CARTAU;
+
+	bool behind = angle > HALFPI || angle < -HALFPI;
+	bool movingForwards = speed > 0;
+
+	if (behind && !movingForwards || !behind && movingForwards) speed = 0;
+}
+
 void Car::Accelerate(float delta)
 {
 	if (speed < maxSpeed) speed += delta * currentAcceleration;
@@ -82,12 +99,12 @@ void Car::Deccelerate(float delta, float baseSpeed)
 
 void Car::SteerLeft(float delta)
 {
-	rotation -= delta * currentSteerSpeed;
+	SetRotation(rotation - delta * currentSteerSpeed);
 }
 
 void Car::SteerRight(float delta)
 {
-	rotation += delta * currentSteerSpeed;
+	SetRotation(rotation + delta * currentSteerSpeed);
 }
 
 void Car::SetMaxSpeedMutliplier(float value)

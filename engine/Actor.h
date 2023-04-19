@@ -20,7 +20,6 @@ public:
 	Actor(string name, vec2 position, float rotation = 0, int layer = 0, int width = 0, int height = 0);
 	
 	virtual void Process(Scene scene, Input input, float delta);
-	void DrawCollision(Graphics& graphics);
 
 	vec2 GetPosition(), GetScale(), GetOrigin();
 	float GetRotation(), GetAt();
@@ -28,6 +27,11 @@ public:
 	int GetLayer();
 
 	string GetName();
+
+	bool IsColliding(Actor source);
+	virtual void ProcessCollision(Actor& source);
+	void DrawCollision(Graphics& graphics);
+	bool GetHasCollision();
 
 
 protected:
@@ -42,6 +46,8 @@ protected:
 	string GetState();
 	virtual void SetState(string state);
 
+	void SetRotation(float rotation);
+
 	void SetAnimation(string currentAnimationName, string nextAnimationName);
 	void SetAnimation(string animationNameName);
 	void SetAnimationSpeed(float animationSpeed);
@@ -53,5 +59,6 @@ private:
 	float t, at;
 	bool useNextAnimation;
 
+	bool hasCollision;
 	OBB collision = OBB(0, 0, 0);
 };

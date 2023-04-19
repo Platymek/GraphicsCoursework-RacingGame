@@ -11,6 +11,7 @@ public:
 
 	void Init(vec2 position, float rotation);
 	void Process(Scene scene, Input input, float delta) override;
+	void ProcessCollision(Actor& source) override;
 
 	void ToggleProgressFlag(int flag);
 	vec2 getVelocity();

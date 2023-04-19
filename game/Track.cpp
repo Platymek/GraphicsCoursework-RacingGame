@@ -141,8 +141,6 @@ void Track::Init(vector<Road> roads)
 
 	for (Road r : roads) AddRoad(r, false);
 	Connect();
-
-	for (vec2 v : leftBounds) cout << v.x << ", " << v.y << endl;
 }
 
 void Track::AddRoad(Road road, bool connect)

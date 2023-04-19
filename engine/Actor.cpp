@@ -1,6 +1,8 @@
 #include "Actor.h"
 #include <iostream>
 
+float TAU = pi<float>() * 2;
+
 Actor::Actor()
 {
 	t = at = 0;
@@ -11,6 +13,7 @@ Actor::Actor()
 	currentAnimationName = "";
 
 	animationSpeed = 1;
+	hasCollision = false;
 }
 
 Actor::Actor(string name, vec2 position, float rotation, int layer, int width, int height)
@@ -27,25 +30,43 @@ Actor::Actor(string name, vec2 position, float rotation, int layer, int width, i
 
 	collision = OBB(width, height, rotation);
 
+	hasCollision = width != 0 && height != 0;
+
 	SetState("idle");
 }
 
 void Actor::Process(Scene scene, Input input, float delta)
 {
-	cout << animationSpeed << endl;
-
 	t += delta;
 	at += delta * animationSpeed;
 
-	mat4 collisionTransform = translate(mat4(1.0), vec3(position.x, position.y, 0));
-	collisionTransform = rotate(collisionTransform, rotation, glm::vec3(0, 0, 1.f));
+	if (hasCollision)
+	{
+		mat4 collisionTransform = translate(mat4(1.0), vec3(position.x, position.y, 0));
+		collisionTransform = rotate(collisionTransform, rotation, glm::vec3(0, 0, 1.f));
 
-	collision.Transform(collisionTransform);
+		collision.Transform(collisionTransform);
+	}
+}
+
+bool Actor::IsColliding(Actor source)
+{
+	return collision.IsColliding(source.collision);
+}
+
+void Actor::ProcessCollision(Actor& source)
+{
+	cout << name << " has collided with " << source.name << endl;
 }
 
 void Actor::DrawCollision(Graphics& graphics)
 {
 	collision.Draw(graphics);
+}
+
+bool Actor::GetHasCollision()
+{
+	return hasCollision;
 }
 
 vec2 Actor::GetPosition()
@@ -107,6 +128,14 @@ void Actor::SetState(string state)
 {
 	this->state = state;
 	ResetT();
+}
+
+void Actor::SetRotation(float rotation)
+{
+	while (rotation >  pi<float>()) rotation -= TAU;
+	while (rotation < -pi<float>()) rotation += TAU;
+
+	this->rotation = rotation;
 }
 
 void Actor::SetAnimation(string currentAnimationName, string nextAnimationName)

@@ -15,7 +15,16 @@ void Scene::Init()
 
 void Scene::Process(Engine& engine, float delta)
 {
-	for (Actor* a : actors) a->Process(*this, *engine.GetInput(), delta);
+	for (Actor* a : actors)
+	{
+		a->Process(*this, *engine.GetInput(), delta);
+
+		for (Actor* other : actors)
+		{
+			if (a != other && other->GetHasCollision())
+				if (a->IsColliding(*other)) a->ProcessCollision(*other);
+		}
+	}
 }
 
 void Scene::Draw(Graphics& graphics)
@@ -33,7 +42,6 @@ void Scene::Draw(Graphics& graphics)
 void Scene::AddActor(Actor& actor)
 {
 	actors.push_back(&actor);
-	cout << actors.back() << endl;
 }
 
 vector<Actor*>& Scene::GetActors()
