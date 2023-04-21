@@ -33,9 +33,12 @@ void Scene::Draw(Graphics& graphics)
 	{
 		a->DrawCollision(graphics);
 
-		graphics.DrawAnimation(a->GetAnimationName(),
-			a->GetPosition().x, a->GetPosition().y, a->GetAt(), a->GetLayer(), a->GetRotation());
-		//a.GetScale().x, a.GetScale().y);
+		if (a->CanDraw())
+		{
+			graphics.DrawAnimation(a->GetAnimationName(),
+				a->GetPosition().x, a->GetPosition().y, a->GetAt(), a->GetLayer(), a->GetRotation());
+			//a.GetScale().x, a.GetScale().y);
+		}
 	}
 }
 

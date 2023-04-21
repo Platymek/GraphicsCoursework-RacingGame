@@ -17,10 +17,12 @@ class Actor
 public:
 
 	Actor();
-	Actor(string name, vec2 position, float rotation = 0, int layer = 0, int width = 0, int height = 0);
+	Actor(string name, vec2 position, float rotation = 0, int layer = 0, int width = 0, int height = 0, 
+		bool draw = true);
 	
 	virtual void Process(Scene scene, Input input, float delta);
 
+	bool CanDraw();
 	vec2 GetPosition(), GetScale(), GetOrigin();
 	float GetRotation(), GetAt();
 	string GetAnimationName();
@@ -57,7 +59,7 @@ private:
 
 	string name, currentAnimationName, nextAnimationName, state;
 	float t, at;
-	bool useNextAnimation;
+	bool useNextAnimation, draw;
 
 	bool hasCollision;
 	OBB collision = OBB(0, 0, 0);

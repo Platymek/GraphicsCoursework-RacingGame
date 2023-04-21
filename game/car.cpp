@@ -66,7 +66,7 @@ void Car::ProcessCollision(Actor& source)
 	bool behind = angle > HALFPI || angle < -HALFPI;
 	bool movingForwards = speed > 0;
 
-	if (behind && !movingForwards || !behind && movingForwards) speed = 0;
+	if (behind && !movingForwards || !behind && movingForwards) speed = -speed;
 }
 
 void Car::Accelerate(float delta)

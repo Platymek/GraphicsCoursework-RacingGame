@@ -16,12 +16,13 @@ Actor::Actor()
 	hasCollision = false;
 }
 
-Actor::Actor(string name, vec2 position, float rotation, int layer, int width, int height)
+Actor::Actor(string name, vec2 position, float rotation, int layer, int width, int height, bool draw)
 {
 	this->name = name;
 	this->position = position;
 	this->rotation = rotation;
 	this->layer = layer;
+	this->draw = draw;
 
 	this->scale = vec2(1, 1);
 	this->currentAnimationName = "";
@@ -67,6 +68,11 @@ void Actor::DrawCollision(Graphics& graphics)
 bool Actor::GetHasCollision()
 {
 	return hasCollision;
+}
+
+bool Actor::CanDraw()
+{
+	return draw;
 }
 
 vec2 Actor::GetPosition()
