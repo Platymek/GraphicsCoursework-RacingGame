@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../engine/Scene.h"
+#include "Wall.h"
 #include <iostream>
 
 class Track : public Scene
@@ -8,6 +9,7 @@ class Track : public Scene
 public:
 
 	struct Road;
+	class Wall;
 
 	enum class StateType
 	{
@@ -48,6 +50,8 @@ private:
 	vector<vec2> leftBounds;
 	vector<vec2> rightBounds;
 
+	vector<Wall> wall;
+
 	StateType state;
 };
 
@@ -61,4 +65,12 @@ public:
 
 	int x, y, width;
 	RoadType type;
+};
+
+
+class Track::Wall : public Actor
+{
+public:
+
+	Wall(vec2 position, float rotation, int height);
 };

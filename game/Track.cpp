@@ -244,13 +244,20 @@ void Track::SetState(StateType state)
 		vec2 c1 = coordinates[0];
 		c1 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
 		p1.Init(c1, startingAngle);
+		AddActor(p1);
 
 		vec2 c2 = coordinates[0];
 		c2 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
 		p2.Init(c2, startingAngle);
-
-		AddActor(p1);
 		AddActor(p2);
+
+
+
 		break;
 	}
 }
+
+Track::Wall::Wall(vec2 position, float rotation, int height)
+	: Actor("Wall", position, rotation, 0, 1, height, false)
+{}
+
