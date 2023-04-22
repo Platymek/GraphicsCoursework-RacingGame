@@ -279,7 +279,7 @@ void Track::SetState(StateType state)
 			// generate left walls //
 
 			vec2 linbetween = (leftBounds[i] + leftBounds[o]) / vec2(2, 2);
-			float lrotation = atan(leftBounds[i].x - leftBounds[o].x, leftBounds[i].y - leftBounds[o].y);
+			float lrotation = -atan(leftBounds[i].x - leftBounds[o].x, leftBounds[i].y - leftBounds[o].y);
 
 			int lheight = leftBounds[i].x - leftBounds[o].x;
 			int lwidth = leftBounds[i].y - leftBounds[o].y;
@@ -293,7 +293,7 @@ void Track::SetState(StateType state)
 			// generate right walls //
 
 			vec2 rinbetween = (rightBounds[i] + rightBounds[o]) / vec2(2, 2);
-			float rrotation = atan(rightBounds[i].x - rightBounds[o].x, rightBounds[i].y - rightBounds[o].y);
+			float rrotation = -atan(rightBounds[o].x - rightBounds[i].x, rightBounds[o].y - rightBounds[i].y);
 
 			int rheight = rightBounds[i].x - rightBounds[o].x;
 			int rwidth = rightBounds[i].y - rightBounds[o].y;
@@ -311,5 +311,8 @@ void Track::SetState(StateType state)
 }
 
 Track::Wall::Wall(vec2 position, float rotation, int height)
-	: Actor("Wall", position, rotation, 0, 1, height, false)
-{}
+	: Actor("Wall", position, rotation, 0, 2, height, false)
+{
+	SetRotation(GetRotation() + rotation);
+	RefreshCollision();
+}

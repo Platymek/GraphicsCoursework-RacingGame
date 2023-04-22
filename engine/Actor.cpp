@@ -34,13 +34,7 @@ Actor::Actor(string name, vec2 position, float rotation, int layer, int width, i
 
 	hasCollision = width != 0 && height != 0;
 
-	if (hasCollision)
-	{
-		mat4 collisionTransform = translate(mat4(1.0), vec3(position.x, position.y, 0));
-		collisionTransform = rotate(collisionTransform, this->rotation, glm::vec3(0, 0, 1.f));
-
-		collision.Transform(collisionTransform);
-	}
+	RefreshCollision();
 
 	SetState("idle");
 }
@@ -50,13 +44,7 @@ void Actor::Process(Scene scene, Input input, float delta)
 	t += delta;
 	at += delta * animationSpeed;
 
-	if (hasCollision)
-	{
-		mat4 collisionTransform = translate(mat4(1.f), vec3(position.x, position.y, 0));
-		collisionTransform = rotate(collisionTransform, rotation, glm::vec3(0, 0, 1.f));
-
-		collision.Transform(collisionTransform);
-	}
+	RefreshCollision();
 }
 
 bool Actor::IsColliding(Actor source)
@@ -173,4 +161,15 @@ void Actor::SetAnimation(string animationName)
 void Actor::SetAnimationSpeed(float animationSpeed)
 {
 	this->animationSpeed = animationSpeed;
+}
+
+void Actor::RefreshCollision()
+{
+	if (hasCollision)
+	{
+		mat4 collisionTransform = translate(mat4(1.f), vec3(position.x, position.y, 0));
+		collisionTransform = rotate(collisionTransform, rotation, glm::vec3(0, 0, 1.f));
+
+		collision.Transform(collisionTransform);
+	}
 }

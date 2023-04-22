@@ -43,6 +43,10 @@ OBB obb = OBB(64, 64);
 
 Input input;
 
+//Player testPlayer;
+Track::Wall testWall(vec2(64, 64), 2, 40);
+Scene testScene;
+
 //OPENGL FUNCTION PROTOTYPES
 void display(); //used as callback in glut for display.
 void reshape(int width, int height); //used as callback for reshape function in glut
@@ -80,6 +84,9 @@ void init()
 	scene.Init();
 	scene.SetDrawMiddleLine(true);
 
+	testScene.Init();
+	testScene.AddActor(testWall);
+
 	input.AddKey("up2",		GLUT_KEY_UP,	true);
 	input.AddKey("left2",	GLUT_KEY_LEFT,	true);
 	input.AddKey("down2",	GLUT_KEY_DOWN,	true);
@@ -111,6 +118,7 @@ void display()
 	engine.Process();
 
 	mat4 m = translate(mat4(1.0), vec3(16, 16, 0));
+	m = rotate(m, t, vec3(0, 0, 1));
 	obb.Transform(m);
 
 	obb.Draw(graphics);

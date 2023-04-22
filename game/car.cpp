@@ -63,10 +63,14 @@ void Car::ProcessCollision(Actor& source)
 	while (angle >  pi<float>()) angle -= CARTAU;
 	while (angle < -pi<float>()) angle += CARTAU;
 
-	bool behind = angle > HALFPI || angle < -HALFPI;
+	bool behind = (angle > HALFPI || angle < -HALFPI);
 	bool movingForwards = speed > 0;
+	bool isCar = source.GetName() == "Car";
 
-	if (behind && !movingForwards || !behind && movingForwards) speed = -speed;
+	if ((behind && !movingForwards) || (!behind && movingForwards) || !isCar)
+	{
+		speed = -speed;
+	}
 }
 
 void Car::Accelerate(float delta)

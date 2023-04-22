@@ -54,6 +54,8 @@ protected:
 	void SetAnimation(string animationNameName);
 	void SetAnimationSpeed(float animationSpeed);
 
+	void RefreshCollision();
+
 
 private:
 
