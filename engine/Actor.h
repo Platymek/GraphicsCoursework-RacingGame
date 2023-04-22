@@ -31,9 +31,10 @@ public:
 	string GetName();
 
 	bool IsColliding(Actor source);
-	virtual void ProcessCollision(Actor& source);
 	void DrawCollision(Graphics& graphics);
 	bool GetHasCollision();
+
+	void ProcessCollision(Actor& source);
 
 
 protected:
@@ -56,6 +57,9 @@ protected:
 
 	void RefreshCollision();
 
+	virtual void StartCollision(Actor* source);
+	virtual void EndCollision(Actor* source);
+
 
 private:
 
@@ -65,4 +69,6 @@ private:
 
 	bool hasCollision;
 	OBB collision = OBB(0, 0, 0);
+	vector<Actor*> currentCollisions;
+	vector<Actor*> nextCollisions;
 };

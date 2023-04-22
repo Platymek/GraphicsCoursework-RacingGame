@@ -117,12 +117,6 @@ void display()
 
 	engine.Process();
 
-	mat4 m = translate(mat4(1.0), vec3(16, 16, 0));
-	m = rotate(m, t, vec3(0, 0, 1));
-	obb.Transform(m);
-
-	obb.Draw(graphics);
-
 	glDisable(GL_BLEND);
 
 	glutSwapBuffers();

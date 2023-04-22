@@ -55,9 +55,11 @@ void Car::Process(Scene scene, Input input, float delta)
 	position += getVelocity() * delta;
 }
 
-void Car::ProcessCollision(Actor& source)
+void Car::StartCollision(Actor* source)
 {
-	float angle = atan(position.x - source.GetPosition().x, source.GetPosition().y - position.y) 
+	Actor::StartCollision(source);
+
+	float angle = atan(position.x - source->GetPosition().x, source->GetPosition().y - position.y)
 				- GetRotation();
 
 	while (angle >  pi<float>()) angle -= CARTAU;
@@ -65,12 +67,9 @@ void Car::ProcessCollision(Actor& source)
 
 	bool behind = (angle > HALFPI || angle < -HALFPI);
 	bool movingForwards = speed > 0;
-	bool isCar = source.GetName() == "Car";
+	bool isCar = source->GetName() == "Car";
 
-	if ((behind && !movingForwards) || (!behind && movingForwards) || !isCar)
-	{
-		speed = -speed;
-	}
+	if ((behind && !movingForwards) || (!behind && movingForwards) || !isCar) speed = -speed;
 }
 
 void Car::Accelerate(float delta)

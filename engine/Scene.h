@@ -28,10 +28,13 @@ public:
 	vector<Actor*>& GetActors();
 
 
-private:
-
-	vector<Actor*> actors;
+protected:
 
 	vec2 cameraPosition, cameraScale, cameraOrigin;
 	float cameraRotation;
+
+
+private:
+
+	vector<Actor*> actors;
 };

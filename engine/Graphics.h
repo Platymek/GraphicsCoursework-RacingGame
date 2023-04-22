@@ -17,21 +17,23 @@ class Graphics
 {
 public:
 
+	struct DrawRequest;
+
 	Graphics();
 	Graphics(int screenWidth, int screenHeight);
 
 	void Init();
 	void Process();
 	void AddAnimation(string animationName, const char* folderName, const int numberOfFrames, const float period);
+
 	void DrawAnimation(string animationName, int x, int y, float time = 0, int layer = 0, float rotation = 0,
-					float xScale = 1, float yScale = 1, float xOrigin = 0, float yOrigin = 0);
+		float xScale = 1, float yScale = 1, float xOrigin = 0, float yOrigin = 0);
+	void DrawAnimation(Graphics::DrawRequest drawRequest, int layer = 0);
 
 	void DrawLine(vec2 p1, vec2 p2);
 
 	int GetScreenWidth();
 	int GetScreenHeight();
-
-	struct DrawRequest;
 
 
 private:

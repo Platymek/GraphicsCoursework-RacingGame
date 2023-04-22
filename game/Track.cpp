@@ -98,16 +98,15 @@ void Track::Process(Engine& engine, float delta)
 
 		for (Wall& w : walls)
 		{
-			w.Process(*this, *engine.GetInput(), delta);
-
-			w.Process(*this, *engine.GetInput(), delta);
-
 			for (Actor* a : GetActors())
 			{
 				if (a->GetHasCollision())
 					if (a->IsColliding(w)) a->ProcessCollision(w);
 			}
 		}
+
+		cameraPosition = GetActors()[0]->GetPosition();
+		cameraRotation = GetActors()[0]->GetRotation();
 
 		break;
 	}
@@ -303,6 +302,8 @@ void Track::SetState(StateType state)
 
 			walls.push_back(rw);
 		}
+
+		cameraScale = vec2(2,2);
 
 		break;
 	}

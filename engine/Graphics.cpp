@@ -19,7 +19,7 @@ void Graphics::DrawRequest::AddTransformation(Transformation transformation, flo
 
 mat4 Graphics::DrawRequest::getModelViewMatrix()
 {
-	mat4 modelViewMatrix = glm::translate(glm::mat4(1.0), glm::vec3(xOrigin, yOrigin, 0.0));
+	mat4 modelViewMatrix = glm::translate(glm::mat4(1.0), glm::vec3(-xOrigin, -yOrigin, 0.0));
 
 	for (int i = 0; i < transformationType.size(); i++)
 		switch (transformationType[i])
@@ -125,6 +125,11 @@ void Graphics::DrawAnimation(string animationName, int x, int y, float time, int
 	dr.AddTransformation(DrawRequest::Transformation::yScale, yScale);
 
 	drawRequests[layer].push_front(dr);
+}
+
+void Graphics::DrawAnimation(Graphics::DrawRequest drawRequest, int layer)
+{
+	drawRequests[layer].push_front(drawRequest);
 }
 
 void Graphics::DrawLine(vec2 v1, vec2 v2)

@@ -11,7 +11,6 @@ public:
 
 	void Init(vec2 position, float rotation);
 	void Process(Scene scene, Input input, float delta) override;
-	void ProcessCollision(Actor& source) override;
 
 	void ToggleProgressFlag(int flag);
 	vec2 getVelocity();
@@ -32,6 +31,8 @@ protected:
 	void SetReverseAccelerationMultiplier(float value = 1);
 	void SetDeccelerationMultiplier(float value = 1);
 	void SetSteerSpeedMultiplier(float value = 1);
+
+	void StartCollision(Actor* source) override;
 
 
 private:

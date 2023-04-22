@@ -13,6 +13,7 @@ Actor::Actor()
 	currentAnimationName = "";
 
 	animationSpeed = 1;
+
 	hasCollision = false;
 }
 
@@ -45,6 +46,29 @@ void Actor::Process(Scene scene, Input input, float delta)
 	at += delta * animationSpeed;
 
 	RefreshCollision();
+
+	vector<Actor*> newCollisions;
+
+	for (Actor* na : nextCollisions)
+	{
+		bool newCollision = true;
+
+		for (Actor* ca : currentCollisions)
+		{
+			if (na == ca)
+			{
+				newCollision = false;
+				break;
+			}
+		}
+
+		if (newCollision) newCollisions.push_back(na);
+	}
+
+	for (Actor* na : newCollisions) StartCollision(na);
+
+	currentCollisions = nextCollisions;
+	nextCollisions.clear();
 }
 
 bool Actor::IsColliding(Actor source)
@@ -54,7 +78,7 @@ bool Actor::IsColliding(Actor source)
 
 void Actor::ProcessCollision(Actor& source)
 {
-	cout << name << " has collided with " << source.name << endl;
+	nextCollisions.push_back(&source);
 }
 
 void Actor::DrawCollision(Graphics& graphics)
@@ -172,4 +196,14 @@ void Actor::RefreshCollision()
 
 		collision.Transform(collisionTransform);
 	}
+}
+
+void Actor::StartCollision(Actor* source)
+{
+	cout << GetName() << " has started colliding with " << source->GetName() << endl;
+}
+
+void Actor::EndCollision(Actor* source)
+{
+	cout << GetName() << " has stopped colliding with " << source->GetName() << endl;
 }
