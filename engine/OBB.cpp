@@ -12,7 +12,9 @@ OBB::OBB(float width, float height, float angle)
 {
 	float halfWidth = width / 2;
 	float halfHeight = height / 2;
-	glm::mat4 angleMatrix = glm::rotate(glm::mat4(1.0), angle, glm::vec3(0.0, 0.0, 1.0));
+	glm::mat4 angleMatrix = rotate(mat4(1.f), angle, glm::vec3(0, 0, 1.f));
+
+	//cout << "funny: " << angle << endl;
 
 	originalVertices[0] = vertices[0] = glm::vec4(-halfWidth, -halfHeight, 0.0, 1.0) * angleMatrix;
 	originalVertices[1] = vertices[1] = glm::vec4(halfWidth, -halfHeight, 0.0, 1.0) * angleMatrix;

@@ -93,7 +93,22 @@ void Track::Process(Engine& engine, float delta)
 		break;
 
 	case StateType::Play:
+
 		Scene::Process(engine, delta);
+
+		for (Wall& w : walls)
+		{
+			w.Process(*this, *engine.GetInput(), delta);
+
+			w.Process(*this, *engine.GetInput(), delta);
+
+			for (Actor* a : GetActors())
+			{
+				if (a->GetHasCollision())
+					if (a->IsColliding(w)) a->ProcessCollision(w);
+			}
+		}
+
 		break;
 	}
 }
@@ -101,6 +116,11 @@ void Track::Process(Engine& engine, float delta)
 void Track::Draw(Graphics& graphics)
 {
 	Scene::Draw(graphics);
+
+	for (Wall& w : walls)
+	{
+		w.DrawCollision(graphics);
+	}
 
 	if (coordinates.size() > 0)
 	{
@@ -230,8 +250,6 @@ void Track::SetDrawMiddleLine(bool drawMiddleLine)
 
 void Track::SetState(StateType state)
 {
-	this->state = state;
-
 	switch (state)
 	{
 	case StateType::Play:
@@ -241,23 +259,57 @@ void Track::SetState(StateType state)
 		float startingLeftAngle = startingAngle - (pi<float>() / 2);
 		int thirdWidth = widths[0] / 3;
 
+		// generate player 1
 		vec2 c1 = coordinates[0];
 		c1 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
 		p1.Init(c1, startingAngle);
 		AddActor(p1);
 
+		// generate player 2
 		vec2 c2 = coordinates[0];
 		c2 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
 		p2.Init(c2, startingAngle);
 		AddActor(p2);
 
+		for (int i = 0; i < coordinates.size(); i++)
+		{
+			int o = i == 0 ? coordinates.size() - 1 : (i - 1);
 
+
+			// generate left walls //
+
+			vec2 linbetween = (leftBounds[i] + leftBounds[o]) / vec2(2, 2);
+			float lrotation = atan(leftBounds[i].x - leftBounds[o].x, leftBounds[i].y - leftBounds[o].y);
+
+			int lheight = leftBounds[i].x - leftBounds[o].x;
+			int lwidth = leftBounds[i].y - leftBounds[o].y;
+			int llength = sqrt(lheight * lheight + lwidth * lwidth);
+
+			Wall lw = Wall(linbetween, lrotation, llength);
+
+			walls.push_back(lw);
+
+
+			// generate right walls //
+
+			vec2 rinbetween = (rightBounds[i] + rightBounds[o]) / vec2(2, 2);
+			float rrotation = atan(rightBounds[i].x - rightBounds[o].x, rightBounds[i].y - rightBounds[o].y);
+
+			int rheight = rightBounds[i].x - rightBounds[o].x;
+			int rwidth = rightBounds[i].y - rightBounds[o].y;
+			int rlength = sqrt(rheight * rheight + rwidth * rwidth);
+
+			Wall rw = Wall(rinbetween, rrotation, rlength);
+
+			walls.push_back(rw);
+		}
 
 		break;
 	}
+
+	this->state = state;
 }
 
 Track::Wall::Wall(vec2 position, float rotation, int height)
 	: Actor("Wall", position, rotation, 0, 1, height, false)
 {}
-

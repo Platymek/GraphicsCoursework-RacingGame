@@ -50,7 +50,7 @@ private:
 	vector<vec2> leftBounds;
 	vector<vec2> rightBounds;
 
-	vector<Wall> wall;
+	vector<Wall> walls;
 
 	StateType state;
 };

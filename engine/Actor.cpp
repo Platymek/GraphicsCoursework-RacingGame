@@ -20,18 +20,27 @@ Actor::Actor(string name, vec2 position, float rotation, int layer, int width, i
 {
 	this->name = name;
 	this->position = position;
-	this->rotation = rotation;
 	this->layer = layer;
 	this->draw = draw;
+
+	SetRotation(rotation);
 
 	this->scale = vec2(1, 1);
 	this->currentAnimationName = "";
 	this->animationSpeed = 1;
 	this->t = this->at = 0;
 
-	collision = OBB(width, height, rotation);
+	collision = OBB(width, height, this->rotation);
 
 	hasCollision = width != 0 && height != 0;
+
+	if (hasCollision)
+	{
+		mat4 collisionTransform = translate(mat4(1.0), vec3(position.x, position.y, 0));
+		collisionTransform = rotate(collisionTransform, this->rotation, glm::vec3(0, 0, 1.f));
+
+		collision.Transform(collisionTransform);
+	}
 
 	SetState("idle");
 }
@@ -43,7 +52,7 @@ void Actor::Process(Scene scene, Input input, float delta)
 
 	if (hasCollision)
 	{
-		mat4 collisionTransform = translate(mat4(1.0), vec3(position.x, position.y, 0));
+		mat4 collisionTransform = translate(mat4(1.f), vec3(position.x, position.y, 0));
 		collisionTransform = rotate(collisionTransform, rotation, glm::vec3(0, 0, 1.f));
 
 		collision.Transform(collisionTransform);
