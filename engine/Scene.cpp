@@ -29,8 +29,6 @@ void Scene::Process(Engine& engine, float delta)
 
 void Scene::Draw(Graphics& graphics)
 {
-
-
 	for (Actor* a : actors)
 	{
 		if (a->GetHasCollision()) a->DrawCollision(graphics);
@@ -58,6 +56,14 @@ void Scene::Draw(Graphics& graphics)
 			graphics.DrawAnimation(dr);
 		}
 	}
+
+	for (int i = 0; i < line1s.size(); i++)
+	{
+		graphics.DrawLine(line1s[i], line2s[i]);
+	}
+
+	line1s.clear();
+	line2s.clear();
 }
 
 void Scene::AddActor(Actor& actor)
@@ -68,4 +74,10 @@ void Scene::AddActor(Actor& actor)
 vector<Actor*>& Scene::GetActors()
 {
 	return actors;
+}
+
+void Scene::DrawLine(vec2 v1, vec2 v2)
+{
+	line1s.push_back(v1);
+	line2s.push_back(v2);
 }

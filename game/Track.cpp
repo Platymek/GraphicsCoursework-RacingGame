@@ -125,26 +125,26 @@ void Track::Draw(Graphics& graphics)
 	{
 		if (drawMiddleLine)
 		{
-			graphics.DrawLine(coordinates[0], coordinates[coordinates.size() - 1]);
+			DrawLine(coordinates[0], coordinates[coordinates.size() - 1]);
 
 			for (int i = 1; i < coordinates.size(); i++)
-				graphics.DrawLine(coordinates[i - 1], coordinates[i]);
+				DrawLine(coordinates[i - 1], coordinates[i]);
 		}
 
 		if (drawLeftLine)
 		{
-			graphics.DrawLine(leftBounds[leftBounds.size() - 1], leftBounds[0]);
+			DrawLine(leftBounds[leftBounds.size() - 1], leftBounds[0]);
 
 			for (int i = 1; i < leftBounds.size(); i++)
-				graphics.DrawLine(leftBounds[i - 1], leftBounds[i]);
+				DrawLine(leftBounds[i - 1], leftBounds[i]);
 		}
 
 		if (drawRightLine)
 		{
-			graphics.DrawLine(rightBounds[rightBounds.size() - 1], rightBounds[0]);
+			DrawLine(rightBounds[rightBounds.size() - 1], rightBounds[0]);
 
 			for (int i = 1; i < rightBounds.size(); i++)
-				graphics.DrawLine(rightBounds[i - 1], rightBounds[i]);
+				DrawLine(rightBounds[i - 1], rightBounds[i]);
 		}
 	}
 }
