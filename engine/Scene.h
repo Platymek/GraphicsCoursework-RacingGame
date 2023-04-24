@@ -39,6 +39,6 @@ protected:
 private:
 
 	vector<Actor*> actors;
-	vector<vec2> line1s;
-	vector<vec2> line2s;
+	vector<vec4> line1s;
+	vector<vec4> line2s;
 };

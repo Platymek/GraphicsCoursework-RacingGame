@@ -31,7 +31,7 @@ void Scene::Draw(Graphics& graphics)
 {
 	for (Actor* a : actors)
 	{
-		if (a->GetHasCollision()) a->DrawCollision(graphics);
+		//if (a->GetHasCollision()) a->DrawCollision(graphics);
 
 		if (a->CanDraw())
 		{
@@ -57,9 +57,40 @@ void Scene::Draw(Graphics& graphics)
 		}
 	}
 
+	mat4 c = mat4(1.f);
+
+	c = translate(c, vec3(graphics.GetScreenWidth() / 2, graphics.GetScreenHeight() / 2, 0));
+	
+	c = scale		(c, vec3(cameraScale.x, cameraScale.y, 1.f));
+	c = rotate		(c, -cameraRotation, vec3(0, 0, 1.f));
+	c = translate	(c, vec3(-cameraPosition.x, -cameraPosition.y, 0));
+
+	//cout << cameraPosition.x << endl;
+
 	for (int i = 0; i < line1s.size(); i++)
 	{
-		graphics.DrawLine(line1s[i], line2s[i]);
+		vec4 dv1 = c * vec4(line1s[i].x, line1s[i].y, 1.f, 1.f);
+		vec4 dv2 = c * vec4(line2s[i].x, line2s[i].y, 1.f, 1.f);
+
+		vec2 v1 = vec2(dv1.x, dv1.y);
+		vec2 v2 = vec2(dv2.x, dv2.y);
+
+		graphics.DrawLine(v1, v2);
+	}
+
+	if (line1s.size() > 1)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				cout << c[j][i] << "\t";
+			}
+			cout << endl;
+		}
+
+		//vec4(1.f, 1.f, line2s[1]);
+		cout << line2s[0].a << ", " << (line2s[0] * c).a << endl;
 	}
 
 	line1s.clear();
@@ -78,6 +109,6 @@ vector<Actor*>& Scene::GetActors()
 
 void Scene::DrawLine(vec2 v1, vec2 v2)
 {
-	line1s.push_back(v1);
-	line2s.push_back(v2);
+	line1s.push_back(vec4(v1.x, v1.y, 1.f, 1.f));
+	line2s.push_back(vec4(v2.x, v2.y, 1.f, 1.f));
 }

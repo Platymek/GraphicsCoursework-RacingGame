@@ -80,8 +80,7 @@ void Track::Process(Engine& engine, float delta)
 
 			if (valid)
 			{
-				if (coordinates.size() > 0)
-					engine.GetGraphics()->DrawLine(coordinates[coordinates.size() - 1], vec2(mousex, mousey));
+				if (coordinates.size() > 0) DrawLine(coordinates[coordinates.size() - 1], vec2(mousex, mousey));
 
 				if (engine.GetInput()->IsMouseLeftDown())
 				{
@@ -90,6 +89,10 @@ void Track::Process(Engine& engine, float delta)
 				}
 			}
 		}
+
+		cameraPosition = vec2(engine.GetGraphics()->GetScreenWidth() / 2, 
+			engine.GetGraphics()->GetScreenHeight() / 2);
+
 		break;
 
 	case StateType::Play:
@@ -114,11 +117,10 @@ void Track::Process(Engine& engine, float delta)
 
 void Track::Draw(Graphics& graphics)
 {
-	Scene::Draw(graphics);
 
 	for (Wall& w : walls)
 	{
-		w.DrawCollision(graphics);
+		//w.DrawCollision(graphics);
 	}
 
 	if (coordinates.size() > 0)
@@ -127,26 +129,24 @@ void Track::Draw(Graphics& graphics)
 		{
 			DrawLine(coordinates[0], coordinates[coordinates.size() - 1]);
 
-			for (int i = 1; i < coordinates.size(); i++)
-				DrawLine(coordinates[i - 1], coordinates[i]);
+			for (int i = 1; i < coordinates.size(); i++) DrawLine(coordinates[i - 1], coordinates[i]);
 		}
 
 		if (drawLeftLine)
 		{
 			DrawLine(leftBounds[leftBounds.size() - 1], leftBounds[0]);
 
-			for (int i = 1; i < leftBounds.size(); i++)
-				DrawLine(leftBounds[i - 1], leftBounds[i]);
+			for (int i = 1; i < leftBounds.size(); i++) DrawLine(leftBounds[i - 1], leftBounds[i]);
 		}
 
 		if (drawRightLine)
 		{
 			DrawLine(rightBounds[rightBounds.size() - 1], rightBounds[0]);
 
-			for (int i = 1; i < rightBounds.size(); i++)
-				DrawLine(rightBounds[i - 1], rightBounds[i]);
+			for (int i = 1; i < rightBounds.size(); i++) DrawLine(rightBounds[i - 1], rightBounds[i]);
 		}
 	}
+	Scene::Draw(graphics);
 }
 
 void Track::Init()

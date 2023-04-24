@@ -28,7 +28,7 @@ using namespace std;
 
 glm::mat4 ViewMatrix;  // matrix for the modelling and viewing
 glm::mat4 ProjectionMatrix; // matrix for the orthographic projection
-int screenWidth = 960, screenHeight = 540;
+int screenWidth = 720, screenHeight = 720;
 
 //booleans to handle when the arrow keys are pressed or released.
 bool Left = false;

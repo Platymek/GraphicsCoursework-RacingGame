@@ -47,10 +47,15 @@ void Car::Process(Scene scene, Input input, float delta)
 	Actor::Process(scene, input, delta);
 
 	if (speed > 0)
-
-		SetAnimationSpeed(currentMaxSpeed / speed);
+	{
+		SetAnimationSpeed(speed / currentMaxSpeed);
+		SetSteerSpeedMultiplier(speed / maxSpeed);
+	}
 	else
+	{
 		SetAnimationSpeed(0);
+		SetSteerSpeedMultiplier(0);
+	}
 
 	position += getVelocity() * delta;
 }
