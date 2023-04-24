@@ -7,6 +7,13 @@
 #include <iostream>
 using namespace std;
 
+OBB::OBB()
+{
+	originalVertices[0] = vertices[0] = glm::vec4(0, 0, 0, 0);
+	originalVertices[1] = vertices[1] = glm::vec4(0, 0, 0, 0);
+	originalVertices[2] = vertices[2] = glm::vec4(0, 0, 0, 0);
+	originalVertices[3] = vertices[3] = glm::vec4(0, 0, 0, 0);
+}
 
 OBB::OBB(float width, float height, float angle)
 {
@@ -20,14 +27,6 @@ OBB::OBB(float width, float height, float angle)
 	originalVertices[1] = vertices[1] = glm::vec4(halfWidth, -halfHeight, 0.0, 1.0) * angleMatrix;
 	originalVertices[2] = vertices[2] = glm::vec4(halfWidth, halfHeight, 0.0, 1.0) * angleMatrix;
 	originalVertices[3] = vertices[3] = glm::vec4(-halfWidth, halfHeight, 0.0, 1.0) * angleMatrix;
-}
-
-void OBB::Draw(Graphics& graphics)
-{
-	graphics.DrawLine(vertices[0], vertices[1]);
-	graphics.DrawLine(vertices[1], vertices[2]);
-	graphics.DrawLine(vertices[2], vertices[3]);
-	graphics.DrawLine(vertices[3], vertices[0]);
 }
 
 //This function is assuming a matrix in column major order to transform the points.
@@ -118,4 +117,9 @@ bool OBB::Test(float proj[4], float len)
 		return true;
 	else
 		return false;
+}
+
+vec2 OBB::GetVertex(int number)
+{
+	return vertices[number];
 }

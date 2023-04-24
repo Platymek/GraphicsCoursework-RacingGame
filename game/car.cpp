@@ -3,7 +3,7 @@
 float CARTAU = pi<float>() * 2;
 float HALFPI = pi<float>() / 2;
 
-Car::Car() : Actor("Car", vec2(0,0), 0, 0, 20, 24)
+Car::Car() : Actor("Car", vec2(0,0), 0, 0, 16, 20)
 {
 	SetAnimation("move");
 
@@ -28,6 +28,8 @@ Car::Car() : Actor("Car", vec2(0,0), 0, 0, 20, 24)
 	speed = 0;
 
 	SetAnimationSpeed(0);
+
+	SetCurrentStep(0);
 }
 
 vec2 Car::getVelocity()
@@ -46,10 +48,10 @@ void Car::Process(Scene scene, Input input, float delta)
 {
 	Actor::Process(scene, input, delta);
 
-	if (speed > 0)
+	if (speed != 0)
 	{
-		SetAnimationSpeed(speed / currentMaxSpeed);
-		SetSteerSpeedMultiplier(speed / maxSpeed);
+		SetAnimationSpeed(abs(speed / currentMaxSpeed));
+		SetSteerSpeedMultiplier(abs(speed / maxSpeed));
 	}
 	else
 	{
@@ -58,6 +60,16 @@ void Car::Process(Scene scene, Input input, float delta)
 	}
 
 	position += getVelocity() * delta;
+}
+
+int Car::GetCurrentStep()
+{
+	return currentStep;
+}
+
+void Car::SetCurrentStep(int step)
+{
+	currentStep = step;
 }
 
 void Car::StartCollision(Actor* source)

@@ -31,7 +31,7 @@ public:
 	string GetName();
 
 	bool IsColliding(Actor source);
-	void DrawCollision(Graphics& graphics);
+	void DrawCollision(Scene& scene);
 	bool GetHasCollision();
 
 	void ProcessCollision(Actor& source);
@@ -68,7 +68,7 @@ private:
 	bool useNextAnimation, draw;
 
 	bool hasCollision;
-	OBB collision = OBB(0, 0, 0);
+	OBB collision;
 	vector<Actor*> currentCollisions;
 	vector<Actor*> nextCollisions;
 };

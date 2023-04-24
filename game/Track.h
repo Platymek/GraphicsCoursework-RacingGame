@@ -51,6 +51,7 @@ private:
 	vector<vec2> rightBounds;
 
 	vector<Wall> walls;
+	vector<Wall> steps;
 
 	StateType state;
 };

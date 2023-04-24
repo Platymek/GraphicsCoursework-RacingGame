@@ -65,8 +65,6 @@ void Scene::Draw(Graphics& graphics)
 	c = rotate		(c, -cameraRotation, vec3(0, 0, 1.f));
 	c = translate	(c, vec3(-cameraPosition.x, -cameraPosition.y, 0));
 
-	//cout << cameraPosition.x << endl;
-
 	for (int i = 0; i < line1s.size(); i++)
 	{
 		vec4 dv1 = c * vec4(line1s[i].x, line1s[i].y, 1.f, 1.f);
@@ -76,21 +74,6 @@ void Scene::Draw(Graphics& graphics)
 		vec2 v2 = vec2(dv2.x, dv2.y);
 
 		graphics.DrawLine(v1, v2);
-	}
-
-	if (line1s.size() > 1)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				cout << c[j][i] << "\t";
-			}
-			cout << endl;
-		}
-
-		//vec4(1.f, 1.f, line2s[1]);
-		cout << line2s[0].a << ", " << (line2s[0] * c).a << endl;
 	}
 
 	line1s.clear();

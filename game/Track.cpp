@@ -120,7 +120,7 @@ void Track::Draw(Graphics& graphics)
 
 	for (Wall& w : walls)
 	{
-		//w.DrawCollision(graphics);
+		w.DrawCollision(*this);
 	}
 
 	if (coordinates.size() > 0)
@@ -261,18 +261,31 @@ void Track::SetState(StateType state)
 		// generate player 1
 		vec2 c1 = coordinates[0];
 		c1 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
-		p1.Init(c1, startingAngle);
+		p1.Init(c1, -startingAngle);
 		AddActor(p1);
 
 		// generate player 2
 		vec2 c2 = coordinates[0];
 		c2 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
-		p2.Init(c2, startingAngle);
+		p2.Init(c2, -startingAngle);
 		AddActor(p2);
 
 		for (int i = 0; i < coordinates.size(); i++)
 		{
 			int o = i == 0 ? coordinates.size() - 1 : (i - 1);
+
+			// generate steps //
+
+			vec2 inbetween = (leftBounds[i] + rightBounds[i]) / vec2(2, 2);
+			float rotation = atan(leftBounds[i].x - rightBounds[i].x, leftBounds[i].y - rightBounds[i].y);
+
+			int height = leftBounds[i].x - leftBounds[o].x;
+			int width = leftBounds[i].y - leftBounds[o].y;
+			int length = sqrt(height * height + width * width);
+
+			Wall step = Wall(inbetween, rotation, length);
+
+			steps.push_back(step);
 
 
 			// generate left walls //

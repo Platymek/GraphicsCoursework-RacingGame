@@ -12,7 +12,12 @@ public:
 	void Init(vec2 position, float rotation);
 	void Process(Scene scene, Input input, float delta) override;
 
-	void ToggleProgressFlag(int flag);
+	int GetCurrentStep();
+	void SetCurrentStep(int step);
+
+	vec2 GetTarget();
+	vec2 SetTarget();
+
 	vec2 getVelocity();
 
 
@@ -46,5 +51,6 @@ private:
 		deccelerationMultiplier, steerSpeedMultiplier;
 
 	int lap;
-	bool lapFlags[3];
+	int currentStep;
+	vec2 target;
 };

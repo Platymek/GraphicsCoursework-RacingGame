@@ -81,9 +81,12 @@ void Actor::ProcessCollision(Actor& source)
 	nextCollisions.push_back(&source);
 }
 
-void Actor::DrawCollision(Graphics& graphics)
+void Actor::DrawCollision(Scene& scene)
 {
-	collision.Draw(graphics);
+	scene.DrawLine(collision.GetVertex(0), collision.GetVertex(1));
+	scene.DrawLine(collision.GetVertex(1), collision.GetVertex(1));
+	scene.DrawLine(collision.GetVertex(2), collision.GetVertex(1));
+	scene.DrawLine(collision.GetVertex(3), collision.GetVertex(0));
 }
 
 bool Actor::GetHasCollision()
