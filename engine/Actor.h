@@ -23,12 +23,15 @@ public:
 	virtual void Process(Scene scene, Input input, float delta);
 
 	bool CanDraw();
+
+	string GetName();
 	vec2 GetPosition(), GetScale(), GetOrigin();
 	float GetRotation(), GetAt();
 	string GetAnimationName();
 	int GetLayer();
 
-	string GetName();
+	float GetAngleTo(vec2 position);
+	float GetAngleTo(Actor actor);
 
 	bool IsColliding(Actor source);
 	void DrawCollision(Scene& scene);

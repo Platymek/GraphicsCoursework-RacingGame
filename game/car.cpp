@@ -72,12 +72,21 @@ void Car::SetCurrentStep(int step)
 	currentStep = step;
 }
 
+vec2 Car::GetTarget()
+{
+	return target;
+}
+
+void Car::SetTarget(vec2 position)
+{
+	target = position;
+}
+
 void Car::StartCollision(Actor* source)
 {
 	Actor::StartCollision(source);
 
-	float angle = atan(position.x - source->GetPosition().x, source->GetPosition().y - position.y)
-				- GetRotation();
+	float angle = GetAngleTo(*source);
 
 	while (angle >  pi<float>()) angle -= CARTAU;
 	while (angle < -pi<float>()) angle += CARTAU;

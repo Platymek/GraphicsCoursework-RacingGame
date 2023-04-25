@@ -16,7 +16,7 @@ public:
 	void SetCurrentStep(int step);
 
 	vec2 GetTarget();
-	vec2 SetTarget();
+	void SetTarget(vec2 position);
 
 	vec2 getVelocity();
 

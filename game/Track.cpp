@@ -1,8 +1,9 @@
 #include "Track.h"
 #include "Player.h"
+#include "Computer.h"
 
 Player p1(1);
-Player p2(2);
+Computer p2;
 
 Track::Road::Road()
 {
@@ -99,6 +100,17 @@ void Track::Process(Engine& engine, float delta)
 
 		Scene::Process(engine, delta);
 
+		for (Actor* a : GetActors())
+		{
+			Car* c = dynamic_cast<Car*>(a);
+
+			if (c)
+			{
+				int step = c->GetCurrentStep();
+				
+			}
+		}
+
 		for (Wall& w : walls)
 		{
 			for (Actor* a : GetActors())
@@ -118,10 +130,8 @@ void Track::Process(Engine& engine, float delta)
 void Track::Draw(Graphics& graphics)
 {
 
-	for (Wall& w : walls)
-	{
-		w.DrawCollision(*this);
-	}
+	for (Wall& w : walls) w.DrawCollision(*this);
+	for (Wall& s : steps) s.DrawCollision(*this);
 
 	if (coordinates.size() > 0)
 	{
@@ -262,13 +272,11 @@ void Track::SetState(StateType state)
 		vec2 c1 = coordinates[0];
 		c1 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
 		p1.Init(c1, -startingAngle);
-		AddActor(p1);
 
 		// generate player 2
 		vec2 c2 = coordinates[0];
 		c2 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
 		p2.Init(c2, -startingAngle);
-		AddActor(p2);
 
 		for (int i = 0; i < coordinates.size(); i++)
 		{
@@ -277,13 +285,12 @@ void Track::SetState(StateType state)
 			// generate steps //
 
 			vec2 inbetween = (leftBounds[i] + rightBounds[i]) / vec2(2, 2);
-			float rotation = atan(leftBounds[i].x - rightBounds[i].x, leftBounds[i].y - rightBounds[i].y);
 
-			int height = leftBounds[i].x - leftBounds[o].x;
-			int width = leftBounds[i].y - leftBounds[o].y;
+			int height = leftBounds[i].x - rightBounds[i].x;
+			int width = leftBounds[i].y - rightBounds[i].y;
 			int length = sqrt(height * height + width * width);
 
-			Wall step = Wall(inbetween, rotation, length);
+			Wall step = Wall(inbetween, -angles[i] + pi<float>() / 2, length);
 
 			steps.push_back(step);
 
@@ -317,6 +324,12 @@ void Track::SetState(StateType state)
 		}
 
 		cameraScale = vec2(2,2);
+
+		p1.SetTarget(coordinates[1]);
+		p2.SetTarget(coordinates[1]);
+
+		AddActor(p1);
+		AddActor(p2);
 
 		break;
 	}

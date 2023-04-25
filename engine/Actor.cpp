@@ -134,6 +134,17 @@ int Actor::GetLayer()
 	return layer;
 }
 
+float Actor::GetAngleTo(vec2 position)
+{
+	return atan(this->position.x - position.x, position.y - this->position.y)
+		- GetRotation();;
+}
+
+float Actor::GetAngleTo(Actor actor)
+{
+	return GetAngleTo(actor.GetPosition());
+}
+
 string Actor::GetName()
 {
 	return name;

@@ -27,6 +27,8 @@
     <ClCompile Include="game\Player.cpp" />
     <ClCompile Include="engine\Input.cpp" />
     <ClCompile Include="game\Track.cpp" />
+    <ClCompile Include="game\Wall.cpp" />
+    <ClCompile Include="game\Computer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\ImageLoading.h">
@@ -52,6 +54,8 @@
     <ClInclude Include="game\Player.h" />
     <ClInclude Include="engine\Input.h" />
     <ClInclude Include="game\Track.h" />
+    <ClInclude Include="game\Wall.h" />
+    <ClInclude Include="game\Computer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game\Computer.h" />
     <ClInclude Include="engine\Engine.h" />
     <ClInclude Include="engine\Input.h" />
     <ClInclude Include="game\Car.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="game\Track.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="game\Computer.cpp" />
     <ClCompile Include="engine\Engine.cpp" />
     <ClCompile Include="engine\Input.cpp" />
     <ClCompile Include="game\Car.cpp" />
