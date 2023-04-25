@@ -93,13 +93,19 @@ void Graphics::Process()
 	glBegin(GL_LINES);
 	for (int i = 0; i < line1s.size(); i++)
 	{
+		glLineWidth(lineWidths[i]);
+
 		glVertex2f(line1s[i].x / screenWidth - 1, line1s[i].y / screenHeight - 1);
 		glVertex2f(line2s[i].x / screenWidth - 1, line2s[i].y / screenHeight - 1);
 	}
 	glEnd();
 
+	glBegin(GL_POLYGON);
+	glEnd();
+
 	line1s.clear();
 	line2s.clear();
+	lineWidths.clear();
 }
 
 void Graphics::AddAnimation(string animationName, const char* folderName, const int numberOfFrames, 
@@ -132,13 +138,14 @@ void Graphics::DrawAnimation(Graphics::DrawRequest drawRequest, int layer)
 	drawRequests[layer].push_front(drawRequest);
 }
 
-void Graphics::DrawLine(vec2 v1, vec2 v2)
+void Graphics::DrawLine(vec2 v1, vec2 v2, int width)
 {
 	vec2 v1n = (v1 - vec2(1)) * vec2(2);
 	vec2 v2n = (v2 - vec2(1)) * vec2(2);
 
 	line1s.push_back(v1n);
 	line2s.push_back(v2n);
+	lineWidths.push_back(width);
 }
 
 int Graphics::GetScreenWidth()

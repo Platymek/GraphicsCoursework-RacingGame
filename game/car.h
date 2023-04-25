@@ -37,7 +37,7 @@ protected:
 	void SetDeccelerationMultiplier(float value = 1);
 	void SetSteerSpeedMultiplier(float value = 1);
 
-	void StartCollision(Actor* source) override;
+	virtual void StartCollision(Actor* source) override;
 
 
 private:

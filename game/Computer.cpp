@@ -59,7 +59,13 @@ void Computer::SetTarget(vec2 position)
 {
 	Car::SetTarget(position);
 
-	cout << GetAngleFrom(GetTarget()) << endl;
+	left = GetAngleFrom(GetTarget()) > 0;
+}
 
+void Computer::StartCollision(Actor* source)
+{
+	Car::StartCollision(source);
+
+	turned = false;
 	left = GetAngleFrom(GetTarget()) > 0;
 }

@@ -73,11 +73,12 @@ void Scene::Draw(Graphics& graphics)
 		vec2 v1 = vec2(dv1.x, dv1.y);
 		vec2 v2 = vec2(dv2.x, dv2.y);
 
-		graphics.DrawLine(v1, v2);
+		graphics.DrawLine(v1, v2, lineWidths[i]);
 	}
 
 	line1s.clear();
 	line2s.clear();
+	lineWidths.clear();
 }
 
 void Scene::AddActor(Actor& actor)
@@ -90,8 +91,10 @@ vector<Actor*>& Scene::GetActors()
 	return actors;
 }
 
-void Scene::DrawLine(vec2 v1, vec2 v2)
+void Scene::DrawLine(vec2 v1, vec2 v2, int width)
 {
+	lineWidths.push_back(width);
+
 	line1s.push_back(vec4(v1.x, v1.y, 1.f, 1.f));
 	line2s.push_back(vec4(v2.x, v2.y, 1.f, 1.f));
 }

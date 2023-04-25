@@ -19,6 +19,11 @@ public:
 	void SetCurrentStep(int step) override;
 	virtual void SetTarget(vec2 position) override;
 
+protected:
+
+	void StartCollision(Actor* source) override;
+
+
 private:
 
 	ComplexityType complexity;

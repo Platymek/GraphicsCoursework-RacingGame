@@ -27,7 +27,7 @@ public:
 	void AddActor(Actor& actor);
 	vector<Actor*>& GetActors();
 
-	void DrawLine(vec2 p1, vec2 p2);
+	void DrawLine(vec2 p1, vec2 p2, int width = 1);
 
 
 protected:
@@ -39,6 +39,8 @@ protected:
 private:
 
 	vector<Actor*> actors;
+
 	vector<vec4> line1s;
 	vector<vec4> line2s;
+	vector<int> lineWidths;
 };

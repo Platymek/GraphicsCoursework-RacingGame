@@ -82,7 +82,6 @@ void init()
 	graphics.AddAnimation("Car/boost", "./textures/Car/boost", 2, 0.2f);
 
 	scene.Init();
-	scene.SetDrawMiddleLine(true);
 
 	testScene.Init();
 	testScene.AddActor(testWall);

@@ -2,10 +2,13 @@
 #include "Player.h"
 #include "Computer.h"
 
-Computer p1(Computer::Steer);
-Computer p2(Computer::Steer);
-Computer p3(Computer::Steer);
-Computer p4(Computer::Steer);
+Player p1(1);
+Player p2(2);
+
+Computer cp1(Computer::Steer);
+Computer cp2(Computer::Steer);
+Computer cp3(Computer::Steer);
+Computer cp4(Computer::Steer);
 
 Track::Road::Road()
 {
@@ -31,6 +34,8 @@ Track::Road::Road(int x, int y, int width, RoadType type)
 
 Track::Track() : Scene()
 {
+	this->cameraType = CameraType::Rotate;
+
 	coordinates = vector<vec2>();
 	widths = vector<int>();
 	angles = vector<float>();
@@ -41,9 +46,10 @@ Track::Track() : Scene()
 	types = vector<RoadType>();
 
 	connected = false;
-	drawMiddleLine = false;
+	drawMiddleLine = true;
 
 	drawLeftLine = drawRightLine = false;
+	numberOfPlayers = 0;
 
 	SetState(StateType::Edit);
 }
@@ -87,7 +93,7 @@ void Track::Process(Engine& engine, float delta)
 
 				if (engine.GetInput()->IsMouseLeftDown())
 				{
-					Road r = Road(mousex, mousey, 48, 0);
+					Road r = Road(mousex, mousey, 64, 0);
 					AddRoad(r, true);
 				}
 			}
@@ -131,8 +137,8 @@ void Track::Process(Engine& engine, float delta)
 			}
 		}
 
-		//cameraPosition = GetActors()[0]->GetPosition();
-		//cameraRotation = GetActors()[0]->GetRotation();
+		if (cameraType >= CameraType::Track)  cameraPosition = GetActors()[0]->GetPosition();
+		if (cameraType >= CameraType::Rotate) cameraRotation = GetActors()[0]->GetRotation();
 
 		break;
 	}
@@ -142,11 +148,8 @@ void Track::Draw(Graphics& graphics)
 {
 	Scene::Draw(graphics);
 
-	for (Wall& w : walls) w.DrawCollision(*this);
+	//for (Wall& w : walls) w.DrawCollision(*this);
 	//for (Wall& s : steps) s.DrawCollision(*this);
-
-	if (GetActors().size() > 1)
-		steps[dynamic_cast<Car*>(GetActors()[1])->GetCurrentStep()].DrawCollision(*this);
 
 	if (coordinates.size() > 0)
 	{
@@ -161,14 +164,14 @@ void Track::Draw(Graphics& graphics)
 		{
 			DrawLine(leftBounds[leftBounds.size() - 1], leftBounds[0]);
 
-			for (int i = 1; i < leftBounds.size(); i++) DrawLine(leftBounds[i - 1], leftBounds[i]);
+			for (int i = 1; i < leftBounds.size(); i++) DrawLine(leftBounds[i - 1], leftBounds[i], 4);
 		}
 
 		if (drawRightLine)
 		{
 			DrawLine(rightBounds[rightBounds.size() - 1], rightBounds[0]);
 
-			for (int i = 1; i < rightBounds.size(); i++) DrawLine(rightBounds[i - 1], rightBounds[i]);
+			for (int i = 1; i < rightBounds.size(); i++) DrawLine(rightBounds[i - 1], rightBounds[i], 4);
 		}
 	}
 }
@@ -218,7 +221,11 @@ void Track::AddRoad(Road road, bool connect)
 		if (connect) Connect();
 	}
 
-	if (coordinates.size() > 3) drawLeftLine = drawRightLine = true;
+	if (coordinates.size() > 3)
+	{
+		drawLeftLine = drawRightLine = true;
+		drawMiddleLine = false;
+	}
 }
 
 void Track::RemoveRoad()
@@ -231,8 +238,14 @@ void Track::RemoveRoad()
 	leftBounds.pop_back();
 	rightBounds.pop_back();
 
-	if (coordinates.size() > 3) Connect();
-	else drawLeftLine = drawRightLine = false;
+	if (coordinates.size() > 3) 
+		
+		Connect();
+	else
+	{
+		drawMiddleLine = true;
+		drawLeftLine = drawRightLine = false;
+	}
 }
 
 void Track::Connect()
@@ -276,33 +289,6 @@ void Track::SetState(StateType state)
 	switch (state)
 	{
 	case StateType::Play:
-
-		float startingAngle = atan(coordinates[1].x - coordinates[0].x, coordinates[1].y - coordinates[0].y);
-
-		float startingLeftAngle = startingAngle - (pi<float>() / 2);
-		int thirdWidth = widths[0] / 3;
-
-		// generate player 1
-		vec2 c1 = coordinates[0];
-		c1 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
-		p1.Init(c1, -startingAngle);
-
-		// generate player 2
-		vec2 c2 = coordinates[0];
-		c2 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
-		p2.Init(c2, -startingAngle);
-
-		// generate player 3
-		vec2 c3 = coordinates[0];
-		c3 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
-		c3 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
-		p3.Init(c3, -startingAngle);
-
-		// generate player 3
-		vec2 c4 = coordinates[0];
-		c4 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
-		c4 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
-		p4.Init(c4, -startingAngle);
 
 		for (int i = 0; i < coordinates.size(); i++)
 		{
@@ -349,22 +335,77 @@ void Track::SetState(StateType state)
 			walls.push_back(rw);
 		}
 
-		//cameraScale = vec2(2,2);
+		if (numberOfPlayers == 0 || numberOfPlayers == 2) SetCameraType(CameraType::None);
+		else SetCameraType(CameraType::Rotate);
 
-		p1.SetTarget(coordinates[1]);
-		p2.SetTarget(coordinates[1]);
-		p3.SetTarget(coordinates[1]);
-		p4.SetTarget(coordinates[1]);
+		float startingAngle = atan(coordinates[1].x - coordinates[0].x, coordinates[1].y - coordinates[0].y);
 
-		AddActor(p1);
-		AddActor(p2);
-		AddActor(p3);
-		AddActor(p4);
+		float startingLeftAngle = startingAngle - (pi<float>() / 2);
+		int thirdWidth = widths[0] / 3;
+
+		// generate player 1
+		vec2 c1 = coordinates[0];
+		c1 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+
+		if (numberOfPlayers > 0)
+		{
+			p1.Init(c1, -startingAngle);
+			p1.SetTarget(coordinates[1]);
+			AddActor(p1);
+		}
+		else
+		{
+			cp1.Init(c1, -startingAngle);
+			cp1.SetTarget(coordinates[1]);
+			AddActor(cp1);
+		}
+
+		// generate player 2
+		vec2 c2 = coordinates[0];
+		c2 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+
+		if (numberOfPlayers > 1)
+		{
+			p2.Init(c2, -startingAngle);
+			p2.SetTarget(coordinates[1]);
+			AddActor(p2);
+		}
+		else
+		{
+			cp2.Init(c2, -startingAngle);
+			cp2.SetTarget(coordinates[1]);
+			AddActor(cp2);
+		}
+
+		// generate player 3
+		vec2 c3 = coordinates[0];
+		c3 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+		c3 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
+		cp3.Init(c3, -startingAngle);
+
+		// generate player 3
+		vec2 c4 = coordinates[0];
+		c4 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+		c4 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
+		cp4.Init(c4, -startingAngle);
+
+		if (cameraType >= CameraType::Zoom) cameraScale = vec2(2,2);
+
+		cp3.SetTarget(coordinates[1]);
+		cp4.SetTarget(coordinates[1]);
+
+		AddActor(cp3);
+		AddActor(cp4);
 
 		break;
 	}
 
 	this->state = state;
+}
+
+void Track::SetCameraType(CameraType cameraType)
+{
+	this->cameraType = cameraType;
 }
 
 Track::Wall::Wall(vec2 position, float rotation, int height)

@@ -30,7 +30,7 @@ public:
 		float xScale = 1, float yScale = 1, float xOrigin = 0, float yOrigin = 0);
 	void DrawAnimation(Graphics::DrawRequest drawRequest, int layer = 0);
 
-	void DrawLine(vec2 p1, vec2 p2);
+	void DrawLine(vec2 p1, vec2 p2, int width);
 
 	int GetScreenWidth();
 	int GetScreenHeight();
@@ -46,6 +46,7 @@ private:
 
 	vector<vec2> line1s;
 	vector<vec2> line2s;
+	vector<int> lineWidths;
 
 	mat4 projectionMatrix;
 };

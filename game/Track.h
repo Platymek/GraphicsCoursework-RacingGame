@@ -23,6 +23,14 @@ public:
 		Normal
 	};
 
+	enum class CameraType
+	{
+		None,
+		Track,
+		Zoom,
+		Rotate,
+	};
+
 	Track();
 
 	void Process(Engine& engine, float delta) override;
@@ -36,6 +44,7 @@ public:
 
 	void SetDrawMiddleLine(bool drawMiddleLine);
 	void SetState(StateType state);
+	void SetCameraType(CameraType cameraType);
 
 
 private:
@@ -54,6 +63,8 @@ private:
 	vector<Wall> steps;
 
 	StateType state;
+	CameraType cameraType;
+	int numberOfPlayers;
 };
 
 struct Track::Road
