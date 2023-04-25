@@ -86,7 +86,7 @@ void Car::StartCollision(Actor* source)
 {
 	Actor::StartCollision(source);
 
-	float angle = GetAngleTo(*source);
+	float angle = GetAngleFrom(*source);
 
 	while (angle >  pi<float>()) angle -= CARTAU;
 	while (angle < -pi<float>()) angle += CARTAU;

@@ -2,8 +2,10 @@
 #include "Player.h"
 #include "Computer.h"
 
-Player p1(1);
-Computer p2;
+Computer p1(Computer::Steer);
+Computer p2(Computer::Steer);
+Computer p3(Computer::Steer);
+Computer p4(Computer::Steer);
 
 Track::Road::Road()
 {
@@ -106,8 +108,17 @@ void Track::Process(Engine& engine, float delta)
 
 			if (c)
 			{
-				int step = c->GetCurrentStep();
-				
+				int s = c->GetCurrentStep() + 1;
+				if (s >= steps.size()) s = 0;
+
+				if (steps[s].IsColliding(*c))
+				{
+					c->SetCurrentStep(s);
+
+					int ns = s + 1;
+					if (ns >= steps.size()) ns = 0;
+					c->SetTarget(steps[ns].GetPosition());
+				}
 			}
 		}
 
@@ -120,8 +131,8 @@ void Track::Process(Engine& engine, float delta)
 			}
 		}
 
-		cameraPosition = GetActors()[0]->GetPosition();
-		cameraRotation = GetActors()[0]->GetRotation();
+		//cameraPosition = GetActors()[0]->GetPosition();
+		//cameraRotation = GetActors()[0]->GetRotation();
 
 		break;
 	}
@@ -129,9 +140,13 @@ void Track::Process(Engine& engine, float delta)
 
 void Track::Draw(Graphics& graphics)
 {
+	Scene::Draw(graphics);
 
 	for (Wall& w : walls) w.DrawCollision(*this);
-	for (Wall& s : steps) s.DrawCollision(*this);
+	//for (Wall& s : steps) s.DrawCollision(*this);
+
+	if (GetActors().size() > 1)
+		steps[dynamic_cast<Car*>(GetActors()[1])->GetCurrentStep()].DrawCollision(*this);
 
 	if (coordinates.size() > 0)
 	{
@@ -156,7 +171,6 @@ void Track::Draw(Graphics& graphics)
 			for (int i = 1; i < rightBounds.size(); i++) DrawLine(rightBounds[i - 1], rightBounds[i]);
 		}
 	}
-	Scene::Draw(graphics);
 }
 
 void Track::Init()
@@ -278,6 +292,18 @@ void Track::SetState(StateType state)
 		c2 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
 		p2.Init(c2, -startingAngle);
 
+		// generate player 3
+		vec2 c3 = coordinates[0];
+		c3 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+		c3 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
+		p3.Init(c3, -startingAngle);
+
+		// generate player 3
+		vec2 c4 = coordinates[0];
+		c4 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+		c4 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
+		p4.Init(c4, -startingAngle);
+
 		for (int i = 0; i < coordinates.size(); i++)
 		{
 			int o = i == 0 ? coordinates.size() - 1 : (i - 1);
@@ -323,13 +349,17 @@ void Track::SetState(StateType state)
 			walls.push_back(rw);
 		}
 
-		cameraScale = vec2(2,2);
+		//cameraScale = vec2(2,2);
 
 		p1.SetTarget(coordinates[1]);
 		p2.SetTarget(coordinates[1]);
+		p3.SetTarget(coordinates[1]);
+		p4.SetTarget(coordinates[1]);
 
 		AddActor(p1);
 		AddActor(p2);
+		AddActor(p3);
+		AddActor(p4);
 
 		break;
 	}

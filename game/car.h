@@ -13,10 +13,10 @@ public:
 	void Process(Scene scene, Input input, float delta) override;
 
 	int GetCurrentStep();
-	void SetCurrentStep(int step);
+	virtual void SetCurrentStep(int step);
 
 	vec2 GetTarget();
-	void SetTarget(vec2 position);
+	virtual void SetTarget(vec2 position);
 
 	vec2 getVelocity();
 

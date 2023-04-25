@@ -33,6 +33,9 @@ public:
 	float GetAngleTo(vec2 position);
 	float GetAngleTo(Actor actor);
 
+	float GetAngleFrom(vec2 position);
+	float GetAngleFrom(Actor actor);
+
 	bool IsColliding(Actor source);
 	void DrawCollision(Scene& scene);
 	bool GetHasCollision();

@@ -136,13 +136,32 @@ int Actor::GetLayer()
 
 float Actor::GetAngleTo(vec2 position)
 {
-	return atan(this->position.x - position.x, position.y - this->position.y)
-		- GetRotation();;
+	float angle = atan(this->position.x - position.x, position.y - this->position.y);
+
+	while (angle > pi<float>()) angle -= TAU;
+	while (angle < -pi<float>()) angle += TAU;
+
+	return angle;
 }
 
 float Actor::GetAngleTo(Actor actor)
 {
 	return GetAngleTo(actor.GetPosition());
+}
+
+float Actor::GetAngleFrom(vec2 position)
+{
+	float angle = GetAngleTo(position) - GetRotation();
+
+	while (angle > pi<float>()) angle -= TAU;
+	while (angle < -pi<float>()) angle += TAU;
+
+	return angle;
+}
+
+float Actor::GetAngleFrom(Actor actor)
+{
+	return GetAngleFrom(actor.GetPosition());
 }
 
 string Actor::GetName()
