@@ -31,6 +31,7 @@ public:
 	void DrawAnimation(Graphics::DrawRequest drawRequest, int layer = 0);
 
 	void DrawLine(vec2 p1, vec2 p2, int width);
+	void DrawPolygon(vector<vec2> vertices, GLfloat red, GLfloat green, GLfloat blue);
 
 	int GetScreenWidth();
 	int GetScreenHeight();
@@ -47,6 +48,12 @@ private:
 	vector<vec2> line1s;
 	vector<vec2> line2s;
 	vector<int> lineWidths;
+
+	vector<vector<vec2>> polygons;
+
+	vector<GLfloat> polygonRed;
+	vector<GLfloat> polygonGreen;
+	vector<GLfloat> polygonBlue;
 
 	mat4 projectionMatrix;
 };

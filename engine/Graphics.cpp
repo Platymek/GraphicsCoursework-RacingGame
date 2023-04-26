@@ -90,22 +90,44 @@ void Graphics::Process()
 		layer.clear();
 	}
 
-	glBegin(GL_LINES);
 	for (int i = 0; i < line1s.size(); i++)
 	{
+		glBegin(GL_LINES);
+
 		glLineWidth(lineWidths[i]);
 
 		glVertex2f(line1s[i].x / screenWidth - 1, line1s[i].y / screenHeight - 1);
 		glVertex2f(line2s[i].x / screenWidth - 1, line2s[i].y / screenHeight - 1);
-	}
-	glEnd();
 
-	glBegin(GL_POLYGON);
-	glEnd();
+		glEnd();
+	}
+
+	for (int i = 0; i < polygons.size(); i++)
+	{
+		GLfloat colour[3] = { polygonRed[i], polygonGreen[i], polygonBlue[i], };
+		vector<vec2> vertices = polygons[i];
+
+		glBegin(GL_POLYGON);
+
+		glColor3fv(colour);
+
+		cout << colour[0] << endl;
+
+		for (int i = 0; i < vertices.size(); i++)
+			glVertex2f(vertices[i].x / screenWidth - 1, vertices[i].y / screenHeight - 1);
+
+		glEnd();
+	}
 
 	line1s.clear();
 	line2s.clear();
 	lineWidths.clear();
+
+	polygons.clear();
+
+	polygonRed.clear();
+	polygonGreen.clear();
+	polygonBlue.clear();
 }
 
 void Graphics::AddAnimation(string animationName, const char* folderName, const int numberOfFrames, 
@@ -146,6 +168,15 @@ void Graphics::DrawLine(vec2 v1, vec2 v2, int width)
 	line1s.push_back(v1n);
 	line2s.push_back(v2n);
 	lineWidths.push_back(width);
+}
+
+void Graphics::DrawPolygon(vector<vec2> vertices, GLfloat red, GLfloat green, GLfloat blue)
+{
+	polygons.push_back(vertices);
+
+	polygonRed.push_back(red);
+	polygonGreen.push_back(green);
+	polygonBlue.push_back(blue);
 }
 
 int Graphics::GetScreenWidth()

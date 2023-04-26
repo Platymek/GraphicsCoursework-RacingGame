@@ -114,6 +114,9 @@ void display()
 
 	//if (input.IsMouseDown()) cout << input.GetMousePosition().x << ", " << input.GetMousePosition().y << endl;
 
+	//vector<vec2> poly = vector<vec2>({ vec2(32, 32), vec2(128, 32), vec2(128, 128), vec2(32, 128), });
+	//graphics.DrawPolygon(poly, 1.f, 1.f, 1.f);
+
 	engine.Process();
 
 	glDisable(GL_BLEND);

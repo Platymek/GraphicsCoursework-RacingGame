@@ -150,6 +150,10 @@ void Track::Draw(Graphics& graphics)
 
 	//for (Wall& w : walls) w.DrawCollision(*this);
 	//for (Wall& s : steps) s.DrawCollision(*this);
+	
+	vector<vec2> poly = vector<vec2>({ vec2(32, 32), vec2(128, 32), vec2(128, 128), vec2(32, 128), });
+	DrawPolygon(poly, 0.3f, 0.3f, 0.3f);
+
 
 	if (coordinates.size() > 0)
 	{

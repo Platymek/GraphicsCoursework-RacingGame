@@ -28,6 +28,7 @@ public:
 	vector<Actor*>& GetActors();
 
 	void DrawLine(vec2 p1, vec2 p2, int width = 1);
+	void DrawPolygon(vector<vec2> vertices, GLfloat red, GLfloat green, GLfloat blue);
 
 
 protected:
@@ -43,4 +44,10 @@ private:
 	vector<vec4> line1s;
 	vector<vec4> line2s;
 	vector<int> lineWidths;
+
+	vector<vector<vec2>> polygons;
+
+	vector<GLfloat> polygonRed;
+	vector<GLfloat> polygonGreen;
+	vector<GLfloat> polygonBlue;
 };

@@ -76,9 +76,30 @@ void Scene::Draw(Graphics& graphics)
 		graphics.DrawLine(v1, v2, lineWidths[i]);
 	}
 
+	for (int i = 0; i < polygons.size(); i++)
+	{
+		vector<vec2> vertices = polygons[i];
+		vector<vec2> newVertices;
+
+		for (int i = 0; i < vertices.size(); i++)
+		{
+			vec4 dv = c * vec4(vertices[i].x, vertices[i].y, 1.f, 1.f);
+			vec2 v = vec2(dv.x, dv.y);
+			newVertices.push_back(v);
+		}
+
+		graphics.DrawPolygon(newVertices, polygonRed[i], polygonGreen[i], polygonBlue[i]);
+	}
+
 	line1s.clear();
 	line2s.clear();
 	lineWidths.clear();
+
+	polygons.clear();
+
+	polygonRed.clear();
+	polygonGreen.clear();
+	polygonBlue.clear();
 }
 
 void Scene::AddActor(Actor& actor)
@@ -97,4 +118,13 @@ void Scene::DrawLine(vec2 v1, vec2 v2, int width)
 
 	line1s.push_back(vec4(v1.x, v1.y, 1.f, 1.f));
 	line2s.push_back(vec4(v2.x, v2.y, 1.f, 1.f));
+}
+
+void Scene::DrawPolygon(vector<vec2> vertices, GLfloat red, GLfloat green, GLfloat blue)
+{
+	polygons.push_back(vertices);
+
+	polygonRed.push_back(red);
+	polygonGreen.push_back(green);
+	polygonBlue.push_back(blue);
 }
