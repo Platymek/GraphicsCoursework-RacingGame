@@ -100,8 +100,6 @@ void Graphics::Process()
 
 		glColor3fv(colour);
 
-		cout << colour[0] << endl;
-
 		for (int i = 0; i < vertices.size(); i++)
 			glVertex2f(vertices[i].x / screenWidth - 1, vertices[i].y / screenHeight - 1);
 

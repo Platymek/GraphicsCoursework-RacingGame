@@ -49,7 +49,7 @@ public:
 
 private:
 
-	bool connected, drawMiddleLine, drawLeftLine, drawRightLine, editting;
+	bool connected, drawMiddleLine, drawLeftLine, drawRightLine, editting, dontDarkNext;
 
 	vector<vec2> coordinates;
 	vector<int> widths;

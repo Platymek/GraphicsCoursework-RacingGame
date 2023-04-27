@@ -48,7 +48,7 @@ Track::Track() : Scene()
 	connected = false;
 	drawMiddleLine = true;
 
-	drawLeftLine = drawRightLine = false;
+	drawLeftLine = drawRightLine = dontDarkNext = false;
 	numberOfPlayers = 0;
 
 	SetState(StateType::Edit);
@@ -93,7 +93,7 @@ void Track::Process(Engine& engine, float delta)
 
 				if (engine.GetInput()->IsMouseLeftDown())
 				{
-					Road r = Road(mousex, mousey, 64, 0);
+					Road r = Road(mousex, mousey, 32, 0);
 					AddRoad(r, true);
 				}
 			}
@@ -196,7 +196,18 @@ void Track::Draw(Graphics& graphics)
 			poly.push_back(rightBounds[o]);
 			poly.push_back(rightBounds[i]);
 
-			DrawPolygon(poly, 0.11f, 0.17f, 0.33f);
+			float darkDistance = (1.5f * widths[i]) * (1.5f * widths[i]);
+
+			float dx = coordinates[i].x - coordinates[o].x;
+			float dy = coordinates[i].y - coordinates[o].y;
+			float distance = dx * dx + dy * dy;
+
+			dontDarkNext = !dontDarkNext && darkDistance > distance;
+
+			if (dontDarkNext)
+				DrawPolygon(poly, 17.f / 255, 29.f / 255, 53.f / 255);
+			else
+				DrawPolygon(poly, 29.f / 255, 43.f / 255, 83.f / 255);
 		}
 
 		break;

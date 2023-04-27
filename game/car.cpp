@@ -22,7 +22,7 @@ Car::Car() : Actor("Car", vec2(0,0), 0, 0, 16, 20)
 	minSpeed = -32;
 	SetMinSpeedMultiplier();
 
-	steerSpeed = 1;
+	steerSpeed = pi<float>() / 2;
 	SetSteerSpeedMultiplier();
 
 	speed = 0;
