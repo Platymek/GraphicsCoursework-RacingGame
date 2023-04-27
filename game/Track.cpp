@@ -150,33 +150,56 @@ void Track::Draw(Graphics& graphics)
 
 	//for (Wall& w : walls) w.DrawCollision(*this);
 	//for (Wall& s : steps) s.DrawCollision(*this);
-	
-	vector<vec2> poly = vector<vec2>({ vec2(32, 32), vec2(128, 32), vec2(128, 128), vec2(32, 128), });
-	DrawPolygon(poly, 0.3f, 0.3f, 0.3f);
 
-
-	if (coordinates.size() > 0)
+	switch (state)
 	{
-		if (drawMiddleLine)
-		{
-			DrawLine(coordinates[0], coordinates[coordinates.size() - 1]);
+	case StateType::Edit:
 
-			for (int i = 1; i < coordinates.size(); i++) DrawLine(coordinates[i - 1], coordinates[i]);
+		if (coordinates.size() > 0)
+		{
+			if (drawMiddleLine)
+			{
+				DrawLine(coordinates[0], coordinates[coordinates.size() - 1]);
+
+				for (int i = 1; i < coordinates.size(); i++) DrawLine(coordinates[i - 1], coordinates[i]);
+			}
+
+			if (drawLeftLine)
+			{
+				DrawLine(leftBounds[leftBounds.size() - 1], leftBounds[0]);
+
+				for (int i = 1; i < leftBounds.size(); i++) DrawLine(leftBounds[i - 1], leftBounds[i], 4);
+			}
+
+			if (drawRightLine)
+			{
+				DrawLine(rightBounds[rightBounds.size() - 1], rightBounds[0]);
+
+				for (int i = 1; i < rightBounds.size(); i++) DrawLine(rightBounds[i - 1], rightBounds[i], 4);
+			}
 		}
 
-		if (drawLeftLine)
-		{
-			DrawLine(leftBounds[leftBounds.size() - 1], leftBounds[0]);
+		break;
 
-			for (int i = 1; i < leftBounds.size(); i++) DrawLine(leftBounds[i - 1], leftBounds[i], 4);
+	case StateType::Play:
+
+		graphics.SetBackgroundColours(0.f, 135.f / 255, 81.f / 255);
+
+		for (int i = 0; i < leftBounds.size(); i++)
+		{
+			int o = i + 1 >= leftBounds.size() ? 0 : i + 1;
+			vector<vec2> poly;
+
+			poly.push_back(leftBounds[i]);
+			poly.push_back(leftBounds[o]);
+
+			poly.push_back(rightBounds[o]);
+			poly.push_back(rightBounds[i]);
+
+			DrawPolygon(poly, 0.11f, 0.17f, 0.33f);
 		}
 
-		if (drawRightLine)
-		{
-			DrawLine(rightBounds[rightBounds.size() - 1], rightBounds[0]);
-
-			for (int i = 1; i < rightBounds.size(); i++) DrawLine(rightBounds[i - 1], rightBounds[i], 4);
-		}
+		break;
 	}
 }
 
@@ -339,8 +362,12 @@ void Track::SetState(StateType state)
 			walls.push_back(rw);
 		}
 
+		// set camera
 		if (numberOfPlayers == 0 || numberOfPlayers == 2) SetCameraType(CameraType::None);
 		else SetCameraType(CameraType::Rotate);
+
+
+		// generate players //
 
 		float startingAngle = atan(coordinates[1].x - coordinates[0].x, coordinates[1].y - coordinates[0].y);
 

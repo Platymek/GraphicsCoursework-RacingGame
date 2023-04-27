@@ -79,17 +79,6 @@ void Graphics::Init()
 
 void Graphics::Process()
 {
-	for (forward_list<DrawRequest>& layer : drawRequests)
-	{
-		for (DrawRequest drawRequest : layer)
-		{
-			animations[drawRequest.getAnimationName()].Render(projectionMatrix, drawRequest.getModelViewMatrix(),
-				drawRequest.getTime());
-		}
-	
-		layer.clear();
-	}
-
 	for (int i = 0; i < line1s.size(); i++)
 	{
 		glBegin(GL_LINES);
@@ -117,6 +106,17 @@ void Graphics::Process()
 			glVertex2f(vertices[i].x / screenWidth - 1, vertices[i].y / screenHeight - 1);
 
 		glEnd();
+	}
+
+	for (forward_list<DrawRequest>& layer : drawRequests)
+	{
+		for (DrawRequest drawRequest : layer)
+		{
+			animations[drawRequest.getAnimationName()].Render(projectionMatrix, drawRequest.getModelViewMatrix(),
+				drawRequest.getTime());
+		}
+
+		layer.clear();
 	}
 
 	line1s.clear();
@@ -189,4 +189,7 @@ int Graphics::GetScreenHeight()
 	return screenHeight;
 }
 
-
+void Graphics::SetBackgroundColours(GLfloat red, GLfloat green, GLfloat blue)
+{
+	glClearColor(red, green, blue, 1.f);
+}

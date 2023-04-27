@@ -57,6 +57,9 @@ void Scene::Draw(Graphics& graphics)
 		}
 	}
 
+
+	// draw polygons //
+
 	mat4 c = mat4(1.f);
 
 	c = translate(c, vec3(graphics.GetScreenWidth() / 2, graphics.GetScreenHeight() / 2, 0));
@@ -76,6 +79,19 @@ void Scene::Draw(Graphics& graphics)
 		graphics.DrawLine(v1, v2, lineWidths[i]);
 	}
 
+
+	// draw polygons //
+
+	mat4 p = mat4(1.f);
+
+	p = scale(p, vec3(2, 2, 1.f));
+
+	p = translate(p, vec3(graphics.GetScreenWidth() / 2, graphics.GetScreenHeight() / 2, 0));
+
+	p = scale(p, vec3(cameraScale.x, cameraScale.y, 1.f));
+	p = rotate(p, -cameraRotation, vec3(0, 0, 1.f));
+	p = translate(p, vec3(-cameraPosition.x, -cameraPosition.y, 0));
+
 	for (int i = 0; i < polygons.size(); i++)
 	{
 		vector<vec2> vertices = polygons[i];
@@ -83,7 +99,7 @@ void Scene::Draw(Graphics& graphics)
 
 		for (int i = 0; i < vertices.size(); i++)
 		{
-			vec4 dv = c * vec4(vertices[i].x, vertices[i].y, 1.f, 1.f);
+			vec4 dv = p * vec4(vertices[i].x, vertices[i].y, 1.f, 1.f);
 			vec2 v = vec2(dv.x, dv.y);
 			newVertices.push_back(v);
 		}

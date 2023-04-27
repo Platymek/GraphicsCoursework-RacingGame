@@ -35,6 +35,7 @@ public:
 
 	int GetScreenWidth();
 	int GetScreenHeight();
+	void SetBackgroundColours(GLfloat red, GLfloat green, GLfloat blue);
 
 
 private:
