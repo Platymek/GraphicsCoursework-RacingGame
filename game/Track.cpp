@@ -36,6 +36,8 @@ Track::Track() : Scene()
 {
 	this->cameraType = CameraType::Rotate;
 
+	nextRoadWidth = 48;
+
 	coordinates = vector<vec2>();
 	widths = vector<int>();
 	angles = vector<float>();
@@ -93,7 +95,7 @@ void Track::Process(Engine& engine, float delta)
 
 				if (engine.GetInput()->IsMouseLeftDown())
 				{
-					Road r = Road(mousex, mousey, 32, 0);
+					Road r = Road(mousex, mousey, nextRoadWidth, 0);
 					AddRoad(r, true);
 				}
 			}
@@ -196,7 +198,7 @@ void Track::Draw(Graphics& graphics)
 			poly.push_back(rightBounds[o]);
 			poly.push_back(rightBounds[i]);
 
-			float darkDistance = (1.5f * widths[i]) * (1.5f * widths[i]);
+			float darkDistance = (2.f * widths[i]) * (2.f * widths[i]);
 
 			float dx = coordinates[i].x - coordinates[o].x;
 			float dy = coordinates[i].y - coordinates[o].y;

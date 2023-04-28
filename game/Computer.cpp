@@ -28,7 +28,7 @@ void Computer::Process(Scene scene, Input input, float delta)
 
 		if (!turned)
 		{
-			float angleFrom = 0.1f * (int)(GetAngleFrom(GetTarget()) * 10);
+			float angleFrom = GetAngleFrom(GetTarget()); //0.1f * (int)(GetAngleFrom(GetTarget()) * 10);
 
 			if (left)
 			{

@@ -12,6 +12,8 @@ using namespace std;
 
 #include "..\GL\freeglut.h"
 #include "..\FreeImage.h"
+//#include "..\FreeType.h"
+//using namespace freetype;
 
 #include "..\engine\Graphics.h"
 #include "..\engine\Animation.h"

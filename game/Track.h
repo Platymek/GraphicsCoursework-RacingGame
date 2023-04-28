@@ -51,6 +51,7 @@ private:
 
 	bool connected, drawMiddleLine, drawLeftLine, drawRightLine, editting, dontDarkNext;
 
+	int nextRoadWidth;
 	vector<vec2> coordinates;
 	vector<int> widths;
 	vector<RoadType> types;
