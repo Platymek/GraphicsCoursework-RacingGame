@@ -9,7 +9,7 @@
 #include <iostream>
 
 //Include our header file.
-#include "freetype.h"
+#include "FreeType.h"
 
 
 namespace freetype {

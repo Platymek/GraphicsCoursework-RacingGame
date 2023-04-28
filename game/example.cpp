@@ -12,8 +12,8 @@ using namespace std;
 
 #include "..\GL\freeglut.h"
 #include "..\FreeImage.h"
-//#include "..\FreeType.h"
-//using namespace freetype;
+#include "..\FreeType.h"
+using namespace freetype;
 
 #include "..\engine\Graphics.h"
 #include "..\engine\Animation.h"
@@ -42,6 +42,7 @@ Track scene;
 Graphics graphics(screenWidth, screenHeight);
 Engine engine;
 OBB obb = OBB(64, 64);
+Font font;
 
 Input input;
 
@@ -82,6 +83,7 @@ void init()
 	graphics.AddAnimation("Car/idle", "./textures/Car/idle", 1, 1);
 	graphics.AddAnimation("Car/move", "./textures/Car/move", 2, 0.2f);
 	graphics.AddAnimation("Car/boost", "./textures/Car/boost", 2, 0.2f);
+	graphics.AddFont("roboto", "./fonts/Roboto-Regular.ttf", 14);
 
 	scene.Init();
 
@@ -93,16 +95,26 @@ void init()
 	input.AddKey("down2",	GLUT_KEY_DOWN,	true);
 	input.AddKey("right2",	GLUT_KEY_RIGHT, true);
 
-	input.AddKey("up1",		'w', false);
-	input.AddKey("left1",   'a', false);
-	input.AddKey("down1",	's', false);
-	input.AddKey("right1",	'd', false);
+	input.AddKey("up1", 'w', false);
+	input.AddKey("left1", 'a', false);
+	input.AddKey("down1", 's', false);
+	input.AddKey("right1", 'd', false);
+
+	input.AddKey("uiUp", 'w', false);
+	input.AddKey("uiLeft", 'a', false);
+	input.AddKey("uiDown", 's', false);
+	input.AddKey("uiRight", 'd', false);
+	input.AddKey("ui0", '0', false);
+	input.AddKey("ui1", '1', false);
+	input.AddKey("ui2", '2', false);
 
 	input.AddKey("start", 13, false);
 
 	engine.Init(graphics, scene, input);
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	//font.init("./fonts/Roboto-Regular.ttf", 16);
 }
 
 void display()
@@ -113,11 +125,6 @@ void display()
 	glEnable(GL_BLEND);
 
 	t += 0.0069;
-
-	//if (input.IsMouseDown()) cout << input.GetMousePosition().x << ", " << input.GetMousePosition().y << endl;
-
-	//vector<vec2> poly = vector<vec2>({ vec2(32, 32), vec2(128, 32), vec2(128, 128), vec2(32, 128), });
-	//graphics.DrawPolygon(poly, 1.f, 1.f, 1.f);
 
 	engine.Process();
 

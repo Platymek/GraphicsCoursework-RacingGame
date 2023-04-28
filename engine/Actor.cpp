@@ -83,10 +83,10 @@ void Actor::ProcessCollision(Actor& source)
 
 void Actor::DrawCollision(Scene& scene)
 {
-	scene.DrawLine(collision.GetVertex(0), collision.GetVertex(1));
-	scene.DrawLine(collision.GetVertex(1), collision.GetVertex(1));
-	scene.DrawLine(collision.GetVertex(2), collision.GetVertex(1));
-	scene.DrawLine(collision.GetVertex(3), collision.GetVertex(0));
+	scene.DrawLine(collision.GetVertex(0), collision.GetVertex(1), 1, 1, 1);
+	scene.DrawLine(collision.GetVertex(1), collision.GetVertex(1), 1, 1, 1);
+	scene.DrawLine(collision.GetVertex(2), collision.GetVertex(1), 1, 1, 1);
+	scene.DrawLine(collision.GetVertex(3), collision.GetVertex(0), 1, 1, 1);
 }
 
 bool Actor::GetHasCollision()

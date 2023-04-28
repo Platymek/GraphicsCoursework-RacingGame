@@ -62,11 +62,7 @@ void Track::Process(Engine& engine, float delta)
 	{
 	case StateType::Edit:
 
-		if (engine.GetInput()->IsKeyReleased("start") && coordinates.size() > 3)
-
-			SetState(StateType::Play);
-
-		else if (engine.GetInput()->IsMouseRightPressed() && coordinates.size() > 0)
+		if (engine.GetInput()->IsMouseRightPressed() && coordinates.size() > 0)
 
 			RemoveRoad();
 		else
@@ -91,7 +87,8 @@ void Track::Process(Engine& engine, float delta)
 
 			if (valid)
 			{
-				if (coordinates.size() > 0) DrawLine(coordinates[coordinates.size() - 1], vec2(mousex, mousey));
+				if (coordinates.size() > 0) DrawLine(coordinates[coordinates.size() - 1], vec2(mousex, mousey), 
+					editLineColour[0], editLineColour[1], editLineColour[2]);
 
 				if (engine.GetInput()->IsMouseLeftDown())
 				{
@@ -99,6 +96,25 @@ void Track::Process(Engine& engine, float delta)
 					AddRoad(r, true);
 				}
 			}
+		}
+
+		if (engine.GetInput()->IsKeyPressed("uiLeft") && nextRoadWidth > 32) nextRoadWidth -= 8;
+		if (engine.GetInput()->IsKeyPressed("uiRight") && nextRoadWidth < 72) nextRoadWidth += 8;
+
+		if (engine.GetInput()->IsKeyReleased("ui0"))
+		{
+			numberOfPlayers = 0;
+			SetState(StateType::Play);
+		}
+		else if (engine.GetInput()->IsKeyReleased("ui1"))
+		{
+			numberOfPlayers = 1;
+			SetState(StateType::Play);
+		}
+		else if (engine.GetInput()->IsKeyReleased("ui2"))
+		{
+			numberOfPlayers = 2;
+			SetState(StateType::Play);
 		}
 
 		cameraPosition = vec2(engine.GetGraphics()->GetScreenWidth() / 2, 
@@ -153,31 +169,57 @@ void Track::Draw(Graphics& graphics)
 	//for (Wall& w : walls) w.DrawCollision(*this);
 	//for (Wall& s : steps) s.DrawCollision(*this);
 
+	string roadWidthMessage = "Current road width - ";
+	roadWidthMessage += to_string(nextRoadWidth);
+
 	switch (state)
 	{
 	case StateType::Edit:
+
+		graphics.DrawFont("roboto", "Draw your track to the screen:"
+			"\nLeft Click - Place Track"
+			"\nRight Click - Undo Placement"
+			"\nA - Increase Road Width"
+			"\nD - Decrease Road Width",
+			vec2(32, graphics.GetScreenHeight() - 32));
+
+		graphics.DrawFont("roboto", "Press to play:"
+			"\n0 - Play 4 AI"
+			"\n1 - Play 1 Player, 3 AI"
+			"\n2 - Play 2 Player, 2 AI",
+			vec2(graphics.GetScreenWidth() / 2, graphics.GetScreenHeight() - 32));
+
+		graphics.DrawFont("roboto", roadWidthMessage.c_str(), vec2(32, 32));
+
+		graphics.SetBackgroundColours(editBgColour[0], editBgColour[1], editBgColour[2]);
 
 		if (coordinates.size() > 0)
 		{
 			if (drawMiddleLine)
 			{
-				DrawLine(coordinates[0], coordinates[coordinates.size() - 1]);
+				DrawLine(coordinates[0], coordinates[coordinates.size() - 1],
+					editLineColour[0], editLineColour[1], editLineColour[2]);
 
-				for (int i = 1; i < coordinates.size(); i++) DrawLine(coordinates[i - 1], coordinates[i]);
+				for (int i = 1; i < coordinates.size(); i++) DrawLine(coordinates[i - 1], coordinates[i],
+					editLineColour[0], editLineColour[1], editLineColour[2]);
 			}
 
 			if (drawLeftLine)
 			{
-				DrawLine(leftBounds[leftBounds.size() - 1], leftBounds[0]);
+				DrawLine(leftBounds[leftBounds.size() - 1], leftBounds[0],
+					editLineColour[0], editLineColour[1], editLineColour[2]);
 
-				for (int i = 1; i < leftBounds.size(); i++) DrawLine(leftBounds[i - 1], leftBounds[i], 4);
+				for (int i = 1; i < leftBounds.size(); i++) DrawLine(leftBounds[i - 1], leftBounds[i],
+					editLineColour[0], editLineColour[1], editLineColour[2]);
 			}
 
 			if (drawRightLine)
 			{
-				DrawLine(rightBounds[rightBounds.size() - 1], rightBounds[0]);
+				DrawLine(rightBounds[rightBounds.size() - 1], rightBounds[0],
+					editLineColour[0], editLineColour[1], editLineColour[2]);
 
-				for (int i = 1; i < rightBounds.size(); i++) DrawLine(rightBounds[i - 1], rightBounds[i], 4);
+				for (int i = 1; i < rightBounds.size(); i++) DrawLine(rightBounds[i - 1], rightBounds[i],
+					editLineColour[0], editLineColour[1], editLineColour[2]);
 			}
 		}
 
@@ -186,6 +228,34 @@ void Track::Draw(Graphics& graphics)
 	case StateType::Play:
 
 		graphics.SetBackgroundColours(0.f, 135.f / 255, 81.f / 255);
+
+		if (numberOfPlayers >= 1)
+		{
+			vector<vec2> controls1Back =
+			{
+				vec2(32, graphics.GetScreenHeight() * 2 - 16),
+				vec2(graphics.GetScreenWidth() - 260, graphics.GetScreenHeight() * 2 - 16),
+				vec2(graphics.GetScreenWidth() - 260, graphics.GetScreenHeight() * 2 - 260),
+				vec2(32, graphics.GetScreenHeight() * 2 - 260),
+			};
+
+			graphics.DrawPolygon(controls1Back, 0, 0, 0);
+
+			graphics.DrawFont("roboto", "Player 1 Controls:"
+				"\nW - Accelerate"
+				"\nA - Steer Left"
+				"\nS - Reverse"
+				"\nD - Seer Right",
+				vec2(32, graphics.GetScreenHeight() - 32));
+		}
+
+		if (numberOfPlayers >= 2)
+			graphics.DrawFont("roboto", "Player 2 Controls:"
+				"\nUp - Accelerate"
+				"\nLeft - Steer Left"
+				"\nDown - Reverse"
+				"\nRight - Seer Right",
+				vec2(graphics.GetScreenWidth() / 2, graphics.GetScreenHeight() - 32));
 
 		for (int i = 0; i < leftBounds.size(); i++)
 		{

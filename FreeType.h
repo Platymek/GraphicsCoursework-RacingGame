@@ -10,8 +10,8 @@
 
 //OpenGL Headers 
 #include <windows.h>		//(the GL headers need it)
-#include "gl/glew.h"
-#include "gl/wglew.h"
+#include "GL/glew.h"
+#include "GL/wglew.h"
 
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"

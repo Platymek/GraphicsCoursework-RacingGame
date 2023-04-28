@@ -66,6 +66,9 @@ private:
 	StateType state;
 	CameraType cameraType;
 	int numberOfPlayers;
+
+	const GLfloat editBgColour[3] = { 1.f / 255, 1.f / 255, 20.f / 255 };
+	const GLfloat editLineColour[3] = { 0.f / 255, 228.f / 255, 54.f / 255 };
 };
 
 struct Track::Road

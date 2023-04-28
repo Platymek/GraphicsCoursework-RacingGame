@@ -58,7 +58,7 @@ void Scene::Draw(Graphics& graphics)
 	}
 
 
-	// draw polygons //
+	// draw lines //
 
 	mat4 c = mat4(1.f);
 
@@ -76,7 +76,7 @@ void Scene::Draw(Graphics& graphics)
 		vec2 v1 = vec2(dv1.x, dv1.y);
 		vec2 v2 = vec2(dv2.x, dv2.y);
 
-		graphics.DrawLine(v1, v2, lineWidths[i]);
+		graphics.DrawLine(v1, v2, lineRed[i], lineGreen[i], lineBlue[i]);
 	}
 
 
@@ -109,10 +109,11 @@ void Scene::Draw(Graphics& graphics)
 
 	line1s.clear();
 	line2s.clear();
-	lineWidths.clear();
+	lineRed.clear();
+	lineGreen.clear();
+	lineBlue.clear();
 
 	polygons.clear();
-
 	polygonRed.clear();
 	polygonGreen.clear();
 	polygonBlue.clear();
@@ -128,12 +129,14 @@ vector<Actor*>& Scene::GetActors()
 	return actors;
 }
 
-void Scene::DrawLine(vec2 v1, vec2 v2, int width)
+void Scene::DrawLine(vec2 p1, vec2 p2, GLfloat red, GLfloat green, GLfloat blue)
 {
-	lineWidths.push_back(width);
+	line1s.push_back(vec4(p1.x, p1.y, 1.f, 1.f));
+	line2s.push_back(vec4(p2.x, p2.y, 1.f, 1.f));
 
-	line1s.push_back(vec4(v1.x, v1.y, 1.f, 1.f));
-	line2s.push_back(vec4(v2.x, v2.y, 1.f, 1.f));
+	lineRed.push_back(red);
+	lineGreen.push_back(green);
+	lineBlue.push_back(blue);
 }
 
 void Scene::DrawPolygon(vector<vec2> vertices, GLfloat red, GLfloat green, GLfloat blue)

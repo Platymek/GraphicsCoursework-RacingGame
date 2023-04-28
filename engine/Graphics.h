@@ -11,6 +11,9 @@
 #include "..\glm\glm.hpp"
 #include "..\glm\gtc\matrix_transform.hpp"
 
+#include "../FreeType.h"
+using namespace freetype;
+
 using namespace std;
 
 class Graphics
@@ -24,13 +27,15 @@ public:
 
 	void Init();
 	void Process();
+	void AddFont(string name, const char* directory, unsigned int size);
+	void DrawFont(string name, const char* text, vec2 position);
 	void AddAnimation(string animationName, const char* folderName, const int numberOfFrames, const float period);
 
 	void DrawAnimation(string animationName, int x, int y, float time = 0, int layer = 0, float rotation = 0,
 		float xScale = 1, float yScale = 1, float xOrigin = 0, float yOrigin = 0);
 	void DrawAnimation(Graphics::DrawRequest drawRequest, int layer = 0);
 
-	void DrawLine(vec2 p1, vec2 p2, int width);
+	void DrawLine(vec2 v1, vec2 v2, GLfloat red, GLfloat green, GLfloat blue);
 	void DrawPolygon(vector<vec2> vertices, GLfloat red, GLfloat green, GLfloat blue);
 
 	int GetScreenWidth();
@@ -41,6 +46,7 @@ public:
 private:
 
 	map<string, Animation> animations;
+	map<string, Font> fonts;
 	int screenWidth, screenHeight;
 
 	/// <summary>5 layers</summary>
@@ -48,13 +54,18 @@ private:
 
 	vector<vec2> line1s;
 	vector<vec2> line2s;
-	vector<int> lineWidths;
+	vector<GLfloat> lineRed;
+	vector<GLfloat> lineGreen;
+	vector<GLfloat> lineBlue;
 
 	vector<vector<vec2>> polygons;
-
 	vector<GLfloat> polygonRed;
 	vector<GLfloat> polygonGreen;
 	vector<GLfloat> polygonBlue;
+
+	vector<string> texts;
+	vector<string> textNames;
+	vector<vec2> textPositions;
 
 	mat4 projectionMatrix;
 };

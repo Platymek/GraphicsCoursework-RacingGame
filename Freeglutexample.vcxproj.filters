@@ -29,6 +29,7 @@
     <ClCompile Include="game\Track.cpp" />
     <ClCompile Include="game\Wall.cpp" />
     <ClCompile Include="game\Computer.cpp" />
+    <ClCompile Include="FreeType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\ImageLoading.h">
@@ -56,6 +57,7 @@
     <ClInclude Include="game\Track.h" />
     <ClInclude Include="game\Wall.h" />
     <ClInclude Include="game\Computer.h" />
+    <ClInclude Include="FreeType.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

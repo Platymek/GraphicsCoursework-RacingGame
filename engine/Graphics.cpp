@@ -79,18 +79,6 @@ void Graphics::Init()
 
 void Graphics::Process()
 {
-	for (int i = 0; i < line1s.size(); i++)
-	{
-		glBegin(GL_LINES);
-
-		glLineWidth(lineWidths[i]);
-
-		glVertex2f(line1s[i].x / screenWidth - 1, line1s[i].y / screenHeight - 1);
-		glVertex2f(line2s[i].x / screenWidth - 1, line2s[i].y / screenHeight - 1);
-
-		glEnd();
-	}
-
 	for (int i = 0; i < polygons.size(); i++)
 	{
 		GLfloat colour[3] = { polygonRed[i], polygonGreen[i], polygonBlue[i], };
@@ -106,6 +94,20 @@ void Graphics::Process()
 		glEnd();
 	}
 
+	for (int i = 0; i < line1s.size(); i++)
+	{
+		GLfloat colour[3] = { lineRed[i], lineGreen[i], lineBlue[i], };
+
+		glBegin(GL_LINES);
+
+		glColor3fv(colour);
+
+		glVertex2f(line1s[i].x / screenWidth - 1, line1s[i].y / screenHeight - 1);
+		glVertex2f(line2s[i].x / screenWidth - 1, line2s[i].y / screenHeight - 1);
+
+		glEnd();
+	}
+
 	for (forward_list<DrawRequest>& layer : drawRequests)
 	{
 		for (DrawRequest drawRequest : layer)
@@ -117,15 +119,38 @@ void Graphics::Process()
 		layer.clear();
 	}
 
+	for (int i = 0; i < texts.size(); i++)
+	{
+		print(projectionMatrix, fonts[textNames[i]], textPositions[i].x, textPositions[i].y, texts[i].c_str());
+	}
+
 	line1s.clear();
 	line2s.clear();
-	lineWidths.clear();
+	lineRed.clear();
+	lineGreen.clear();
+	lineBlue.clear();
 
 	polygons.clear();
-
 	polygonRed.clear();
 	polygonGreen.clear();
 	polygonBlue.clear();
+
+	texts.clear();
+	textNames.clear();
+	textPositions.clear();
+}
+
+void Graphics::AddFont(string name, const char* directory, unsigned int size)
+{
+	fonts.insert({ name, Font() });
+	fonts[name].init(directory, size);
+}
+
+void Graphics::DrawFont(string name, const char* text, vec2 position)
+{
+	textNames.push_back(name);
+	texts.push_back(text);
+	textPositions.push_back(position);
 }
 
 void Graphics::AddAnimation(string animationName, const char* folderName, const int numberOfFrames, 
@@ -158,14 +183,17 @@ void Graphics::DrawAnimation(Graphics::DrawRequest drawRequest, int layer)
 	drawRequests[layer].push_front(drawRequest);
 }
 
-void Graphics::DrawLine(vec2 v1, vec2 v2, int width)
+void Graphics::DrawLine(vec2 v1, vec2 v2, GLfloat red, GLfloat green, GLfloat blue)
 {
 	vec2 v1n = (v1 - vec2(1)) * vec2(2);
 	vec2 v2n = (v2 - vec2(1)) * vec2(2);
 
 	line1s.push_back(v1n);
 	line2s.push_back(v2n);
-	lineWidths.push_back(width);
+
+	lineRed.push_back(red);
+	lineGreen.push_back(green);
+	lineBlue.push_back(blue);
 }
 
 void Graphics::DrawPolygon(vector<vec2> vertices, GLfloat red, GLfloat green, GLfloat blue)

@@ -27,7 +27,7 @@ public:
 	void AddActor(Actor& actor);
 	vector<Actor*>& GetActors();
 
-	void DrawLine(vec2 p1, vec2 p2, int width = 1);
+	void DrawLine(vec2 p1, vec2 p2, GLfloat red, GLfloat green, GLfloat blue);
 	void DrawPolygon(vector<vec2> vertices, GLfloat red, GLfloat green, GLfloat blue);
 
 
@@ -43,10 +43,11 @@ private:
 
 	vector<vec4> line1s;
 	vector<vec4> line2s;
-	vector<int> lineWidths;
+	vector<GLfloat> lineRed;
+	vector<GLfloat> lineGreen;
+	vector<GLfloat> lineBlue;
 
 	vector<vector<vec2>> polygons;
-
 	vector<GLfloat> polygonRed;
 	vector<GLfloat> polygonGreen;
 	vector<GLfloat> polygonBlue;
