@@ -124,7 +124,11 @@ void Track::Process(Engine& engine, float delta)
 
 	case StateType::Play:
 
-		Scene::Process(engine, delta);
+		if (countDown < 0)
+
+			Scene::Process(engine, delta);
+		else
+			countDown -= delta;
 
 		for (Actor* a : GetActors())
 		{
@@ -155,7 +159,14 @@ void Track::Process(Engine& engine, float delta)
 			}
 		}
 
-		if (cameraType >= CameraType::Track)  cameraPosition = GetActors()[0]->GetPosition();
+		int pnum = numberOfPlayers == 0 ? 4 : numberOfPlayers;
+		vec2 totalPosition = vec2(0);
+		
+		for (int i = 0; i < pnum; i++)
+			totalPosition += GetActors()[i]->GetPosition();
+			
+		cameraPosition = totalPosition / vec2(pnum);
+
 		if (cameraType >= CameraType::Rotate) cameraRotation = GetActors()[0]->GetRotation();
 
 		break;
@@ -229,33 +240,11 @@ void Track::Draw(Graphics& graphics)
 
 		graphics.SetBackgroundColours(0.f, 135.f / 255, 81.f / 255);
 
-		if (numberOfPlayers >= 1)
-		{
-			vector<vec2> controls1Back =
-			{
-				vec2(32, graphics.GetScreenHeight() * 2 - 16),
-				vec2(graphics.GetScreenWidth() - 260, graphics.GetScreenHeight() * 2 - 16),
-				vec2(graphics.GetScreenWidth() - 260, graphics.GetScreenHeight() * 2 - 260),
-				vec2(32, graphics.GetScreenHeight() * 2 - 260),
-			};
+		float width = graphics.GetScreenWidth() * 2;
+		float halfWidth = width / 2;
 
-			graphics.DrawPolygon(controls1Back, 0, 0, 0);
-
-			graphics.DrawFont("roboto", "Player 1 Controls:"
-				"\nW - Accelerate"
-				"\nA - Steer Left"
-				"\nS - Reverse"
-				"\nD - Seer Right",
-				vec2(32, graphics.GetScreenHeight() - 32));
-		}
-
-		if (numberOfPlayers >= 2)
-			graphics.DrawFont("roboto", "Player 2 Controls:"
-				"\nUp - Accelerate"
-				"\nLeft - Steer Left"
-				"\nDown - Reverse"
-				"\nRight - Seer Right",
-				vec2(graphics.GetScreenWidth() / 2, graphics.GetScreenHeight() - 32));
+		float height = graphics.GetScreenHeight() * 2;
+		float halfHeight = height / 2;
 
 		for (int i = 0; i < leftBounds.size(); i++)
 		{
@@ -268,18 +257,66 @@ void Track::Draw(Graphics& graphics)
 			poly.push_back(rightBounds[o]);
 			poly.push_back(rightBounds[i]);
 
-			float darkDistance = (2.f * widths[i]) * (2.f * widths[i]);
-
-			float dx = coordinates[i].x - coordinates[o].x;
-			float dy = coordinates[i].y - coordinates[o].y;
-			float distance = dx * dx + dy * dy;
-
-			dontDarkNext = !dontDarkNext && darkDistance > distance;
-
-			if (dontDarkNext)
+			if (darks[i])
 				DrawPolygon(poly, 17.f / 255, 29.f / 255, 53.f / 255);
 			else
 				DrawPolygon(poly, 29.f / 255, 43.f / 255, 83.f / 255);
+		}
+
+		if (numberOfPlayers >= 1)
+		{
+			vector<vec2> controls1Back =
+			{
+				vec2(32, 16),
+				vec2(halfWidth - 260, 16),
+				vec2(halfWidth - 260, 268),
+				vec2(32, 268),
+			};
+
+			graphics.DrawPolygon(controls1Back, 29.f / 255, 43.f / 255, 83.f / 255);
+
+			graphics.DrawFont("roboto", "Player 1 Controls:"
+				"\nW - Accelerate"
+				"\nA - Steer Left"
+				"\nS - Reverse"
+				"\nD - Seer Right",
+				vec2(32, 112));
+		}
+
+		if (numberOfPlayers >= 2)
+		{
+			vector<vec2> controls2Back =
+			{
+				vec2(halfWidth + 32, 16),
+				vec2(width - 260, 16),
+				vec2(width - 260, 268),
+				vec2(halfWidth + 32, 268),
+			};
+
+			graphics.DrawPolygon(controls2Back, 126.f / 255, 37.f / 255, 83.f / 255);
+
+			graphics.DrawFont("roboto", "Player 2 Controls:"
+				"\nUp - Accelerate"
+				"\nLeft - Steer Left"
+				"\nDown - Reverse"
+				"\nRight - Seer Right",
+				vec2(halfWidth / 2 + 32, 112));
+		}
+
+		if (countDown > 0)
+		{
+			vector<vec2> countDownBack =
+			{
+				vec2(halfWidth - 32, halfHeight + 16),
+				vec2(halfWidth + 16, halfHeight + 16),
+				vec2(halfWidth + 16, halfHeight - 32),
+				vec2(halfWidth - 32, halfHeight - 32),
+			};
+
+			string countDownString = to_string((int)countDown);
+
+			graphics.DrawPolygon(countDownBack, 0.f / 255, 0.f / 255, 0.f / 255);
+			graphics.DrawFont("roboto", countDownString.c_str(), vec2(halfWidth / 2 - 7, halfHeight / 2 - 7));
 		}
 
 		break;
@@ -445,6 +482,25 @@ void Track::SetState(StateType state)
 			walls.push_back(rw);
 		}
 
+		for (int i = 0; i < coordinates.size(); i++)
+		{
+			int o = i + 1 >= leftBounds.size() ? 0 : i + 1;
+
+			// generate dark patches //
+
+			float darkDistance = (2.f * widths[o]) * (2.f * widths[o]);
+
+			float dx = coordinates[i].x - coordinates[o].x;
+			float dy = coordinates[i].y - coordinates[o].y;
+			float distance = dx * dx + dy * dy;
+
+			cout << (darkDistance > distance) << endl;
+
+			dontDarkNext = !dontDarkNext && (darkDistance > distance);
+
+			darks.push_back(dontDarkNext);
+		}
+
 		// set camera
 		if (numberOfPlayers == 0 || numberOfPlayers == 2) SetCameraType(CameraType::None);
 		else SetCameraType(CameraType::Rotate);
@@ -510,6 +566,8 @@ void Track::SetState(StateType state)
 
 		AddActor(cp3);
 		AddActor(cp4);
+
+		countDown = 4;
 
 		break;
 	}

@@ -55,6 +55,7 @@ private:
 	vector<vec2> coordinates;
 	vector<int> widths;
 	vector<RoadType> types;
+	vector<bool> darks;
 
 	vector<float> angles;
 	vector<vec2> leftBounds;
@@ -69,6 +70,8 @@ private:
 
 	const GLfloat editBgColour[3] = { 1.f / 255, 1.f / 255, 20.f / 255 };
 	const GLfloat editLineColour[3] = { 0.f / 255, 228.f / 255, 54.f / 255 };
+
+	float countDown;
 };
 
 struct Track::Road
