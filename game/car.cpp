@@ -10,10 +10,10 @@ Car::Car(int costume) : Actor("Car", vec2(0,0), 0, 0, 16, 20)
 	acceleration = 64;
 	SetAccelerationMultiplier();
 
-	reverseAcceleration = 32;
+	reverseAcceleration = 64;
 	SetReverseAccelerationMultiplier();
 
-	decceleration = 16;
+	decceleration = 32;
 	SetDeccelerationMultiplier();
 
 	maxSpeed = 128;
@@ -22,7 +22,7 @@ Car::Car(int costume) : Actor("Car", vec2(0,0), 0, 0, 16, 20)
 	minSpeed = -64;
 	SetMinSpeedMultiplier();
 
-	steerSpeed = pi<float>();
+	steerSpeed = pi<float>() * 0.75f;
 	SetSteerSpeedMultiplier();
 
 	speed = 0;
@@ -56,6 +56,11 @@ int Car::GetCostume()
 string Car::GetPlayerName()
 {
 	return playerName;
+}
+
+int Car::GetLap()
+{
+	return lap;
 }
 
 void Car::SetPlayerName(string name)
@@ -95,6 +100,8 @@ int Car::GetCurrentStep()
 void Car::SetCurrentStep(int step)
 {
 	currentStep = step;
+
+	if (step == 0) lap += 1;
 }
 
 vec2 Car::GetTarget()

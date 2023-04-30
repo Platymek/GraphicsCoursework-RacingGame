@@ -24,6 +24,7 @@ using namespace freetype;
 
 #include "Track.h"
 #include "Player.h"
+#include "Menu.h"
 
 #include <iostream>
 using namespace std;
@@ -39,6 +40,7 @@ bool Up = false;
 bool Down = false;
 
 Track scene;
+Menu menu;
 Graphics graphics(screenWidth, screenHeight);
 Engine engine;
 OBB obb = OBB(64, 64);
@@ -99,12 +101,15 @@ void init()
 
 	graphics.AddAnimation("CountDown", "./textures/CountDown", 4, 1.f);
 
-	graphics.AddFont("roboto", "./fonts/Roboto-Regular.ttf", 14);
+	graphics.AddFont("roboto", "./fonts/Roboto/Roboto-Regular.ttf", 14);
+	graphics.AddFont("title", "./fonts/Righteous/Righteous-Regular.ttf", 64);
 
 	scene.Init();
 
 	testScene.Init();
 	testScene.AddActor(testWall);
+
+	menu.Init();
 
 	input.AddKey("up2",		GLUT_KEY_UP,	true);
 	input.AddKey("left2",	GLUT_KEY_LEFT,	true);
@@ -126,11 +131,9 @@ void init()
 
 	input.AddKey("start", 13, false);
 
-	engine.Init(graphics, scene, input);
+	engine.Init(graphics, menu, input);
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	//font.init("./fonts/Roboto-Regular.ttf", 16);
 }
 
 void display()
@@ -143,8 +146,6 @@ void display()
 	t += 0.008;
 
 	engine.Process();
-
-	//graphics.DrawAnimation("CountDown", graphics.GetScreenHeight() * 0.5f, graphics.GetScreenHeight() * 0.5f, t);
 
 	glDisable(GL_BLEND);
 

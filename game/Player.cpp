@@ -9,6 +9,11 @@ Player::Player(int playerNumber) : Car(playerNumber)
 	keyNames = map<string, string>();
 
 	for (string key : keys) keyNames.insert({ key, key + to_string(playerNumber) });
+
+	string pName = "Player ";
+	pName += to_string(playerNumber);
+
+	SetPlayerName(pName);
 }
 
 void Player::Process(Scene scene, Input input, float delta)

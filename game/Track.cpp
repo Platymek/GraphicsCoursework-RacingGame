@@ -270,6 +270,7 @@ void Track::Draw(Graphics& graphics)
 				DrawPolygon(poly, 29.f / 255, 43.f / 255, 83.f / 255);
 		}
 
+		string lapNumber = to_string(laps);
 
 		// Draw Player 1 Info //
 
@@ -279,18 +280,23 @@ void Track::Draw(Graphics& graphics)
 			{
 				vec2(32, 16),
 				vec2(halfWidth - 260, 16),
-				vec2(halfWidth - 260, 268),
-				vec2(32, 268),
+				vec2(halfWidth - 260, 296),
+				vec2(32, 296),
 			};
 
 			graphics.DrawPolygon(controls1Back, 29.f / 255, 43.f / 255, 83.f / 255);
 
-			graphics.DrawFont("roboto", "Player 1 Controls:"
+			Car* p1 = dynamic_cast<Car*>(GetActors()[0]);
+
+			string p1Explanation = "Lap ";
+			p1Explanation += to_string(p1->GetLap()) + "/" + lapNumber +
+				"\n" + p1->GetPlayerName() + " Controls:"
 				"\nW - Accelerate"
 				"\nA - Steer Left"
 				"\nS - Reverse"
-				"\nD - Seer Right",
-				vec2(32, 112));
+				"\nD - Seer Right";
+
+			graphics.DrawFont("roboto", p1Explanation.c_str(), vec2(32, 126));
 		}
 
 
@@ -302,18 +308,23 @@ void Track::Draw(Graphics& graphics)
 			{
 				vec2(halfWidth + 32, 16),
 				vec2(width - 260, 16),
-				vec2(width - 260, 268),
-				vec2(halfWidth + 32, 268),
+				vec2(width - 260, 296),
+				vec2(halfWidth + 32, 296),
 			};
 
 			graphics.DrawPolygon(controls2Back, 126.f / 255, 37.f / 255, 83.f / 255);
 
-			graphics.DrawFont("roboto", "Player 2 Controls:"
+			Car* p2 = dynamic_cast<Car*>(GetActors()[1]);
+
+			string p2Explanation = "Lap ";
+			p2Explanation += to_string(p2->GetLap()) + "/" + lapNumber + 
+				"\n" + p2->GetPlayerName() + " Controls:"
 				"\nUp - Accelerate"
 				"\nLeft - Steer Left"
 				"\nDown - Reverse"
-				"\nRight - Seer Right",
-				vec2(halfWidth / 2 + 32, 112));
+				"\nRight - Seer Right";
+
+			graphics.DrawFont("roboto", p2Explanation.c_str(), vec2(halfWidth / 2 + 32, 126));
 		}
 
 

@@ -31,6 +31,7 @@
     <ClInclude Include="engine\Scene.h" />
     <ClInclude Include="game\Player.h" />
     <ClInclude Include="game\Wall.h" />
+    <ClInclude Include="game\Menu.h" />
     <ClInclude Include="shaders\Shader.h" />
     <ClInclude Include="engine\Sprite.h" />
     <ClInclude Include="engine\Animation.h" />
@@ -50,6 +51,7 @@
     <ClCompile Include="engine\Scene.cpp" />
     <ClCompile Include="game\Player.cpp" />
     <ClCompile Include="game\Wall.cpp" />
+    <ClCompile Include="game\Menu.cpp" />
     <ClCompile Include="shaders\Shader.cpp" />
     <ClCompile Include="engine\Sprite.cpp" />
     <ClCompile Include="engine\Animation.cpp" />

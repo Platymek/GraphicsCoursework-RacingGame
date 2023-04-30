@@ -24,6 +24,7 @@ public:
 	int GetCostume();
 
 	string GetPlayerName();
+	int GetLap();
 
 
 protected:
