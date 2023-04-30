@@ -27,4 +27,6 @@ private:
 	Graphics* graphics;
 	Scene* currentScene;
 	Input* input;
+
+	float previousTime;
 };

@@ -18,7 +18,10 @@ void Engine::Init(Graphics& graphics, Scene& scene, Input& input)
 
 void Engine::Process()
 {
-	currentScene->Process(*this, 0.016f);
+	float delta = clock() - previousTime;
+	previousTime = clock();
+
+	currentScene->Process(*this, delta / 1000);
 	currentScene->Draw(*graphics);
 
 	graphics->Process();

@@ -7,7 +7,7 @@ class Car : public Actor
 {
 public:
 
-	Car();
+	Car(int costume);
 
 	void Init(vec2 position, float rotation);
 	void Process(Scene scene, Input input, float delta) override;
@@ -19,6 +19,11 @@ public:
 	virtual void SetTarget(vec2 position);
 
 	vec2 getVelocity();
+
+	string GetAnimationName() override;
+	int GetCostume();
+
+	string GetPlayerName();
 
 
 protected:
@@ -38,6 +43,7 @@ protected:
 	void SetSteerSpeedMultiplier(float value = 1);
 
 	virtual void StartCollision(Actor* source) override;
+	void SetPlayerName(string name);
 
 
 private:
@@ -50,7 +56,11 @@ private:
 	float maxSpeedMultiplier, minSpeedMultiplier, accelerationMultiplier, reverseAccelerationMultiplier, 
 		deccelerationMultiplier, steerSpeedMultiplier;
 
+	string playerName;
+
 	int lap;
 	int currentStep;
+	int costume;
+
 	vec2 target;
 };

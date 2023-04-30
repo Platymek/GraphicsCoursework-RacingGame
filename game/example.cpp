@@ -80,9 +80,25 @@ void init()
 	t = 0;
 
 	graphics.Init();
+
 	graphics.AddAnimation("Car/idle", "./textures/Car/idle", 1, 1);
 	graphics.AddAnimation("Car/move", "./textures/Car/move", 2, 0.2f);
 	graphics.AddAnimation("Car/boost", "./textures/Car/boost", 2, 0.2f);
+
+	graphics.AddAnimation("Car/idle/0", "./textures/Car/idle/0", 1, 1);
+	graphics.AddAnimation("Car/move/0", "./textures/Car/move/0", 2, 0.2f);
+	graphics.AddAnimation("Car/boost/0", "./textures/Car/boost/0", 2, 0.2f);
+
+	graphics.AddAnimation("Car/idle/1", "./textures/Car/idle/1", 1, 1);
+	graphics.AddAnimation("Car/move/1", "./textures/Car/move/1", 2, 0.2f);
+	graphics.AddAnimation("Car/boost/1", "./textures/Car/boost/1", 2, 0.2f);
+
+	graphics.AddAnimation("Car/idle/2", "./textures/Car/idle/2", 1, 1);
+	graphics.AddAnimation("Car/move/2", "./textures/Car/move/2", 2, 0.2f);
+	graphics.AddAnimation("Car/boost/2", "./textures/Car/boost/2", 2, 0.2f);
+
+	graphics.AddAnimation("CountDown", "./textures/CountDown", 4, 1.f);
+
 	graphics.AddFont("roboto", "./fonts/Roboto-Regular.ttf", 14);
 
 	scene.Init();
@@ -124,9 +140,11 @@ void display()
 
 	glEnable(GL_BLEND);
 
-	t += 0.0069;
+	t += 0.008;
 
 	engine.Process();
+
+	//graphics.DrawAnimation("CountDown", graphics.GetScreenHeight() * 0.5f, graphics.GetScreenHeight() * 0.5f, t);
 
 	glDisable(GL_BLEND);
 

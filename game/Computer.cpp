@@ -1,17 +1,17 @@
 #include "Computer.h"
 
-
-
-Computer::Computer(ComplexityType complexity) : Car()
+Computer::Computer(ComplexityType complexity) : Car(0)
 {
 	this->complexity = complexity;
 	
 	left = turned = true;
+
+	SetPlayerName("Computer");
 }
 
 void Computer::Process(Scene scene, Input input, float delta)
 {
-	Car::Process(scene, input, delta);
+	Car::Process(scene, input, delta * 1.1f);
 
 	switch (complexity)
 	{
@@ -28,7 +28,8 @@ void Computer::Process(Scene scene, Input input, float delta)
 
 		if (!turned)
 		{
-			float angleFrom = GetAngleFrom(GetTarget()); //0.1f * (int)(GetAngleFrom(GetTarget()) * 10);
+			float angleFrom = GetAngleFrom(GetTarget()); 
+			//float angleFrom = 0.1f * (int)(GetAngleFrom(GetTarget()) * 10);
 
 			if (left)
 			{

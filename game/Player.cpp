@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(int playerNumber) : Car()
+Player::Player(int playerNumber) : Car(playerNumber)
 {
 	this->playerNumber = playerNumber;
 

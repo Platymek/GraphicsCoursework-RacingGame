@@ -27,7 +27,7 @@ public:
 	string GetName();
 	vec2 GetPosition(), GetScale(), GetOrigin();
 	float GetRotation(), GetAt();
-	string GetAnimationName();
+	virtual string GetAnimationName();
 	int GetLayer();
 
 	float GetAngleTo(vec2 position);

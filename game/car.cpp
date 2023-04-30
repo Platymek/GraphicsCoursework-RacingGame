@@ -3,26 +3,26 @@
 float CARTAU = pi<float>() * 2;
 float HALFPI = pi<float>() / 2;
 
-Car::Car() : Actor("Car", vec2(0,0), 0, 0, 16, 20)
+Car::Car(int costume) : Actor("Car", vec2(0,0), 0, 0, 16, 20)
 {
 	SetAnimation("move");
 
-	acceleration = 16;
+	acceleration = 64;
 	SetAccelerationMultiplier();
 
-	reverseAcceleration = 16;
+	reverseAcceleration = 32;
 	SetReverseAccelerationMultiplier();
 
-	decceleration = 8;
+	decceleration = 16;
 	SetDeccelerationMultiplier();
 
-	maxSpeed = 64;
+	maxSpeed = 128;
 	SetMaxSpeedMutliplier();
 
-	minSpeed = -32;
+	minSpeed = -64;
 	SetMinSpeedMultiplier();
 
-	steerSpeed = pi<float>() / 2;
+	steerSpeed = pi<float>();
 	SetSteerSpeedMultiplier();
 
 	speed = 0;
@@ -30,12 +30,37 @@ Car::Car() : Actor("Car", vec2(0,0), 0, 0, 16, 20)
 	SetAnimationSpeed(0);
 
 	SetCurrentStep(0);
+
+	this->costume = costume;
 }
 
 vec2 Car::getVelocity()
 {
 	vec2 v(speed * -sin(rotation), speed * cos(rotation));
 	return v;
+}
+
+string Car::GetAnimationName()
+{
+	string s = "/";
+	s += to_string(costume);
+
+	return Actor::GetAnimationName() + s;
+}
+
+int Car::GetCostume()
+{
+	return costume;
+}
+
+string Car::GetPlayerName()
+{
+	return playerName;
+}
+
+void Car::SetPlayerName(string name)
+{
+	playerName = name;
 }
 
 void Car::Init(vec2 position, float rotation)

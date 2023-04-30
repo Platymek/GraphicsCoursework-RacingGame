@@ -162,8 +162,7 @@ void Track::Process(Engine& engine, float delta)
 		int pnum = numberOfPlayers == 0 ? 4 : numberOfPlayers;
 		vec2 totalPosition = vec2(0);
 		
-		for (int i = 0; i < pnum; i++)
-			totalPosition += GetActors()[i]->GetPosition();
+		for (int i = 0; i < pnum; i++) totalPosition += GetActors()[i]->GetPosition();
 			
 		cameraPosition = totalPosition / vec2(pnum);
 
@@ -232,6 +231,10 @@ void Track::Draw(Graphics& graphics)
 				for (int i = 1; i < rightBounds.size(); i++) DrawLine(rightBounds[i - 1], rightBounds[i],
 					editLineColour[0], editLineColour[1], editLineColour[2]);
 			}
+
+			if (coordinates.size() > 1)
+				DrawLine(leftBounds[0], rightBounds[0],
+					editLineColour[0], editLineColour[1], editLineColour[2]);
 		}
 
 		break;
@@ -240,11 +243,15 @@ void Track::Draw(Graphics& graphics)
 
 		graphics.SetBackgroundColours(0.f, 135.f / 255, 81.f / 255);
 
+
 		float width = graphics.GetScreenWidth() * 2;
 		float halfWidth = width / 2;
 
 		float height = graphics.GetScreenHeight() * 2;
 		float halfHeight = height / 2;
+
+
+		// Draw Track //
 
 		for (int i = 0; i < leftBounds.size(); i++)
 		{
@@ -262,6 +269,9 @@ void Track::Draw(Graphics& graphics)
 			else
 				DrawPolygon(poly, 29.f / 255, 43.f / 255, 83.f / 255);
 		}
+
+
+		// Draw Player 1 Info //
 
 		if (numberOfPlayers >= 1)
 		{
@@ -283,6 +293,9 @@ void Track::Draw(Graphics& graphics)
 				vec2(32, 112));
 		}
 
+
+		// Draw Player 2 Info //
+
 		if (numberOfPlayers >= 2)
 		{
 			vector<vec2> controls2Back =
@@ -303,20 +316,31 @@ void Track::Draw(Graphics& graphics)
 				vec2(halfWidth / 2 + 32, 112));
 		}
 
+
+		// Draw Finish Line //
+
+		vector<vec2> finishLine =
+		{
+			vec2(leftBounds[0]),
+			vec2(leftBounds[0]),
+			vec2(rightBounds[0]),
+			vec2(rightBounds[0]),
+		};
+
+		vec2 cornerOffset = vec2(8 * sin(angles[0]), 8 * cos(angles[0]));
+
+		finishLine[1] += cornerOffset;
+		finishLine[2] += cornerOffset;
+
+		DrawPolygon(finishLine, 1, 0, 77.f / 255.f);
+
+
+		// Draw CountDown //
+
 		if (countDown > 0)
 		{
-			vector<vec2> countDownBack =
-			{
-				vec2(halfWidth - 32, halfHeight + 16),
-				vec2(halfWidth + 16, halfHeight + 16),
-				vec2(halfWidth + 16, halfHeight - 32),
-				vec2(halfWidth - 32, halfHeight - 32),
-			};
-
-			string countDownString = to_string((int)countDown);
-
-			graphics.DrawPolygon(countDownBack, 0.f / 255, 0.f / 255, 0.f / 255);
-			graphics.DrawFont("roboto", countDownString.c_str(), vec2(halfWidth / 2 - 7, halfHeight / 2 - 7));
+			graphics.DrawAnimation("CountDown", graphics.GetScreenHeight() * 0.5f, 
+				graphics.GetScreenHeight() * 0.5f - 128, 4.f - countDown, 1);
 		}
 
 		break;
@@ -508,7 +532,8 @@ void Track::SetState(StateType state)
 
 		// generate players //
 
-		float startingAngle = atan(coordinates[1].x - coordinates[0].x, coordinates[1].y - coordinates[0].y);
+		int l = coordinates.size() - 1;
+		float startingAngle = atan(coordinates[0].x - coordinates[l].x, coordinates[0].y - coordinates[l].y);
 
 		float startingLeftAngle = startingAngle - (pi<float>() / 2);
 		int thirdWidth = widths[0] / 3;
@@ -516,6 +541,7 @@ void Track::SetState(StateType state)
 		// generate player 1
 		vec2 c1 = coordinates[0];
 		c1 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+		c1 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
 
 		if (numberOfPlayers > 0)
 		{
@@ -533,6 +559,7 @@ void Track::SetState(StateType state)
 		// generate player 2
 		vec2 c2 = coordinates[0];
 		c2 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
+		c2 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
 
 		if (numberOfPlayers > 1)
 		{
@@ -550,13 +577,11 @@ void Track::SetState(StateType state)
 		// generate player 3
 		vec2 c3 = coordinates[0];
 		c3 += vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
-		c3 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
 		cp3.Init(c3, -startingAngle);
 
 		// generate player 3
 		vec2 c4 = coordinates[0];
 		c4 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
-		c4 -= vec2(32 * sin(startingAngle), 32 * cos(startingAngle));
 		cp4.Init(c4, -startingAngle);
 
 		if (cameraType >= CameraType::Zoom) cameraScale = vec2(2,2);
