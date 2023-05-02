@@ -48,6 +48,13 @@ void Computer::Process(Scene scene, Input input, float delta)
 	}
 }
 
+void Computer::Init(vec2 position, float rotation)
+{
+	Car::Init(position, rotation);
+
+	turned = false;
+}
+
 void Computer::SetCurrentStep(int step)
 {
 	Car::SetCurrentStep(step);
@@ -66,6 +73,8 @@ void Computer::StartCollision(Actor* source)
 {
 	Car::StartCollision(source);
 
-	turned = false;
-	left = GetAngleFrom(GetTarget()) > 0;
+	//turned = false;
+	//left = GetAngleFrom(GetTarget()) > 0;
+
+	SetTarget(GetTarget());
 }

@@ -117,6 +117,8 @@ void Track::Process(Engine& engine, float delta)
 
 			if (c)
 			{
+				//cout << GetCurrentStep() << endl;
+
 				int s = c->GetCurrentStep() + 1;
 				if (s >= steps.size()) s = 0;
 
@@ -268,6 +270,7 @@ void Track::Draw(Graphics& graphics)
 
 		string lapNumber = to_string(laps);
 
+
 		// Draw Player 1 Info //
 
 		if (numberOfPlayers >= 1)
@@ -360,18 +363,22 @@ void Track::Init()
 
 	GetActors().clear();
 
+	walls.clear();
+	steps.clear();
+
 	this->cameraType = CameraType::Rotate;
 
 	nextRoadWidth = 48;
 
-	coordinates = vector<vec2>();
-	widths = vector<int>();
-	angles = vector<float>();
+	coordinates.clear();
+	widths.clear();
+	angles.clear();
+	darks.clear();
 
-	leftBounds = vector<vec2>();
-	rightBounds = vector<vec2>();
+	leftBounds.clear();
+	rightBounds.clear();
 
-	types = vector<RoadType>();
+	types.clear();
 
 	connected = false;
 	drawMiddleLine = true;
@@ -492,6 +499,9 @@ void Track::SetState(StateType state)
 	switch (state)
 	{
 	case StateType::Play:
+
+		walls.clear();
+		steps.clear();
 
 		for (int i = 0; i < coordinates.size(); i++)
 		{
@@ -616,14 +626,13 @@ void Track::SetState(StateType state)
 		c4 -= vec2(thirdWidth * sin(startingLeftAngle), thirdWidth * cos(startingLeftAngle));
 		cp4.Init(c4, -startingAngle);
 
-		if (cameraType >= CameraType::Zoom) cameraScale = vec2(2,2);
-
 		cp3.SetTarget(coordinates[1]);
 		cp4.SetTarget(coordinates[1]);
 
 		AddActor(cp3);
 		AddActor(cp4);
 
+		if (cameraType >= CameraType::Zoom) cameraScale = vec2(2, 2);
 		countDown = 4;
 
 		break;

@@ -9,7 +9,7 @@ public:
 
 	Car(int costume);
 
-	void Init(vec2 position, float rotation);
+	virtual void Init(vec2 position, float rotation);
 	void Process(Scene scene, Input input, float delta) override;
 
 	int GetCurrentStep();

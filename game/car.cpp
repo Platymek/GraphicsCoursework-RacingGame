@@ -78,6 +78,7 @@ void Car::Init(vec2 position, float rotation)
 
 	lap = 1;
 	speed = 0;
+	currentStep = 0;
 }
 
 void Car::Process(Scene scene, Input input, float delta)
