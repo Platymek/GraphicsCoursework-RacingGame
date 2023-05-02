@@ -46,10 +46,14 @@ public:
 	void SetState(StateType state);
 	void SetCameraType(CameraType cameraType);
 
+	int GetNumberOfLaps();
+
 
 private:
 
 	bool connected, drawMiddleLine, drawLeftLine, drawRightLine, editting, dontDarkNext;
+
+	bool won;
 
 	int nextRoadWidth;
 	vector<vec2> coordinates;

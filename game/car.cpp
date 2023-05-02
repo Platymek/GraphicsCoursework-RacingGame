@@ -1,5 +1,8 @@
 #include "car.h"
 
+#include "Track.h"
+#include "MatrixRush.h"
+
 float CARTAU = pi<float>() * 2;
 float HALFPI = pi<float>() / 2;
 
@@ -72,11 +75,17 @@ void Car::Init(vec2 position, float rotation)
 {
 	this->position = position;
 	this->rotation = rotation;
+
+	lap = 1;
+	speed = 0;
 }
 
 void Car::Process(Scene scene, Input input, float delta)
 {
 	Actor::Process(scene, input, delta);
+
+
+	// Process Movement //
 
 	if (speed != 0)
 	{

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game\Button.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="game\Computer.h" />
     <ClInclude Include="engine\Engine.h" />
@@ -32,12 +33,15 @@
     <ClInclude Include="game\Player.h" />
     <ClInclude Include="game\Wall.h" />
     <ClInclude Include="game\Menu.h" />
+    <ClInclude Include="game\MatrixRush.h" />
     <ClInclude Include="shaders\Shader.h" />
     <ClInclude Include="engine\Sprite.h" />
     <ClInclude Include="engine\Animation.h" />
     <ClInclude Include="game\Track.h" />
+    <ClInclude Include="game\WinScreen.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="game\Button.cpp" />
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="game\Computer.cpp" />
     <ClCompile Include="engine\Engine.cpp" />
@@ -45,17 +49,19 @@
     <ClCompile Include="game\Car.cpp" />
     <ClCompile Include="engine\Actor.cpp" />
     <ClCompile Include="engine\Graphics.cpp" />
-    <ClCompile Include="game\example.cpp" />
+    <ClCompile Include="game\main.cpp" />
     <ClCompile Include="engine\ImageLoading.cpp" />
     <ClCompile Include="engine\OBB.cpp" />
     <ClCompile Include="engine\Scene.cpp" />
     <ClCompile Include="game\Player.cpp" />
     <ClCompile Include="game\Wall.cpp" />
     <ClCompile Include="game\Menu.cpp" />
+    <ClCompile Include="game\MatrixRush.cpp" />
     <ClCompile Include="shaders\Shader.cpp" />
     <ClCompile Include="engine\Sprite.cpp" />
     <ClCompile Include="engine\Animation.cpp" />
     <ClCompile Include="game\Track.cpp" />
+    <ClCompile Include="game\WinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glslfiles\basicTexture.frag" />

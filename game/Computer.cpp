@@ -4,8 +4,7 @@ Computer::Computer(ComplexityType complexity) : Car(0)
 {
 	this->complexity = complexity;
 	
-	left = turned = true;
-
+	turned = false;
 	SetPlayerName("Computer");
 }
 

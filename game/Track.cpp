@@ -1,6 +1,7 @@
 #include "Track.h"
 #include "Player.h"
 #include "Computer.h"
+#include "MatrixRush.h"
 
 Player p1(1);
 Player p2(2);
@@ -34,26 +35,6 @@ Track::Road::Road(int x, int y, int width, RoadType type)
 
 Track::Track() : Scene()
 {
-	this->cameraType = CameraType::Rotate;
-
-	nextRoadWidth = 48;
-
-	coordinates = vector<vec2>();
-	widths = vector<int>();
-	angles = vector<float>();
-
-	leftBounds	= vector<vec2>();
-	rightBounds = vector<vec2>();
-
-	types = vector<RoadType>();
-
-	connected = false;
-	drawMiddleLine = true;
-
-	drawLeftLine = drawRightLine = dontDarkNext = false;
-	numberOfPlayers = 0;
-
-	SetState(StateType::Edit);
 }
 
 void Track::Process(Engine& engine, float delta)
@@ -167,6 +148,21 @@ void Track::Process(Engine& engine, float delta)
 		cameraPosition = totalPosition / vec2(pnum);
 
 		if (cameraType >= CameraType::Rotate) cameraRotation = GetActors()[0]->GetRotation();
+
+		for (Actor* a : GetActors())
+		{
+			Car* car = dynamic_cast<Car*>(a);
+
+			if (car)
+			{
+				if (car->GetLap() > laps)
+				{
+					MatrixRush* game = dynamic_cast<MatrixRush*>(&engine);
+
+					if (game) game->Win(car->GetPlayerName() + "\nWon!");
+				}
+			}
+		}
 
 		break;
 	}
@@ -361,11 +357,36 @@ void Track::Draw(Graphics& graphics)
 void Track::Init()
 {
 	Scene::Init();
+
+	GetActors().clear();
+
+	this->cameraType = CameraType::Rotate;
+
+	nextRoadWidth = 48;
+
+	coordinates = vector<vec2>();
+	widths = vector<int>();
+	angles = vector<float>();
+
+	leftBounds = vector<vec2>();
+	rightBounds = vector<vec2>();
+
+	types = vector<RoadType>();
+
+	connected = false;
+	drawMiddleLine = true;
+
+	drawLeftLine = drawRightLine = dontDarkNext = false;
+	numberOfPlayers = 0;
+
+	countDown = 0;
+
+	SetState(StateType::Edit);
 }
 
 void Track::Init(vector<Road> roads)
 {
-	Scene::Init();
+	Track::Init();
 
 	for (Road r : roads) AddRoad(r, false);
 	Connect();
@@ -614,6 +635,11 @@ void Track::SetState(StateType state)
 void Track::SetCameraType(CameraType cameraType)
 {
 	this->cameraType = cameraType;
+}
+
+int Track::GetNumberOfLaps()
+{
+	return laps;
 }
 
 Track::Wall::Wall(vec2 position, float rotation, int height)

@@ -3,14 +3,18 @@
 
 Scene::Scene()
 {
-	cameraPosition = cameraOrigin = vec2(0, 0);
-	cameraScale = vec2(1, 1);
-	cameraRotation = 0;
 }
 
 void Scene::Init()
 {
-	vector<Actor*> actors();
+	vector<Actor*> actors = vector<Actor*>();
+	actors.clear();
+
+	cout << "Bruh " << GetActors().size() << endl;
+
+	cameraPosition = cameraOrigin = vec2(0, 0);
+	cameraScale = vec2(1, 1);
+	cameraRotation = 0;
 }
 
 void Scene::Process(Engine& engine, float delta)

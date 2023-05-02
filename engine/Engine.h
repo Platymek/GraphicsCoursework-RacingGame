@@ -14,8 +14,8 @@ public:
 
 	Engine();
 
-	void Init(Graphics& graphics, Scene& scene, Input& input);
-	void Process();
+	virtual void Init(Graphics& graphics, Scene& scene, Input& input);
+	virtual void Process();
 	
 	void SetScene(Scene& scene);
 	Graphics* GetGraphics();

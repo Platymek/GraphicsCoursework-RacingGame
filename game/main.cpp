@@ -15,16 +15,8 @@ using namespace std;
 #include "..\FreeType.h"
 using namespace freetype;
 
-#include "..\engine\Graphics.h"
-#include "..\engine\Animation.h"
-#include "..\engine\Engine.h"
-#include "..\engine\Scene.h"
 #include "..\engine\Input.h"
-#include "..\engine\OBB.h"
-
-#include "Track.h"
-#include "Player.h"
-#include "Menu.h"
+#include "MatrixRush.h"
 
 #include <iostream>
 using namespace std;
@@ -33,24 +25,8 @@ glm::mat4 ViewMatrix;  // matrix for the modelling and viewing
 glm::mat4 ProjectionMatrix; // matrix for the orthographic projection
 int screenWidth = 720, screenHeight = 720;
 
-//booleans to handle when the arrow keys are pressed or released.
-bool Left = false;
-bool Right = false;
-bool Up = false;
-bool Down = false;
-
-Track scene;
-Menu menu;
-Graphics graphics(screenWidth, screenHeight);
-Engine engine;
-OBB obb = OBB(64, 64);
-Font font;
-
 Input input;
-
-//Player testPlayer;
-Track::Wall testWall(vec2(64, 64), 2, 40);
-Scene testScene;
+MatrixRush game;
 
 //OPENGL FUNCTION PROTOTYPES
 void display(); //used as callback in glut for display.
@@ -79,59 +55,7 @@ void init()
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
-	t = 0;
-
-	graphics.Init();
-
-	graphics.AddAnimation("Car/idle", "./textures/Car/idle", 1, 1);
-	graphics.AddAnimation("Car/move", "./textures/Car/move", 2, 0.2f);
-	graphics.AddAnimation("Car/boost", "./textures/Car/boost", 2, 0.2f);
-
-	graphics.AddAnimation("Car/idle/0", "./textures/Car/idle/0", 1, 1);
-	graphics.AddAnimation("Car/move/0", "./textures/Car/move/0", 2, 0.2f);
-	graphics.AddAnimation("Car/boost/0", "./textures/Car/boost/0", 2, 0.2f);
-
-	graphics.AddAnimation("Car/idle/1", "./textures/Car/idle/1", 1, 1);
-	graphics.AddAnimation("Car/move/1", "./textures/Car/move/1", 2, 0.2f);
-	graphics.AddAnimation("Car/boost/1", "./textures/Car/boost/1", 2, 0.2f);
-
-	graphics.AddAnimation("Car/idle/2", "./textures/Car/idle/2", 1, 1);
-	graphics.AddAnimation("Car/move/2", "./textures/Car/move/2", 2, 0.2f);
-	graphics.AddAnimation("Car/boost/2", "./textures/Car/boost/2", 2, 0.2f);
-
-	graphics.AddAnimation("CountDown", "./textures/CountDown", 4, 1.f);
-
-	graphics.AddFont("roboto", "./fonts/Roboto/Roboto-Regular.ttf", 14);
-	graphics.AddFont("title", "./fonts/Righteous/Righteous-Regular.ttf", 64);
-
-	scene.Init();
-
-	testScene.Init();
-	testScene.AddActor(testWall);
-
-	menu.Init();
-
-	input.AddKey("up2",		GLUT_KEY_UP,	true);
-	input.AddKey("left2",	GLUT_KEY_LEFT,	true);
-	input.AddKey("down2",	GLUT_KEY_DOWN,	true);
-	input.AddKey("right2",	GLUT_KEY_RIGHT, true);
-
-	input.AddKey("up1", 'w', false);
-	input.AddKey("left1", 'a', false);
-	input.AddKey("down1", 's', false);
-	input.AddKey("right1", 'd', false);
-
-	input.AddKey("uiUp", 'w', false);
-	input.AddKey("uiLeft", 'a', false);
-	input.AddKey("uiDown", 's', false);
-	input.AddKey("uiRight", 'd', false);
-	input.AddKey("ui0", '0', false);
-	input.AddKey("ui1", '1', false);
-	input.AddKey("ui2", '2', false);
-
-	input.AddKey("start", 13, false);
-
-	engine.Init(graphics, menu, input);
+	game.Init(input);
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -143,9 +67,7 @@ void display()
 
 	glEnable(GL_BLEND);
 
-	t += 0.008;
-
-	engine.Process();
+	game.Process();
 
 	glDisable(GL_BLEND);
 

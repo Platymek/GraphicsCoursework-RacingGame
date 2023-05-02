@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="game\example.cpp">
+    <ClCompile Include="game\main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="engine\ImageLoading.cpp">
@@ -31,6 +31,9 @@
     <ClCompile Include="game\Computer.cpp" />
     <ClCompile Include="FreeType.cpp" />
     <ClCompile Include="game\Menu.cpp" />
+    <ClCompile Include="game\Button.cpp" />
+    <ClCompile Include="game\MatrixRush.cpp" />
+    <ClCompile Include="game\WinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\ImageLoading.h">
@@ -60,6 +63,9 @@
     <ClInclude Include="game\Computer.h" />
     <ClInclude Include="FreeType.h" />
     <ClInclude Include="game\Menu.h" />
+    <ClInclude Include="game\Button.h" />
+    <ClInclude Include="game\MatrixRush.h" />
+    <ClInclude Include="game\WinScreen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
