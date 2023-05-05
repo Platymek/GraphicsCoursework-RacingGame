@@ -36,6 +36,8 @@ protected:
 	void SteerLeft(float delta);
 	void SteerRight(float delta);
 
+	void Boost();
+
 	void SetMaxSpeedMutliplier(float value = 1);
 	void SetMinSpeedMultiplier(float value = 1);
 	void SetAccelerationMultiplier(float value = 1);
@@ -62,6 +64,9 @@ private:
 	int lap;
 	int currentStep;
 	int costume;
+
+	bool boosting;
+	bool wasBoosting;
 
 	vec2 target;
 };
