@@ -117,8 +117,6 @@ void Track::Process(Engine& engine, float delta)
 
 			if (c)
 			{
-				//cout << GetCurrentStep() << endl;
-
 				int s = c->GetCurrentStep() + 1;
 				if (s >= steps.size()) s = 0;
 
@@ -173,9 +171,6 @@ void Track::Process(Engine& engine, float delta)
 void Track::Draw(Graphics& graphics)
 {
 	Scene::Draw(graphics);
-
-	//for (Wall& w : walls) w.DrawCollision(*this);
-	//for (Wall& s : steps) s.DrawCollision(*this);
 
 	string roadWidthMessage = "Current road width - ";
 	roadWidthMessage += to_string(nextRoadWidth);
@@ -559,8 +554,6 @@ void Track::SetState(StateType state)
 			float dx = coordinates[i].x - coordinates[o].x;
 			float dy = coordinates[i].y - coordinates[o].y;
 			float distance = dx * dx + dy * dy;
-
-			cout << (darkDistance > distance) << endl;
 
 			dontDarkNext = !dontDarkNext && (darkDistance > distance);
 

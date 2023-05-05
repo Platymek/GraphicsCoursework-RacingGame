@@ -21,8 +21,11 @@ void Engine::Process()
 	float delta = clock() - previousTime;
 	previousTime = clock();
 
-	currentScene->Process(*this, delta / 1000);
-	currentScene->Draw(*graphics);
+	if (delta < 100)
+	{
+		currentScene->Process(*this, delta / 1000);
+		currentScene->Draw(*graphics);
+	}
 
 	graphics->Process();
 	input->Process();

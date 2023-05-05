@@ -233,10 +233,10 @@ void Actor::RefreshCollision()
 
 void Actor::StartCollision(Actor* source)
 {
-	cout << GetName() << " has started colliding with " << source->GetName() << endl;
+	//cout << GetName() << " has started colliding with " << source->GetName() << endl;
 }
 
 void Actor::EndCollision(Actor* source)
 {
-	cout << GetName() << " has stopped colliding with " << source->GetName() << endl;
+	//cout << GetName() << " has stopped colliding with " << source->GetName() << endl;
 }

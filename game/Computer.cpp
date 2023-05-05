@@ -28,7 +28,6 @@ void Computer::Process(Scene scene, Input input, float delta)
 		if (!turned)
 		{
 			float angleFrom = GetAngleFrom(GetTarget()); 
-			//float angleFrom = 0.1f * (int)(GetAngleFrom(GetTarget()) * 10);
 
 			if (left)
 			{
@@ -72,9 +71,6 @@ void Computer::SetTarget(vec2 position)
 void Computer::StartCollision(Actor* source)
 {
 	Car::StartCollision(source);
-
-	//turned = false;
-	//left = GetAngleFrom(GetTarget()) > 0;
 
 	SetTarget(GetTarget());
 }
