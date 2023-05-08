@@ -51,5 +51,5 @@ void Player::Process(Scene scene, Input input, float delta)
 
 	// process boosting //
 
-	if (input.IsKeyDown(keyNames["boost"])) Boost();
+	if (input.IsKeyDown(keyNames["boost"])) Boost(delta);
 }

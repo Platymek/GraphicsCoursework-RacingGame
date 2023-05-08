@@ -28,8 +28,6 @@ Car::Car(int costume) : Actor("Car", vec2(0,0), 0, 0, 16, 20)
 	steerSpeed = pi<float>() * 0.75f;
 	SetSteerSpeedMultiplier();
 
-	speed = 0;
-
 	SetAnimationSpeed(0);
 
 	SetCurrentStep(0);
@@ -81,13 +79,13 @@ void Car::Init(vec2 position, float rotation)
 
 	lap = 1;
 	speed = 0;
+	boostMeter = 1;
 	currentStep = 0;
 }
 
 void Car::Process(Scene scene, Input input, float delta)
 {
 	Actor::Process(scene, input, delta);
-	cout << speed / maxSpeed << endl;
 
 
 	// Process Movement //
@@ -106,14 +104,23 @@ void Car::Process(Scene scene, Input input, float delta)
 
 	// Process Boost //
 
-	if (!boosting && wasBoosting)
+	if (wasBoosting && (!boosting || boosting <= 0))
 	{
 		SetAccelerationMultiplier(1);
 		SetMaxSpeedMutliplier(1);
 		SetAnimation("move");
-		
+
+		boostRestartTimer = 0;
 		wasBoosting = false;
 	}
+	
+	if (!boosting && boostRestartTimer >= boostRestartLimit) boostMeter = boostMeter >= 1 ? 1 : boostMeter + delta;
+
+	cout << boostRestartTimer << endl;
+
+	boostRestartTimer = boostRestartTimer >= boostRestartLimit 
+		? boostRestartLimit
+		: boostRestartTimer + delta;
 
 
 	// Process Result //
@@ -159,6 +166,8 @@ void Car::StartCollision(Actor* source)
 	bool isCar = source->GetName() == "Car";
 
 	if ((behind && !movingForwards) || (!behind && movingForwards) || !isCar) speed = -speed;
+	
+	boostMeter = 1;
 }
 
 void Car::Accelerate(float delta)
@@ -199,17 +208,22 @@ void Car::SteerRight(float delta)
 	SetRotation(rotation + delta * currentSteerSpeed);
 }
 
-void Car::Boost()
+void Car::Boost(float delta)
 {
-	boosting = true;
-
-	if (!wasBoosting)
+	if (boostMeter > 0)
 	{
-		wasBoosting = true;
+		boosting = true;
 
-		SetAccelerationMultiplier(4);
-		SetMaxSpeedMutliplier(1.5f);
-		SetAnimation("boost");
+		if (!wasBoosting)
+		{
+			wasBoosting = true;
+
+			SetAccelerationMultiplier(4);
+			SetMaxSpeedMutliplier(1.5f);
+			SetAnimation("boost");
+		}
+
+		boostMeter -= delta;
 	}
 }
 
