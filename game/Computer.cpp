@@ -10,7 +10,7 @@ Computer::Computer(ComplexityType complexity) : Car(0)
 
 void Computer::Process(Scene scene, Input input, float delta)
 {
-	Car::Process(scene, input, delta * 1.05f);
+	Car::Process(scene, input, delta);
 
 	switch (complexity)
 	{
@@ -24,6 +24,9 @@ void Computer::Process(Scene scene, Input input, float delta)
 	case(Steer):
 
 		Accelerate(delta);
+
+
+		// Process Turning//
 
 		if (!turned)
 		{
@@ -43,6 +46,14 @@ void Computer::Process(Scene scene, Input input, float delta)
 			}
 		}
 
+		
+		// Process Boosting //
+
+		if (GetBoostMeter() == 1) boost = true;
+		else if (GetBoostMeter() < 0.5f) boost = false;
+
+		if (GetSpeed() < 0 || boost) Boost(delta);
+
 		break;
 	}
 }
@@ -52,6 +63,7 @@ void Computer::Init(vec2 position, float rotation)
 	Car::Init(position, rotation);
 
 	turned = false;
+	boost = false;
 }
 
 void Computer::SetCurrentStep(int step)

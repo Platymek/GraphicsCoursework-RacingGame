@@ -19,6 +19,8 @@ public:
 	virtual void SetTarget(vec2 position);
 
 	vec2 getVelocity();
+	float GetSpeed();
+	float GetBoostMeter();
 
 	string GetAnimationName() override;
 	int GetCostume();

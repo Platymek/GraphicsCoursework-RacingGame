@@ -41,6 +41,16 @@ vec2 Car::getVelocity()
 	return v;
 }
 
+float Car::GetSpeed()
+{
+	return speed;
+}
+
+float Car::GetBoostMeter()
+{
+	return boostMeter;
+}
+
 string Car::GetAnimationName()
 {
 	string s = "/";
