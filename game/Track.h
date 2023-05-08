@@ -67,7 +67,7 @@ private:
 
 	vector<Wall> walls;
 	vector<Wall> steps;
-	int laps = 3;
+	int laps = 5;
 
 	StateType state;
 	CameraType cameraType;

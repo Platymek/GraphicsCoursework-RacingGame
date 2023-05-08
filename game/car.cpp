@@ -16,13 +16,13 @@ Car::Car(int costume) : Actor("Car", vec2(0,0), 0, 0, 16, 20)
 	reverseAcceleration = 64;
 	SetReverseAccelerationMultiplier();
 
-	decceleration = 32;
+	decceleration = 64;
 	SetDeccelerationMultiplier();
 
 	maxSpeed = 128;
 	SetMaxSpeedMutliplier();
 
-	minSpeed = -64;
+	minSpeed = -48;
 	SetMinSpeedMultiplier();
 
 	steerSpeed = pi<float>() * 0.75f;
