@@ -69,6 +69,9 @@
     <None Include="x64\Debug\glew32.dll" />
     <None Include="glslfiles\basicTexture.frag" />
     <None Include="glslfiles\basicTexture.vert" />
+    <None Include="x64\Release\freeglut.dll" />
+    <None Include="x64\Release\FreeImage.dll" />
+    <None Include="x64\Release\glew32.dll" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{472FEE38-34C3-4DC2-8DFC-871F6F80345E}</ProjectGuid>
@@ -193,13 +196,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>freetype.lib;freeimage.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

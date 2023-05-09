@@ -126,11 +126,9 @@ void Car::Process(Scene scene, Input input, float delta)
 	
 	if (!boosting && boostRestartTimer >= boostRestartLimit) boostMeter = boostMeter >= 1 ? 1 : boostMeter + delta;
 
-	cout << boostRestartTimer << endl;
-
 	boostRestartTimer = boostRestartTimer >= boostRestartLimit 
 		? boostRestartLimit
-		: boostRestartTimer + delta;
+		: boostRestartTimer + delta * 0.5f;
 
 
 	// Process Result //
@@ -177,6 +175,12 @@ void Car::StartCollision(Actor* source)
 
 	if ((behind && !movingForwards) || (!behind && movingForwards) || !isCar) speed = -speed;
 	
+	if (isCar)
+	{
+		Car* c = dynamic_cast<Car*>(source);
+		c->boostMeter = 1;
+	}
+
 	boostMeter = 1;
 }
 
@@ -228,13 +232,14 @@ void Car::Boost(float delta)
 		{
 			wasBoosting = true;
 
-			SetAccelerationMultiplier(4);
-			SetMaxSpeedMutliplier(1.5f);
+			SetAccelerationMultiplier(6);
+			SetMaxSpeedMutliplier(1.75f);
 			SetAnimation("boost");
 		}
 
 		boostMeter -= delta;
 	}
+	else boostMeter = 0;
 }
 
 void Car::SetMaxSpeedMutliplier(float value)

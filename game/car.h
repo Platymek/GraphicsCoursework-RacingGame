@@ -70,7 +70,7 @@ private:
 	/// <summary>Range from 0 to 1</summary>
 	float boostMeter;
 	float boostRestartTimer;
-	float boostRestartLimit = 2.f;
+	float boostRestartLimit = 1.f;
 
 	bool boosting;
 	bool wasBoosting;

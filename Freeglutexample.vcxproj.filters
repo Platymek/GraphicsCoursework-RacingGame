@@ -88,5 +88,8 @@
     <None Include="x64\Debug\freeglut.dll" />
     <None Include="x64\Debug\FreeImage.dll" />
     <None Include="x64\Debug\glew32.dll" />
+    <None Include="x64\Release\freeglut.dll" />
+    <None Include="x64\Release\FreeImage.dll" />
+    <None Include="x64\Release\glew32.dll" />
   </ItemGroup>
 </Project>

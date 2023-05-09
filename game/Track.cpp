@@ -59,7 +59,7 @@ void Track::Process(Engine& engine, float delta)
 
 				int distanceSquared = pow(mousex - v.x, 2) + pow(mousey - v.y, 2);
 
-				if (distanceSquared <= pow(widths[i], 2) * 2)
+				if (distanceSquared <= pow(widths[i], 2)) //* 2)
 				{
 					valid = false;
 					break;
@@ -270,15 +270,20 @@ void Track::Draw(Graphics& graphics)
 
 		if (numberOfPlayers >= 1)
 		{
+			// Controls Background //
+
 			vector<vec2> controls1Back =
 			{
-				vec2(32, 16),
-				vec2(halfWidth - 260, 16),
-				vec2(halfWidth - 260, 296),
-				vec2(32, 296),
+				vec2(32, 0),
+				vec2(32 + 360, 0),
+				vec2(32 + 360, 328),
+				vec2(32, 328),
 			};
 
 			graphics.DrawPolygon(controls1Back, 29.f / 255, 43.f / 255, 83.f / 255);
+
+
+			// Controls Text //
 
 			Car* p1 = dynamic_cast<Car*>(GetActors()[0]);
 
@@ -288,9 +293,35 @@ void Track::Draw(Graphics& graphics)
 				"\nW - Accelerate"
 				"\nA - Steer Left"
 				"\nS - Reverse"
-				"\nD - Seer Right";
+				"\nD - Seer Right"
+				"\nSpace - Boost";
 
-			graphics.DrawFont("roboto", p1Explanation.c_str(), vec2(32, 126));
+			graphics.DrawFont("roboto", p1Explanation.c_str(), vec2(32, 142));
+
+
+			// Boost Meter //
+
+			vector<vec2> boostMeter1back =
+			{
+				vec2(32, 360),
+				vec2(32 + 360, 360),
+				vec2(32 + 360, 328),
+				vec2(32, 328),
+			};
+
+			graphics.DrawPolygon(boostMeter1back, 255.f / 255, 236.f / 255, 39.f / 255);
+
+			if (p1->GetBoostMeter() > 0)
+			{
+				vector<vec2> boostMeter1 =
+				{
+					vec2(32, 360),
+					vec2(32 + 360 * p1->GetBoostMeter(), 360),
+					vec2(32 + 360 * p1->GetBoostMeter(), 328),
+					vec2(32, 328),
+				};
+				graphics.DrawPolygon(boostMeter1, 255.f / 255, 0, 77.f / 255);
+			}
 		}
 
 
@@ -298,15 +329,20 @@ void Track::Draw(Graphics& graphics)
 
 		if (numberOfPlayers >= 2)
 		{
+			// Controls Background //
+
 			vector<vec2> controls2Back =
 			{
-				vec2(halfWidth + 32, 16),
-				vec2(width - 260, 16),
-				vec2(width - 260, 296),
-				vec2(halfWidth + 32, 296),
+				vec2(halfWidth + 32, 0),
+				vec2(halfWidth + 32 + 360, 0),
+				vec2(halfWidth + 32 + 360, 328),
+				vec2(halfWidth + 32, 328),
 			};
 
 			graphics.DrawPolygon(controls2Back, 126.f / 255, 37.f / 255, 83.f / 255);
+
+
+			// Controls Text //
 
 			Car* p2 = dynamic_cast<Car*>(GetActors()[1]);
 
@@ -316,9 +352,36 @@ void Track::Draw(Graphics& graphics)
 				"\nUp - Accelerate"
 				"\nLeft - Steer Left"
 				"\nDown - Reverse"
-				"\nRight - Seer Right";
+				"\nRight - Seer Right"
+				"\nR.Ctrl - Boost";
 
-			graphics.DrawFont("roboto", p2Explanation.c_str(), vec2(halfWidth / 2 + 32, 126));
+			graphics.DrawFont("roboto", p2Explanation.c_str(), vec2(halfWidth / 2 + 32, 142));
+
+
+			// Boost Meter //
+
+			vector<vec2> boostMeter2back =
+			{
+				vec2(halfWidth + 32, 360),
+				vec2(halfWidth + 32 + 360, 360),
+				vec2(halfWidth + 32 + 360, 328),
+				vec2(halfWidth + 32, 328),
+			};
+
+			graphics.DrawPolygon(boostMeter2back, 255.f / 255, 236.f / 255, 39.f / 255);
+
+			if (p2->GetBoostMeter() > 0)
+			{
+				vector<vec2> boostMeter2 =
+				{
+					vec2(halfWidth + 32, 360),
+					vec2(halfWidth + 32 + 360 * p2->GetBoostMeter(), 360),
+					vec2(halfWidth + 32 + 360 * p2->GetBoostMeter(), 328),
+					vec2(halfWidth + 32, 328),
+				};
+
+				graphics.DrawPolygon(boostMeter2, 255.f / 255, 0, 77.f / 255);
+			}
 		}
 
 

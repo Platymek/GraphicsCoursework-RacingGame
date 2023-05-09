@@ -10,7 +10,9 @@ Computer::Computer(ComplexityType complexity) : Car(0)
 
 void Computer::Process(Scene scene, Input input, float delta)
 {
-	Car::Process(scene, input, delta);
+
+	if (!turned) Car::Process(scene, input, delta * 1.05f);
+	else		 Car::Process(scene, input, delta * 1.0f);
 
 	switch (complexity)
 	{
