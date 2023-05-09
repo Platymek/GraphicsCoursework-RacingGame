@@ -29,4 +29,5 @@ private:
 
 	ComplexityType complexity;
 	bool left, turned;
+	bool boost;
 };

@@ -16,19 +16,17 @@ Car::Car(int costume) : Actor("Car", vec2(0,0), 0, 0, 16, 20)
 	reverseAcceleration = 64;
 	SetReverseAccelerationMultiplier();
 
-	decceleration = 32;
+	decceleration = 64;
 	SetDeccelerationMultiplier();
 
 	maxSpeed = 128;
 	SetMaxSpeedMutliplier();
 
-	minSpeed = -64;
+	minSpeed = -48;
 	SetMinSpeedMultiplier();
 
 	steerSpeed = pi<float>() * 0.75f;
 	SetSteerSpeedMultiplier();
-
-	speed = 0;
 
 	SetAnimationSpeed(0);
 
@@ -41,6 +39,16 @@ vec2 Car::getVelocity()
 {
 	vec2 v(speed * -sin(rotation), speed * cos(rotation));
 	return v;
+}
+
+float Car::GetSpeed()
+{
+	return speed;
+}
+
+float Car::GetBoostMeter()
+{
+	return boostMeter;
 }
 
 string Car::GetAnimationName()
@@ -76,8 +84,12 @@ void Car::Init(vec2 position, float rotation)
 	this->position = position;
 	this->rotation = rotation;
 
+	boosting = false;
+	wasBoosting = false;
+
 	lap = 1;
 	speed = 0;
+	boostMeter = 1;
 	currentStep = 0;
 }
 
@@ -99,7 +111,31 @@ void Car::Process(Scene scene, Input input, float delta)
 		SetSteerSpeedMultiplier(0);
 	}
 
+
+	// Process Boost //
+
+	if (wasBoosting && (!boosting || boosting <= 0))
+	{
+		SetAccelerationMultiplier(1);
+		SetMaxSpeedMutliplier(1);
+		SetAnimation("move");
+
+		boostRestartTimer = 0;
+		wasBoosting = false;
+	}
+	
+	if (!boosting && boostRestartTimer >= boostRestartLimit) boostMeter = boostMeter >= 1 ? 1 : boostMeter + delta;
+
+	boostRestartTimer = boostRestartTimer >= boostRestartLimit 
+		? boostRestartLimit
+		: boostRestartTimer + delta * 0.5f;
+
+
+	// Process Result //
+
 	position += getVelocity() * delta;
+	
+	boosting = false;
 }
 
 int Car::GetCurrentStep()
@@ -138,18 +174,26 @@ void Car::StartCollision(Actor* source)
 	bool isCar = source->GetName() == "Car";
 
 	if ((behind && !movingForwards) || (!behind && movingForwards) || !isCar) speed = -speed;
+	
+	if (isCar)
+	{
+		Car* c = dynamic_cast<Car*>(source);
+		c->boostMeter = 1;
+	}
+
+	boostMeter = 1;
 }
 
 void Car::Accelerate(float delta)
 {
-	if (speed < maxSpeed) speed += delta * currentAcceleration;
-	else Deccelerate(delta, maxSpeed);
+	if (speed < currentMaxSpeed) speed += delta * currentAcceleration;
+	else Deccelerate(delta, currentMaxSpeed);
 }
 
 void Car::Reverse(float delta)
 {
-	if (speed > minSpeed) speed -= delta * currentReverseAcceleration;
-	else Deccelerate(delta, minSpeed);
+	if (speed > currentMinSpeed) speed -= delta * currentReverseAcceleration;
+	else Deccelerate(delta, currentMinSpeed);
 }
 
 void Car::Deccelerate(float delta, float baseSpeed)
@@ -176,6 +220,26 @@ void Car::SteerLeft(float delta)
 void Car::SteerRight(float delta)
 {
 	SetRotation(rotation + delta * currentSteerSpeed);
+}
+
+void Car::Boost(float delta)
+{
+	if (boostMeter > 0)
+	{
+		boosting = true;
+
+		if (!wasBoosting)
+		{
+			wasBoosting = true;
+
+			SetAccelerationMultiplier(6);
+			SetMaxSpeedMutliplier(1.75f);
+			SetAnimation("boost");
+		}
+
+		boostMeter -= delta;
+	}
+	else boostMeter = 0;
 }
 
 void Car::SetMaxSpeedMutliplier(float value)

@@ -47,14 +47,18 @@ void MatrixRush::Init(Input& input)
 
 	// Initialise Input //
 
-	input.AddKey("up2", GLUT_KEY_UP, true);
-	input.AddKey("left2", GLUT_KEY_LEFT, true);
-	input.AddKey("down2", GLUT_KEY_DOWN, true);
-	input.AddKey("right2", GLUT_KEY_RIGHT, true);
 	input.AddKey("up1", 'w', false);
 	input.AddKey("left1", 'a', false);
 	input.AddKey("down1", 's', false);
 	input.AddKey("right1", 'd', false);
+	input.AddKey("boost1", 32, false);
+
+	input.AddKey("up2", GLUT_KEY_UP, true);
+	input.AddKey("left2", GLUT_KEY_LEFT, true);
+	input.AddKey("down2", GLUT_KEY_DOWN, true);
+	input.AddKey("right2", GLUT_KEY_RIGHT, true);
+	input.AddKey("boost2", GLUT_KEY_CTRL_R, true);
+
 	input.AddKey("uiUp", 'w', false);
 	input.AddKey("uiLeft", 'a', false);
 	input.AddKey("uiDown", 's', false);

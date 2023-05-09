@@ -4,7 +4,7 @@ Player::Player(int playerNumber) : Car(playerNumber)
 {
 	this->playerNumber = playerNumber;
 
-	string keys[4] { "up", "down", "left", "right" };
+	string keys[5] { "up", "down", "left", "right", "boost" };
 
 	keyNames = map<string, string>();
 
@@ -20,8 +20,10 @@ void Player::Process(Scene scene, Input input, float delta)
 {
 	Car::Process(scene, input, delta);
 
+
 	// process steering //
-	int turn  = input.IsKeyDown(keyNames["right"]) - input.IsKeyDown(keyNames["left"]);
+
+	int turn = input.IsKeyDown(keyNames["right"]) - input.IsKeyDown(keyNames["left"]);
 
 	if (turn == 1) 
 
@@ -31,10 +33,12 @@ void Player::Process(Scene scene, Input input, float delta)
 
 		SteerRight(delta);
 
+
 	// process acceleration //
+
 	int drive = input.IsKeyDown(keyNames["up"]) - input.IsKeyDown(keyNames["down"]);
 
-	if (drive == 1)
+	if (drive == 1 || input.IsKeyDown(keyNames["boost"]))
 
 		Accelerate(delta);
 
@@ -43,4 +47,9 @@ void Player::Process(Scene scene, Input input, float delta)
 		Reverse(delta);
 	else 
 		Deccelerate(delta);
+
+
+	// process boosting //
+
+	if (input.IsKeyDown(keyNames["boost"])) Boost(delta);
 }

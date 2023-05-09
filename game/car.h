@@ -19,6 +19,8 @@ public:
 	virtual void SetTarget(vec2 position);
 
 	vec2 getVelocity();
+	float GetSpeed();
+	float GetBoostMeter();
 
 	string GetAnimationName() override;
 	int GetCostume();
@@ -35,6 +37,8 @@ protected:
 
 	void SteerLeft(float delta);
 	void SteerRight(float delta);
+
+	void Boost(float delta);
 
 	void SetMaxSpeedMutliplier(float value = 1);
 	void SetMinSpeedMultiplier(float value = 1);
@@ -62,6 +66,14 @@ private:
 	int lap;
 	int currentStep;
 	int costume;
+
+	/// <summary>Range from 0 to 1</summary>
+	float boostMeter;
+	float boostRestartTimer;
+	float boostRestartLimit = 1.f;
+
+	bool boosting;
+	bool wasBoosting;
 
 	vec2 target;
 };
