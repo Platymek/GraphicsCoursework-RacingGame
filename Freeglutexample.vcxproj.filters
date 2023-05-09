@@ -85,5 +85,6 @@
     <None Include="glslfiles\basicTexture.frag">
       <Filter>Source\glslfiles</Filter>
     </None>
+    <None Include="x64\Debug\FreeImage.dll" />
   </ItemGroup>
 </Project>
