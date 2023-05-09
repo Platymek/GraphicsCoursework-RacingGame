@@ -39,6 +39,7 @@
     <ClInclude Include="engine\Animation.h" />
     <ClInclude Include="game\Track.h" />
     <ClInclude Include="game\WinScreen.h" />
+    <ClInclude Include="x64\Release\shaders\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game\Button.cpp" />
@@ -62,10 +63,13 @@
     <ClCompile Include="engine\Animation.cpp" />
     <ClCompile Include="game\Track.cpp" />
     <ClCompile Include="game\WinScreen.cpp" />
+    <ClCompile Include="x64\Release\shaders\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glslfiles\basicTexture.frag" />
     <None Include="glslfiles\basicTexture.vert" />
+    <None Include="x64\Release\glslfiles\basicTexture.frag" />
+    <None Include="x64\Release\glslfiles\basicTexture.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{472FEE38-34C3-4DC2-8DFC-871F6F80345E}</ProjectGuid>

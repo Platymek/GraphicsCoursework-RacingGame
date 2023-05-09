@@ -34,6 +34,7 @@
     <ClCompile Include="game\Button.cpp" />
     <ClCompile Include="game\MatrixRush.cpp" />
     <ClCompile Include="game\WinScreen.cpp" />
+    <ClCompile Include="x64\Release\shaders\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\ImageLoading.h">
@@ -66,6 +67,7 @@
     <ClInclude Include="game\Button.h" />
     <ClInclude Include="game\MatrixRush.h" />
     <ClInclude Include="game\WinScreen.h" />
+    <ClInclude Include="x64\Release\shaders\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -85,6 +87,7 @@
     <None Include="glslfiles\basicTexture.frag">
       <Filter>Source\glslfiles</Filter>
     </None>
-    <None Include="x64\Debug\FreeImage.dll" />
+    <None Include="x64\Release\glslfiles\basicTexture.frag" />
+    <None Include="x64\Release\glslfiles\basicTexture.vert" />
   </ItemGroup>
 </Project>
