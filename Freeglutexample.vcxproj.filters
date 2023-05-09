@@ -85,11 +85,8 @@
     <None Include="glslfiles\basicTexture.frag">
       <Filter>Source\glslfiles</Filter>
     </None>
-    <None Include="x64\Debug\freeglut.dll" />
-    <None Include="x64\Debug\FreeImage.dll" />
-    <None Include="x64\Debug\glew32.dll" />
-    <None Include="x64\Release\freeglut.dll" />
-    <None Include="x64\Release\FreeImage.dll" />
-    <None Include="x64\Release\glew32.dll" />
+    <None Include="x64\freeglut.dll" />
+    <None Include="x64\FreeImage.dll" />
+    <None Include="x64\glew32.dll" />
   </ItemGroup>
 </Project>

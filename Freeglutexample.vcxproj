@@ -64,14 +64,11 @@
     <ClCompile Include="game\WinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="x64\Debug\freeglut.dll" />
-    <None Include="x64\Debug\FreeImage.dll" />
-    <None Include="x64\Debug\glew32.dll" />
     <None Include="glslfiles\basicTexture.frag" />
     <None Include="glslfiles\basicTexture.vert" />
-    <None Include="x64\Release\freeglut.dll" />
-    <None Include="x64\Release\FreeImage.dll" />
-    <None Include="x64\Release\glew32.dll" />
+    <None Include="x64\freeglut.dll" />
+    <None Include="x64\FreeImage.dll" />
+    <None Include="x64\glew32.dll" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{472FEE38-34C3-4DC2-8DFC-871F6F80345E}</ProjectGuid>
